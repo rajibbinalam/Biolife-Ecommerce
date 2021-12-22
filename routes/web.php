@@ -110,6 +110,23 @@ Route::prefix('/admin')->name('admin.')->middleware('auth')->group(function(){
     Route::get('/messages', 'App\Http\Controllers\SubandMessageController@showmessages')->name('messages');
     Route::get('/subscribers', 'App\Http\Controllers\SubandMessageController@showsubscribers')->name('subscribers');
 
+//=========== Contact Page
+
+    Route::get('/contact', 'App\Http\Controllers\ContactSocialController@conactCreate')->name('contactcreate');
+    Route::post('/add-contact', 'App\Http\Controllers\ContactSocialController@addContact')->name('addcontact');
+
+    Route::get('/contact/edit/{id}', 'App\Http\Controllers\ContactSocialController@contactEdit')->name('contectedit');
+    Route::post('/contact/update/{id}', 'App\Http\Controllers\ContactSocialController@contactUpdate');
+    Route::get('/contact/delete/{id}', 'App\Http\Controllers\ContactSocialController@contactDelete')->name('contactdelete');;
+
+
+
+
+
+
+
+
+
 
 });
 

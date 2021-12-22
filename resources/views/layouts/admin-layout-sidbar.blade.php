@@ -120,10 +120,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> Social Links</a></li>
-            <li><a href="pages/UI/icons.html"><i class="fa fa-circle-o"></i> Contact Page</a></li>
-            <li><a href="pages/UI/buttons.html"><i class="fa fa-circle-o"></i> Blog Page</a></li>
-            <li><a href="pages/UI/sliders.html"><i class="fa fa-circle-o"></i> Footer</a></li>
+            <li><a href="{{route('admin.contactcreate')}}"><i class="fa fa-circle-o"></i> Contact Page</a></li>
+            <li><a href=""><i class="fa fa-circle-o"></i> Social Links</a></li>
+            <li><a href=""><i class="fa fa-circle-o"></i> Footer</a></li>
           </ul>
         </li>
         <li class="treeview">
