@@ -9,6 +9,7 @@ use App\Models\Slider;
 use App\Models\TopBanner;
 use App\Models\MiddleBanner;
 use App\Models\BottomBanner;
+use App\Models\Partner;
 
 class GeneralSetController extends Controller
 {
@@ -222,10 +223,246 @@ public function topbannercreate(){
 
 
 
+//============= Middle banners
+
+public function middlebannercreate(){
+        $banners = MiddleBanner::all();
+        return view('admin.middle-banner', compact('banners'));
+        
+    }
+
+    public function middlebannerInsert(Request $request){
+
+         if($request->hasFile('image')){
+            $file = $request->file('image');
+
+                $extension = $file->getClientOriginalExtension();
+                $fileName= 'banner'. time() . '.' . $extension;
+                $location= '/images/banner/middle/';
+                $file->move(public_path() . $location, $fileName);
+                $imageLocation= $location. $fileName;
+            
+                MiddleBanner::insert([
+                    'name'=> $request->input('name'),
+                    'first_tag_line'=> $request->input('first_tag_line'),
+                    'second_tag_line'=> $request->input('second_tag_line'),
+                    'price'=> $request->input('price'),
+                    'image'=> $imageLocation,
+                ]);
+            
+            
+            return back()->with('success', 'Banner Added Success!');
+         }  else{
+                return back()->with('error', 'Somethink Wrong!');
+            }
+
+
+        }
+
+
+        public function middlebannerEdit($id){
+        $edits = MiddleBanner::find($id);
+        return view('admin.edit-middle-banner', compact('edits'));
+        
+            }
+
+
+        public function middlebannerUpdate(Request $request, $id){
+            $midbanner = MiddleBanner::find($id);
+            $old_image = $midbanner->image;
+
+         if($request->hasFile('image')){
+            unlink(public_path($old_image));
+            $file = $request->file('image');
+
+                $extension = $file->getClientOriginalExtension();
+                $fileName= 'banner'. time() . '.' . $extension;
+                $location= '/images/banner/middle/';
+                $file->move(public_path() . $location, $fileName);
+                $imageLocation= $location. $fileName;
+        
+                $midbanner->image = $imageLocation;
+            
+         }  else{
+
+                $midbanner->image = $old_image;
+            }
+            $midbanner->name = $request->input('name');
+            $midbanner->first_tag_line = $request->input('first_tag_line');
+            $midbanner->second_tag_line = $request->input('second_tag_line');
+            $midbanner->price = $request->input('price');
+            $midbanner->save();
+            return redirect('/admin/middle-banner')->with('success', 'Top Banner Update Success!');
+        }
 
 
 
+        public function middlebannerDelete($id){
+        $delete = MiddleBanner::find($id)->first();
+        $delete->delete();
+        unlink(public_path($delete->image));
+        return back()->with('success','Banner Deleted!');
+    }
 
+
+
+//============= Bottom banners
+
+public function bottombannercreate(){
+        $banners = BottomBanner::all();
+        return view('admin.bottom-banner', compact('banners'));
+        
+    }
+
+    public function bottombannerInsert(Request $request){
+
+         if($request->hasFile('image')){
+            $file = $request->file('image');
+
+                $extension = $file->getClientOriginalExtension();
+                $fileName= 'banner'. time() . '.' . $extension;
+                $location= '/images/banner/bottom/';
+                $file->move(public_path() . $location, $fileName);
+                $imageLocation= $location. $fileName;
+            
+                BottomBanner::insert([
+                    'name'=> $request->input('name'),
+                    'first_tag_line'=> $request->input('first_tag_line'),
+                    'second_tag_line'=> $request->input('second_tag_line'),
+                    'price'=> $request->input('price'),
+                    'image'=> $imageLocation,
+                ]);
+            
+            
+            return back()->with('success', 'Banner Added Success!');
+         }  else{
+                return back()->with('error', 'Somethink Wrong!');
+            }
+
+
+        }
+
+
+        public function bottombannerEdit($id){
+        $edits = BottomBanner::find($id);
+        return view('admin.edit-bottom-banner', compact('edits'));
+        
+            }
+
+
+        public function bottombannerUpdate(Request $request, $id){
+            $midbanner = BottomBanner::find($id);
+            $old_image = $midbanner->image;
+
+         if($request->hasFile('image')){
+            unlink(public_path($old_image));
+            $file = $request->file('image');
+
+                $extension = $file->getClientOriginalExtension();
+                $fileName= 'banner'. time() . '.' . $extension;
+                $location= '/images/banner/bottom/';
+                $file->move(public_path() . $location, $fileName);
+                $imageLocation= $location. $fileName;
+        
+                $midbanner->image = $imageLocation;
+            
+         }  else{
+
+                $midbanner->image = $old_image;
+            }
+            $midbanner->name = $request->input('name');
+            $midbanner->first_tag_line = $request->input('first_tag_line');
+            $midbanner->second_tag_line = $request->input('second_tag_line');
+            $midbanner->price = $request->input('price');
+            $midbanner->save();
+            return redirect('/admin/bottom-banner')->with('success', 'Top Banner Update Success!');
+        }
+
+
+
+        public function bottombannerDelete($id){
+        $delete = BottomBanner::find($id)->first();
+        $delete->delete();
+        unlink(public_path($delete->image));
+        return back()->with('success','Banner Deleted!');
+    }
+
+
+
+//============= Partners
+
+public function partnercreate(){
+        $partners = Partner::all();
+        return view('admin.partners', compact('partners'));
+        
+    }
+
+    public function partnerInsert(Request $request){
+
+         if($request->hasFile('logo')){
+            $file = $request->file('logo');
+
+                $extension = $file->getClientOriginalExtension();
+                $fileName= 'partner'. time() . '.' . $extension;
+                $location= '/images/partners/';
+                $file->move(public_path() . $location, $fileName);
+                $imageLocation= $location. $fileName;
+            
+                Partner::insert([
+                    'links'=> $request->input('links'),
+                    'logo'=> $imageLocation,
+                ]);
+            
+            
+            return back()->with('success', 'Partner Added Success!');
+         }  else{
+                return back()->with('error', 'Somethink Wrong!');
+            }
+
+
+        }
+
+
+        public function partnerEdit($id){
+        $edits = Partner::find($id);
+        return view('admin.partner-edit', compact('edits'));
+        
+            }
+
+
+        public function partnerUpdate(Request $request, $id){
+            $partner = Partner::find($id);
+            $old_image = $partner->logo;
+
+         if($request->hasFile('logo')){
+            unlink(public_path($old_image));
+            $file = $request->file('logo');
+
+                $extension = $file->getClientOriginalExtension();
+                $fileName= 'partner'. time() . '.' . $extension;
+                $location= '/images/partners/';
+                $file->move(public_path() . $location, $fileName);
+                $imageLocation= $location. $fileName;
+        
+                $partner->logo = $imageLocation;
+            
+         }  else{
+
+                $partner->logo = $old_image;
+            }
+            $partner->links = $request->input('links');
+            $partner->save();
+            return redirect('/admin/partner')->with('success', 'Partner Update Success!');
+        }
+
+
+
+        public function partnerDelete($id){
+        $delete = Partner::find($id)->first();
+        $delete->delete();
+        unlink(public_path($delete->logo));
+        return back()->with('success','Partner Deleted!');
+    }
 
 
 

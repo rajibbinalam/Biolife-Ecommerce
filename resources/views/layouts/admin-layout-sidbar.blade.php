@@ -100,15 +100,14 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{route('admin.topbannercreate')}}"><i class="fa fa-circle-o"></i> Top Banners</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Middle Banners</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Bottom Banners</a></li>
+                <li><a href="{{route('admin.middlebannercreate')}}"><i class="fa fa-circle-o"></i> Middle Banners</a></li>
+                <li><a href="{{route('admin.bottombannercreate')}}"><i class="fa fa-circle-o"></i> Bottom Banners</a></li>
                 
               </ul>
             </li>
 
-            <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Partners</a></li>
+            <li><a href="{{route('admin.partnercreate')}}"><i class="fa fa-circle-o"></i> Partners</a></li>
             <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> CHefs Banner</a></li>
-            <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Brand</a></li>
           </ul>
         </li>
 
@@ -127,6 +126,19 @@
             <li><a href="pages/UI/sliders.html"><i class="fa fa-circle-o"></i> Footer</a></li>
           </ul>
         </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-laptop"></i>
+            <span>Blog Page</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{route('admin.blogcategorycreate')}}"><i class="fa fa-circle-o"></i> Category</a></li>
+            <li><a href="{{route('admin.blogpostcreate')}}"><i class="fa fa-circle-o"></i> Posts</a></li>
+          </ul>
+        </li>
 
         <li class="treeview">
           <a href="#">
@@ -136,8 +148,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i> Subscriber</a></li>
-            <li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> Message</a></li>
+            <li><a href="{{route('admin.subscribers')}}"><i class="fa fa-circle-o"></i> Subscriber</a></li>
+            <li><a href="{{route('admin.messages')}}"><i class="fa fa-circle-o"></i> Message</a></li>
           </ul>
         </li>
 
