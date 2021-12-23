@@ -54,15 +54,14 @@
               </div>
               
 
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-12">
                   <label for="inputEmail">Details</label>
-                  <textarea class="form-control" name="details" value="{{ old('details') }}" id="inputEmail" rows="3"></textarea>
+                  <textarea class="ckeditor form-control" name="details" value="{{ old('details') }}" id="inputEmail" rows="3"></textarea>
                   @error('details')
                       <div class="alert alert-danger">{{$message}}</div>
                   @enderror
               </div>
               <div class="form-group col-md-6">
-                
                  <label for="inputEmail">Tags   <small class="text-muted"> ( use (,) for Separate )</small></label>
                  <!-- <textarea class="form-control" name="tags" value="{{ old('tags') }}" id="inputEmail" rows="3"></textarea> -->
                   <input type="text" class="form-control ui-widget-content ui-autocomplete-input" name="tags" id="exampleFormControlFile1" autocomplete="off">
@@ -81,6 +80,7 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
               </div>
+              
 
               <div class="form-group col-md-12">
                 <button type="submit" class="btn btn-primary" style="float: right;">Submit</button>

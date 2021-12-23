@@ -45,9 +45,9 @@
               </div>
               
 
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-12">
                   <label for="inputEmail">Details</label>
-                  <textarea class="form-control" name="details" value="{{ old('details') }}" id="inputEmail" rows="3">{{$edits->details}}</textarea>
+                  <textarea class="ckeditor form-control" name="details" value="{{ old('details') }}" id="inputEmail" rows="3">{{$edits->details}}</textarea>
                   @error('details')
                       <div class="alert alert-danger">{{$message}}</div>
                   @enderror

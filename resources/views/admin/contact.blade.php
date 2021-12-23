@@ -36,7 +36,7 @@
 
               <div class="form-group col-md-6">
                   <label for="inputEmail">Address</label>
-                  <textarea class="form-control" name="address" value="{{ old('address') }}" id="inputEmail" rows="3"></textarea>
+                  <textarea class="ckeditor form-control" name="address" value="{{ old('address') }}" id="inputEmail" rows="3"></textarea>
                   @error('address')
                       <div class="alert alert-danger">{{$message}}</div>
                   @enderror
