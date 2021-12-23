@@ -121,7 +121,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{route('admin.contactcreate')}}"><i class="fa fa-circle-o"></i> Contact Page</a></li>
-            <li><a href=""><i class="fa fa-circle-o"></i> Social Links</a></li>
+            <li><a href="{{route('admin.socialcreate')}}"><i class="fa fa-circle-o"></i> Social Links</a></li>
             <li><a href=""><i class="fa fa-circle-o"></i> Footer</a></li>
           </ul>
         </li>

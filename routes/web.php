@@ -114,11 +114,17 @@ Route::prefix('/admin')->name('admin.')->middleware('auth')->group(function(){
 
     Route::get('/contact', 'App\Http\Controllers\ContactSocialController@conactCreate')->name('contactcreate');
     Route::post('/add-contact', 'App\Http\Controllers\ContactSocialController@addContact')->name('addcontact');
-
     Route::get('/contact/edit/{id}', 'App\Http\Controllers\ContactSocialController@contactEdit')->name('contectedit');
     Route::post('/contact/update/{id}', 'App\Http\Controllers\ContactSocialController@contactUpdate');
     Route::get('/contact/delete/{id}', 'App\Http\Controllers\ContactSocialController@contactDelete')->name('contactdelete');;
 
+//=========== Social Links
+
+    Route::get('/social', 'App\Http\Controllers\ContactSocialController@socialCreate')->name('socialcreate');
+    Route::post('/social', 'App\Http\Controllers\ContactSocialController@addSocial')->name('addsocial');
+    Route::get('/social/edit/{id}', 'App\Http\Controllers\ContactSocialController@SocialEdit')->name('socialedit');
+    Route::post('/social/update/{id}', 'App\Http\Controllers\ContactSocialController@socialUpdate');
+    Route::get('/social/delete/{id}', 'App\Http\Controllers\ContactSocialController@socialDelete')->name('socialdelete');;
 
 
 

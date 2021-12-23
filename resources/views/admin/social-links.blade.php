@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Blog Post
+        Contact
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
@@ -17,9 +17,9 @@
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
-      <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
+      <div class="row" style="border-radius: 10px; background-color: white; padding: 9px; margin: 10px;">
+        <!-- <div class="col-md-3"></div> -->
+        <div class="col-md-12">
           @if(session()->has('success'))
             <div class="alert alert-success">
                 {{session()->get('success')}}
@@ -30,7 +30,38 @@
                   {{session()->get('error')}}
               </div>
               @endif
-          
+          @if($socials->count()<5)
+          <form action="{{route('admin.addsocial')}}" method="post">
+            @csrf
+
+              <div class="form-group col-md-6">
+                  <label for="inputEmail">Website Name</label>
+                  <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="exampleFormControlFile1" placeholder="Website Name">
+                  @error('name')
+                      <div class="alert alert-danger">{{$message}}</div>
+                  @enderror
+              </div>
+              <div class="form-group col-md-6">
+                <label for="exampleFormControlFile1">Link</label>
+                <input type="text" class="form-control @error('link') is-invalid @enderror" name="link" id="exampleFormControlFile1" value="https://">
+                @error('link')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+              </div>
+              <div class="form-group col-md-6">
+                <label for="exampleFormControlFile1">Icon Class</label>
+                <input type="text" class="form-control @error('icon_class') is-invalid @enderror" name="icon_class" id="exampleFormControlFile1" placeholder="Ex: fa fa-youtube">
+                @error('icon_class')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+              </div>
+              <div class="form-group col-md-6" style="padding-top: 24px;">
+                <button type="submit" class="btn btn-primary" style="float: right;">Submit</button>
+              </div>
+              
+            </form>
+            @endif
+
         </div>
       </div>
       <!-- /.row -->
@@ -41,51 +72,35 @@
           <!-- /.nav-tabs-custom -->
 
           <div class="card">
-            <a href="{{route('admin.addblogpost')}}" class="btn btn-primary" style="float: right;">Add Post</a>
-            <div class="card-header">List</div>
-            <table class="table card-body">
+            <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">SL</th>
-                    <th scope="col">Feature Image</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Tags</th>
-                    <th scope="col">Viewed</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Link</th>
+                    <th scope="col">Icon</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach($blogposts as $blogpost)
+                  @foreach($socials as $social)
                   <tr>
                     <th scope="row">{{ ++$loop->index}}</th>
-                    <td><img src="{{ $blogpost->image}}" height="45px" width="100px" alt="Logo image"></td>
-                    <td>{{ $blogpost->title}}</td>
-                    <td>{{ $blogpost->blogcategory->name}}</td>
+                    <td>{{ $social->name}}</td>
+                    <td>{{ $social->link}}</td>
+                    <td><i class="{{ $social->icon_class}}"></i></td>
                     <td>
-                      @if(isset(explode(',',$blogpost->tags)[0]))
-                      <span class="badge badge-light">{{explode(',',$blogpost->tags)[0]}}</span>
-                      @endif
-                      @if(isset(explode(',',$blogpost->tags)[1]))
-                      <span class="badge badge-light">{{explode(',',$blogpost->tags)[1]}}</span>
-                      @endif
-                      @if(isset(explode(',',$blogpost->tags)[2]))
-                      <span class="badge badge-light">{{explode(',',$blogpost->tags)[2]}}</span>
-                      @endif
-                      @if(isset(explode(',',$blogpost->tags)[3]))
-                      <span class="badge badge-light">{{explode(',',$blogpost->tags)[3]}}</span>
-                      @endif
-
-                    </td>
-                    <td>{{ $blogpost->view}}</td>
-                    <td>
-                      <a href="{{url('/admin/blog-post/edit/'.$blogpost->id)}}" style="color: white; background-color: #00a65a; padding: 8px; border-radius: 24px;" ><i class="fa fa-edit"></i>Edit</a>
-                      <a href="{{url('/admin/blog-post/delete/'.$blogpost->id)}}" style="color: white; background-color: #ff0000; padding: 8px; border-radius: 24px;" OnClick='return (confirm("Are you sure Delete "));'><i class="fa fa-trash"></i></a>
+                      <a href="{{url('/admin/social/edit/'.$social->id)}}" style="color: white; background-color: #00a65a; padding: 8px; border-radius: 24px;"><i class="fa fa-edit"></i></a>
+                      <a href="{{url('/admin/social/delete/'.$social->id)}}" style="color: white; background-color: #ff0000; padding: 8px; border-radius: 24px;" OnClick='return (confirm("Are you sure"));'><i class="fa fa-trash"></i></a>
                     </td>
                   </tr>
                   @endforeach
                 </tbody>
               </table>
+
+
+            
+            
           </div>
           
 
