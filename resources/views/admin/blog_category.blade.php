@@ -1,11 +1,9 @@
-@extends('layouts.admin-layout')
-@section('admin_content')
+@extends('admin.layouts.app')
+@section('content')
 
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Top Banner
+        Blog Categories
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
@@ -17,9 +15,10 @@
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
-      <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
+      <div class="row" style="border-radius: 10px; background-color: white; padding: 9px; margin: 10px;">
+        <!-- <div class="col-md-3"></div> -->
+        <h4 style="padding-left: 32px; padding-bottom: 10px; font-weight: bold;">Add Category</h4>
+        <div class="col-md-12">
           @if(session()->has('success'))
             <div class="alert alert-success">
                 {{session()->get('success')}}
@@ -57,7 +56,7 @@
       </div>
       <!-- /.row -->
       <!-- Main row -->
-      <div class="row">
+      <div class="row" style="border-radius: 10px; background-color: white; padding: 9px; margin: 10px;">
         <!-- Left col -->
         <section class="col-lg-12 connectedSortable">
           <!-- /.nav-tabs-custom -->
@@ -67,10 +66,10 @@
             <table class="table card-body">
                 <thead>
                   <tr>
-                    <th scope="col">SL</th>
+                    <th scope="col" style="width: 79px;">SL</th>
                     <th scope="col">Name</th>
                     <th scope="col">Slug</th>
-                    <th scope="col">Action</th>
+                    <th scope="col" style="width: 79px;">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -95,7 +94,5 @@
       <!-- /.row (main row) -->
 
     </section>
-    <!-- /.content -->
-  </div>
 
   @endsection

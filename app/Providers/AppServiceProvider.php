@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\GeneralSetting;
 use Illuminate\Support\ServiceProvider;
-use Schema;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,7 +25,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-        //Schema::defaultStringLength(191);
+
+        //  Schema::defaultStringLength(191);
+
+        $general = GeneralSetting::first();
+        View::share('general', $general);
     }
 }

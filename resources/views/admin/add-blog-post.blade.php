@@ -1,8 +1,6 @@
-@extends('layouts.admin-layout')
-@section('admin_content')
+@extends('admin.layouts.app')
+@section('content')
 
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
         Add Post
@@ -92,7 +90,4 @@
       <!-- /.row (main row) -->
 
     </section>
-    <!-- /.content -->
-  </div>
-
   @endsection

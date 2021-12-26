@@ -1,8 +1,6 @@
-@extends('layouts.admin-layout')
-@section('admin_content')
-
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
+@extends('admin.layouts.app')
+@section('content')
+ 
     <section class="content-header">
       <h1>
         Edit Partner
@@ -52,8 +50,6 @@
       </div>
       <!-- /.row (main row) -->
 
-    </section>
-    <!-- /.content -->
-  </div>
+    </section> 
 
   @endsection

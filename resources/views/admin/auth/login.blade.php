@@ -6,7 +6,7 @@
 <div class="login-box-body">
       <p class="login-box-msg">Admin Log In</p>
 
-      <form action="{{ route('admin.storelogin') }}" method="post">
+      <form action="{{ route('admin.login') }}" method="post">
       	@csrf
 
         <div class="form-group has-feedback">
@@ -38,13 +38,7 @@
         </div>
       </form>
 
-      <div class="social-auth-links text-center">
-        <p>- OR -</p>
-        <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
-          Facebook</a>
-        <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
-          Google+</a>
-      </div>
+
       <!-- /.social-auth-links -->
 
 		<!-- @if (Route::has('password.request'))

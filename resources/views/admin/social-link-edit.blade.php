@@ -1,8 +1,6 @@
-@extends('layouts.admin-layout')
-@section('admin_content')
-
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
+@extends('admin.layouts.app')
+@section('content')
+ 
     <section class="content-header">
       <h1>
         Contact
@@ -53,8 +51,6 @@
 
         </div>
       </div>
-    </section>
-    <!-- /.content -->
-  </div>
+    </section> 
 
   @endsection
