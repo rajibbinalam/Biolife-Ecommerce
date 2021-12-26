@@ -12,8 +12,9 @@ class ContactSocialController extends Controller
 
     public function conactCreate()
     {
-        $contacts = Contact::all();
-        return view('admin.contact', compact('contacts'));
+        $pageTitle = "Contact";
+        $contacts = Contact::orderBy('id','DESC')->get();
+        return view('admin.contact', compact('contacts','pageTitle'));
     }
 
     public function addContact(Request $request)
@@ -36,8 +37,9 @@ class ContactSocialController extends Controller
 
     public function contactEdit($id)
         {
+            $pageTitle = "Edit Contact";
             $edits = Contact::find($id);
-            return view('admin.contact-edit', compact('edits'));
+            return view('admin.contact-edit', compact('edits','pageTitle'));
         }
 
     public function contactUpdate(Request $request, $id){
@@ -65,8 +67,9 @@ class ContactSocialController extends Controller
 
 public function socialCreate()
     {
-        $socials = SocialLink::all();
-        return view('admin.social-links', compact('socials'));
+        $pageTitle = "Social Links";
+        $socials = SocialLink::orderBy('id','DESC')->get();
+        return view('admin.social-links', compact('socials','pageTitle'));
     }
 
     public function addSocial(Request $request)
@@ -88,7 +91,8 @@ public function socialCreate()
     public function SocialEdit($id)
         {
             $edits = SocialLink::find($id);
-            return view('admin.social-link-edit', compact('edits'));
+            $pageTitle = "Edit Social Links > ".$edits->name;
+            return view('admin.social-link-edit', compact('edits','pageTitle'));
         }
 
     public function socialUpdate(Request $request, $id){

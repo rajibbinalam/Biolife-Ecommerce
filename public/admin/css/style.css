@@ -49,3 +49,31 @@
 .-mr-2 {
   margin-right: -0.5rem;
 }
+
+.widgth-120 {
+  width: 120px;
+}
+.edit{
+  color: white;
+  background-color: #00a65a;
+  padding: 10px 14px 10px 15px;
+  border-radius: 24px
+}
+.edit:hover{
+  color: #00a65a;
+    background: #cbcccd;
+}
+.delete:hover{
+  color: red;
+    background: #cbcccd;
+}
+.delete{
+  color: white;
+  background-color: #ff0000;
+  padding: 10px 15px 10px 15px; 
+  border-radius: 24px;
+}
+.float-right{
+  float: right;
+
+}

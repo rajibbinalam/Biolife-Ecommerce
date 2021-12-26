@@ -1,43 +1,18 @@
 @extends('admin.layouts.app')
 @section('content')
-
-    <section class="content-header">
-      <h1>
-        Contact
-        <small>Control panel</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Admin</li>
-      </ol>
-    </section>
-        
-    <!-- Main content -->
-    <section class="content">
-      <!-- Small boxes (Stat box) -->
-      <div class="row" style="border-radius: 10px; background-color: white; padding: 9px; margin: 10px;">
-        <!-- <div class="col-md-3"></div> -->
-        <div class="col-md-12">
-          @if(session()->has('success'))
-            <div class="alert alert-success">
-                {{session()->get('success')}}
-            </div>
-            @endif
-            @if(session()->has('error'))
-              <div class="alert alert-danger">
-                  {{session()->get('error')}}
-              </div>
-              @endif
-          @if($contacts->count()<1)
+<div class="row">
+  <div class="col-lg-12">
+    <div class="box box-primary">
+      <div class="box-body">
+         @if($contacts->count()<1)
           <form action="{{route('admin.addcontact')}}" method="post">
             @csrf
-
-              <div class="form-group col-md-6">
-                  <label for="inputEmail">Address</label>
-                  <textarea class="ckeditor form-control" name="address" value="{{ old('address') }}" id="inputEmail" rows="3"></textarea>
-                  @error('address')
-                      <div class="alert alert-danger">{{$message}}</div>
-                  @enderror
+              <div class="form-group col-md-12">
+                <label for="inputEmail">Address</label>
+                <textarea class="ckeditor form-control" name="address" value="{{ old('address') }}" id="inputEmail" rows="3"></textarea>
+                @error('address')
+                    <div class="alert alert-danger">{{$message}}</div>
+                @enderror
               </div>
               <div class="form-group col-md-6">
                 <label for="exampleFormControlFile1">Phone</label>
@@ -75,16 +50,8 @@
             </form>
             @endif
 
-        </div>
-      </div>
-      <!-- /.row -->
-      <!-- Main row -->
-      <div class="row" style="border-radius: 10px; background-color: white; padding: 9px; margin: 10px;">
-        <!-- Left col -->
-        <section class="col-lg-12 connectedSortable">
-          <!-- /.nav-tabs-custom -->
 
-          <div class="card">
+        <div class="card">
             
             @foreach($contacts as $contact)
             <div class="card-header" style="padding: 21px 19px 14px 14px;">
@@ -121,13 +88,12 @@
             @endforeach
             
           </div>
-          
 
-        </section>
-        <!-- right col -->
+
       </div>
-      <!-- /.row (main row) -->
+    </div>
+  </div>
+</div>
 
-    </section>
 
   @endsection

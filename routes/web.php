@@ -91,7 +91,7 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
     Route::post('/partner/update/{id}', 'GeneralSetController@partnerUpdate');
     Route::get('/partner/delete/{id}', 'GeneralSetController@partnerDelete')->name('partnerdelete');
 
-    //=========== blog vategory
+    //=========== blog Category
 
     Route::get('/blog-category', 'BlogController@blogCategorycreate')->name('blogcategorycreate');
     Route::post('blog-category', 'BlogController@blogCategoryInsert')->name('blogcategoryinsert');

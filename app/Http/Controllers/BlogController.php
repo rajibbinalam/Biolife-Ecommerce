@@ -8,14 +8,13 @@ use App\Models\BlogPost;
 
 class BlogController extends Controller
 {
-    //
-
 
     //============= Blog Category
 
 public function blogCategorycreate(){
-        $categories = BlogCategory::all();
-        return view('admin.blog_category', compact('categories'));
+        $pageTitle = "Blog Category";
+        $categories = BlogCategory::orderBy('id','DESC')->get();
+        return view('admin.blog_category', compact('categories','pageTitle'));
         
     }
 
@@ -49,15 +48,17 @@ public function blogCategorycreate(){
 //============= Blog Post
 
 public function blogPostcreate(){
-        $blogposts = BlogPost::all();
+        $pageTitle = "Blog Posts";
+        $blogposts = BlogPost::orderBy('id','DESC')->get();
         //$tag = explode(',',$blogposts->tags);
-        return view('admin.blog-post', compact('blogposts'));
+        return view('admin.blog-post', compact('blogposts','pageTitle'));
         
     }
 
     public function addBlogPostcreate(){
-         $categories = BlogCategory::all();
-        return view('admin.add-blog-post', compact('categories'));
+        $pageTitle = "Add Blog Post";
+        $categories = BlogCategory::all();
+        return view('admin.add-blog-post', compact('categories','pageTitle'));
         //return view('admin.add-blog-post');
     }
 
@@ -95,9 +96,11 @@ public function blogPostcreate(){
 
 
         public function blogPostEdit($id){
+            
             $edits = BlogPost::find($id);
+            $pageTitle = "Edit Blog Post > ".$edits->name;
             $categories = BlogCategory::all();
-            return view('admin.blog-post-edit', compact('edits','categories'));
+            return view('admin.blog-post-edit', compact('edits','categories','pageTitle'));
         
         }
 

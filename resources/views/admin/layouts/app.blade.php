@@ -9,7 +9,7 @@
     <link rel="icon" type="image/x-icon" href="{{asset($general->favicon)}}">
 
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="{{asset('admin/css/app.css')}}">
+    <link rel="stylesheet" href="{{asset('admin/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('admin/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin/bower_components/font-awesome/css/font-awesome.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin/bower_components/Ionicons/css/ionicons.min.css')}}">
@@ -124,11 +124,14 @@
                   });
               @endforeach
           @endif
-         
-        //   iziToast.success({
-        //     title: 'success',
-        //     message: 'Successfully inserted record!',
-        // });
+          @if(session()->has('success'))
+                
+                iziToast.success({
+                title: 'success',
+                message: '{{session()->get('success')}}',
+        });
+            @endif
+          
       });
 
 

@@ -16,8 +16,9 @@ class SubandMessageController extends Controller
     }
 
     public function showmessages(){
+        $pageTitle = "All Messages";
         $messages = Message::all();
-        return view('admin.message', compact('messages'));
+        return view('admin.message', compact('messages','pageTitle'));
     }
 
 
@@ -28,8 +29,9 @@ class SubandMessageController extends Controller
 
 
     public function showsubscribers(){
+        $pageTitle = "All Subscribers";
         $subscribers = Subscriber::all();
-        return view('admin.subscriber', compact('subscribers'));
+        return view('admin.subscriber', compact('subscribers','pageTitle'));
     }
 
 
