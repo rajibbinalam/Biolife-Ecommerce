@@ -13,7 +13,7 @@
               <th scope="col">Price</th>
               <th scope="col">Stock</th>
               <th scope="col" style="width: 100px;">Status</th>
-              <th scope="col" style="width: 79px;">Action</th>
+              <th scope="col" class="widgth-120">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -31,12 +31,9 @@
                 @endif
               </td>
               <td>
-                <a href="{{url('/admin/product/edit/'.$product->id)}}"
-                  style="color: white; background-color: #ff0000; padding: 8px; border-radius: 24px;"><i
+                <a href="{{url('/admin/product/edit/'.$product->id)}}" class="edit" ><i
                     class="fa fa-edit"></i></a>
-                <a href="{{url('/admin/product/delete/'.$product->id)}}"
-                  style="color: white; background-color: #ff0000; padding: 8px; border-radius: 24px;"
-                  OnClick='return (confirm("Are you sure Delete {{ $product->name}}"));'><i
+                <a href="{{url('/admin/product/delete/'.$product->id)}}" class="delete" OnClick='return (confirm("Are you sure Delete {{ $product->name}}"));'><i
                     class="fa fa-trash"></i></a>
               </td>
             </tr>
@@ -56,7 +53,7 @@
 @endsection
 @push('breadcrumb')
 
-<a href="" class="btn btn-primary" style="float: right;" >
+<a href="{{route('admin.products.create')}}" class="btn btn-primary" style="float: right;" >
 @lang('Add New Product')
 </a>
 

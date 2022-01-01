@@ -857,7 +857,7 @@ body{
     }
 }
 .header-top .top-bar{
-    max-width: 50%;
+    /* max-width: 50%; */
     float: left;
 }
 .header-top .right{
@@ -6784,6 +6784,7 @@ body.open-overlay #overlay{
 }
 .slider-opt03__layout01 .media{
     z-index: 10;
+    
     background-image: url('../images/home-03/slide-01.jpg');
     background-repeat: no-repeat;
     background-position: center center;

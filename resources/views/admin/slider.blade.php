@@ -14,7 +14,7 @@
               <th scope="form-group col-md-6">Second Tag Line</th>
               <th scope="form-group col-md-6">Image</th>
               <th scope="form-group col-md-6">Status</th>
-              <th scope="form-group col-md-6">Action</th>
+              <th scope="form-group col-md-6" class="widgth-120">Action</th>
             </tr>
           </thead>
           
@@ -28,7 +28,7 @@
               <td><img src="{{ $slider->image}}" height="45px" width="100px" alt="Logo image"></td>
               <td>{{ $slider->status}}</td>
               <td>
-                <a href="{{url('/admin/slider/delete/'.$slider->id)}}" style="form-groupor: white; background-form-groupor: #ff0000; padding: 8px; border-radius: 24px;" OnClick='return (confirm("Are you sure Delete Logo"));'><i class="fa fa-trash"></i></a>
+                <a href="{{url('/admin/slider/delete/'.$slider->id)}}" class="delete" OnClick='return (confirm("Are you sure Delete Logo"));'><i class="fa fa-trash"></i></a>
               </td>
             </tr>
             @endforeach

@@ -11,7 +11,7 @@ class BlogController extends Controller
 
     //============= Blog Category
 
-public function blogCategorycreate(){
+    public function blogCategorycreate(){
         $pageTitle = "Blog Category";
         $categories = BlogCategory::orderBy('id','DESC')->get();
         return view('admin.blog_category', compact('categories','pageTitle'));

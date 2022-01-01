@@ -30,5 +30,10 @@ class AppServiceProvider extends ServiceProvider
 
         $general = GeneralSetting::first();
         View::share('general', $general);
+
+        //   Front Web Page
+
+        // $general = GeneralSetting::first();
+        // View::share('general', $general);
     }
 }

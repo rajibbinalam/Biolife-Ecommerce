@@ -5,17 +5,7 @@
   <div class="col-lg-12">
     <div class="box box-primary">
       <div class="box-body">
-      	 @if(session()->has('success'))
-            <div class="alert alert-success">
-                {{session()->get('success')}}
-            </div>
-         @endif
-         @if(session()->has('error'))
-            <div class="alert alert-danger">
-                {{session()->get('error')}}
-            </div>
-         @endif
-
+      	 
         <form  action="{{route('admin.productAdd')}}" id="form" method="POST" enctype="multipart/form-data">
           @csrf
 
@@ -33,7 +23,6 @@
       			    <div class="text-danger">{{ $message }}</div>
       			@enderror
            </div>
-
           <div class="form-group col-md-3">
             <label for="">@lang('New Price')</label>
             <input type="number" class="form-control" name="new_price" placeholder="Product Price">
@@ -58,6 +47,15 @@
       			@enderror
           </div>
           <div class="form-group col-md-6">
+              <label for="exampleFormControlSelect1">Select Brand</label>
+              <select class="form-control" id="brand" name="brand_id">
+                <option value="">Select Brand</option>
+                @foreach($brands as $brand)
+                  <option value="{{ $brand->id}}">{{ $brand->name}}</option>
+                @endforeach
+              </select>
+          </div>
+          <div class="form-group col-md-6">
               <label for="exampleFormControlSelect1">Select Category</label>
               <select class="form-control" id="category" name="category_id">
                 <option value="">Select Category</option>
@@ -72,12 +70,12 @@
               <option value="">Select Sub Category</option>
             </select>
           </div>
-          <div class="form-group col-md-6">
+          <!-- <div class="form-group col-md-6">
             <label for="exampleFormControlSelect1">Select Child Category</label>
             <select class="form-control" id="childCategory" name="child_categories_id">
               <option value="">Select Child Category</option>
             </select>
-          </div>
+          </div> -->
           <div class="form-group col-md-6">
             <label for="exampleFormControlSelect1">Select Size</label>
             <select class="form-control" id="size" name="size">
@@ -103,7 +101,7 @@
 	      </div>
 		 <div class="form-group col-md-6">
             <label for="">@lang('Image')</label>
-            <input type="file" multiple class="form-control" name="image">
+            <input type="file" multiple class="form-control" name="image[]">
           </div>
             <input type="hidden" class="form-control" value="{{auth()->guard('admin')->user()->id}}" name="add_by">
 
@@ -114,12 +112,7 @@
       </div>
     </div>
   </div>
-
 </div>
-
-
-
-
 
 @endsection
 
@@ -129,7 +122,7 @@
       $(document).ready(function () {
           $('#category').on('change', function () {
           
-              let action="{{route('admin.category.wise.sub.category',':id')}}";
+              let action="{{route('admin.product.category.wise.sub.category',':id')}}";
               console.log(action)
               $.ajax({
                   url:action.replace(':id',this.value),
@@ -148,34 +141,7 @@
 
       });
 
-
   </script>
-  <script>
-      
-      $(document).ready(function () {
-          $('#subCategory').on('change', function () {
-          
-              let action="{{route('admin.category.wise.child.category',':id')}}";
-              console.log(action)
-              $.ajax({
-                  url:action.replace(':id',this.value),
-                  type: "GET",
-                  success: function (resp) {
-                    if(resp.success){
-                      let html="";
-                      $.each(resp.childCategories,function(i,ele){
-                          html+=`<option value="${ele.id}">${ele.name}</option>`
-                      });
-                     $('#childCategory').html(html)
-                    }
-                  }
-              })
-          });
-
-      });
-
-
-  </script>
-
+ 
   @endpush
 

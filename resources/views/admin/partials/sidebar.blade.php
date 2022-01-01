@@ -8,6 +8,11 @@
             <li><i class="fa fa-dashboard"></i>@lang('Dashboard')</li>
           </a>
         </li>
+        <li class="treeview">
+          <a href="{{route('admin.homePages')}}" class="active">
+            <li><i class="fa fa-dashboard"></i>@lang('Web Page')</li>
+          </a>
+        </li>
     
         <li class="treeview">
           <a href="#">
@@ -20,10 +25,12 @@
           <ul class="treeview-menu">
             <li><a href="{{route('admin.products.create')}}"><i class="fa fa-circle-o"></i> @lang('Add Product')</a></li>
             <li><a href="{{route('admin.products.index')}}"><i class="fa fa-circle-o"></i> @lang('All Products')</a></li>
-            <li><a href=""><i class="fa fa-circle-o"></i> Report</a></li>
+            <li><a href="{{route('admin.bestSeller')}}"><i class="fa fa-circle-o"></i> @lang('Best Product')</a></li>
           </ul>
         </li>
-     
+        <li class="active treeview">
+            <li><a href="{{route('admin.brand')}}"><i class="fa fa-circle-o"></i> @lang('Brands')</a></li>
+        </li>
 
         <li class="treeview">
           <a href="#">

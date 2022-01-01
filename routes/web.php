@@ -11,26 +11,24 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/','HomeController@Home')->name('home');
+Route::post('/','HomeController@subscribe')->name('subscribe');
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/dashboard', function () {
-    //return view('dashboard');
-    return redirect('admin/index');
-})->middleware(['auth'])->name('dashboard');
+    return redirect('/admin');
+})->middleware(['auth']);
 
-Route::get('admin/index', function () {
-    $pageTitle = "Dashboard";
-    return view('admin/index', compact('pageTitle'));
-})->middleware(['admin'])->name('admin.index');
+// Route::get('admin/index', function () {
+//     $pageTitle = "Dashboard";
+//     return view('admin/index', compact('pageTitle'));
+// })->middleware(['admin'])->name('admin.index');
 
 Route::get('/home', function () {
     return redirect('admin/index');
@@ -46,6 +44,23 @@ require __DIR__ . '/auth.php';
 
 Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () {
 
+    //=============  Admin er Dashboard
+    Route::get('/index','DashboardController@index')->name('index');
+
+
+
+
+    //================= Home Pages
+    Route::get('/home-pages', 'HomeController@homePages')->name('homePages');
+    Route::post('/home-pages', 'HomeController@homePagesinsert')->name('homePagesinsert');
+    // Update
+    Route::post('/home-pages/1', 'HomeController@HomePage1');
+    Route::post('/home-pages/2', 'HomeController@HomePage2')->name('homepage2');
+    Route::post('/home-pages/3', 'HomeController@HomePage3')->name('homepage3');
+    Route::post('/home-pages/4', 'HomeController@HomePage4');
+    Route::post('/home-pages/5', 'HomeController@HomePage5');
+    //Route::get('/home-pages/delete', 'HomeController@delete')->name('delete');
+
     //===========favicon
     Route::get('/favicon', 'GeneralSetController@faviconcreate')->name('faviconcreate');
     Route::post('favicon', 'GeneralSetController@faviconInsert')->name('faviconinsert');
@@ -60,7 +75,7 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
     Route::post('slider', 'GeneralSetController@sliderInsert')->name('sliderinsert');
     Route::get('/slider/delete/{id}', 'GeneralSetController@sliderDelete')->name('sliderdelete');
 
-    //==========Banners
+    //=====================Banners
     //===Top
     Route::get('/top-banner', 'GeneralSetController@topbannercreate')->name('topbannercreate');
     Route::post('top-banner', 'GeneralSetController@topbannerInsert')->name('topbannerinsert');
@@ -84,7 +99,6 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
 
 
     //==========partners
-
     Route::get('/partner', 'GeneralSetController@partnercreate')->name('partnercreate');
     Route::post('partner', 'GeneralSetController@partnerInsert')->name('partnerinsert');
     Route::get('/partner/edit/{id}', 'GeneralSetController@partnerEdit')->name('partneredit');
@@ -92,13 +106,11 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
     Route::get('/partner/delete/{id}', 'GeneralSetController@partnerDelete')->name('partnerdelete');
 
     //=========== blog Category
-
     Route::get('/blog-category', 'BlogController@blogCategorycreate')->name('blogcategorycreate');
     Route::post('blog-category', 'BlogController@blogCategoryInsert')->name('blogcategoryinsert');
     Route::get('/blog-category/delete/{id}', 'BlogController@blogCategoryDelete')->name('partnerdelete');
 
     //========== Blog Post
-
     Route::get('/blog-post', 'BlogController@blogPostcreate')->name('blogpostcreate');
     Route::get('/add-blog-post', 'BlogController@addBlogPostcreate')->name('addblogpost');
     Route::post('blog-post', 'BlogController@blogPostInsert')->name('blogpostinsert');
@@ -108,12 +120,10 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
 
 
     //========== Message and Subcriber
-
     Route::get('/messages', 'SubandMessageController@showmessages')->name('messages');
     Route::get('/subscribers', 'SubandMessageController@showsubscribers')->name('subscribers');
 
     //=========== Contact Page
-
     Route::get('/contact', 'ContactSocialController@conactCreate')->name('contactcreate');
     Route::post('/add-contact', 'ContactSocialController@addContact')->name('addcontact');
     Route::get('/contact/edit/{id}', 'ContactSocialController@contactEdit')->name('contectedit');
@@ -121,7 +131,6 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
     Route::get('/contact/delete/{id}', 'ContactSocialController@contactDelete')->name('contactdelete');
 
     //=========== Social Links
-
     Route::get('/social', 'ContactSocialController@socialCreate')->name('socialcreate');
     Route::post('/social', 'ContactSocialController@addSocial')->name('addsocial');
     Route::get('/social/edit/{id}', 'ContactSocialController@SocialEdit')->name('socialedit');
@@ -157,27 +166,40 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
         Route::post('/store', 'SettingController@updateGeneralSetting')->name('store');
     });
 
-
     //================== Product section   
 
     Route::resource('products',ProductController::class);
-   
 
     Route::post('/products_ctegories', 'ProductController@SubCategories')->name('productCat');
-    Route::get('category/wise/sub/category/{id}', 'ProductController@categoryWiseSubCatgoery')->name('category.wise.sub.category');
+    Route::get('product/category/wise/sub/category/{id}', 'ProductController@categoryWiseSubCatgoery')->name('product.category.wise.sub.category');
 
     Route::post('/products_ctegories', 'ProductController@chilCategories')->name('productchildCat');
     Route::get('category/wise/child/category/{id}', 'ProductController@categoryWiseChildCatgoery')->name('category.wise.child.category');
     Route::post('/Add-products','ProductController@productAdd')->name('productAdd');
 
+//============update product
+    Route::get('/product/edit/{id}', 'ProductController@editProduct')->name('editProduct');
+    Route::post('/products_ctegories', 'ProductController@editSubCategories')->name('editproductCat');
+    Route::get('category/wise/sub/category/{id}', 'ProductController@editcategoryWiseSubCatgoery')->name('editcategory.wise.sub.category');
+
+    Route::post('/product/update/{id}', 'ProductController@updateProduct')->name('updateProduct');
+    Route::get('/product/delete/{id}', 'ProductController@deleteProduct')->name('deleteProduct');
+
+    //======================= brand
+    Route::get('/brand', 'BrandController@index')->name('brand');
+    Route::post('/brand', 'BrandController@insert')->name('brnadInsert');
+    Route::get('/brand/delete/{id}', 'BrandController@delete')->name('brandDelete');
+
+    //================ Best Seller Product
+    Route::get('/best-product', 'ProductController@bestSeller')->name('bestSeller');
+    Route::post('/best-product', 'ProductController@bestSellerIput')->name('bestSellerIput');
+    Route::get('/best-product/delete/{id}', 'ProductController@bestSellerDelete')->name('bestSellerDelete');
+
 
 
 });
 
-
-
 //Route::get('admin/index',[AdminController::class,'index']);
-
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login'])->name('login');

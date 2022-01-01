@@ -9,15 +9,16 @@
                                 <i class="biolife-icon icon-head-phone"></i>
                                 <p class="r-info">
                                     <span>Got Questions ?</span>
-                                    <span>(700)  9001-1909 (900) 689 -66</span>
+                                    <span>{{$contact->phone}}</span>
                                 </p>
                             </div>
                             <div class="newsletter-block layout-01">
                                 <h4 class="title">Newsletter Signup</h4>
                                 <div class="form-content">
-                                    <form action="#" name="new-letter-foter">
-                                        <input type="email" class="input-text email" value="" placeholder="Your email here...">
-                                        <button type="submit" class="bnt-submit" name="ok">Sign up</button>
+                                    <form action="{{route('subscribe')}}" method="post" name="new-letter-foter">
+                                        @csrf
+                                        <input type="email" name="email" class="input-text email" placeholder="Your email here...">
+                                        <button type="submit" class="bnt-submit" name="ok">Subscrib</button>
                                     </form>
                                 </div>
                             </div>
@@ -62,36 +63,38 @@
                                     <li>
                                         <p class="info-item">
                                             <i class="biolife-icon icon-location"></i>
-                                            <b class="desc">7563 St. Vicent Place, Glasgow, Greater Newyork NH7689, UK </b>
+                                            <b class="desc">{{$contact->address}}</b>
                                         </p>
                                     </li>
                                     <li>
                                         <p class="info-item">
                                             <i class="biolife-icon icon-phone"></i>
-                                            <b class="desc">Phone: (+067) 234 789 (+068) 222 888</b>
+                                            <b class="desc">Phone: {{$contact->phone}}</b>
                                         </p>
                                     </li>
                                     <li>
                                         <p class="info-item">
                                             <i class="biolife-icon icon-letter"></i>
-                                            <b class="desc">Email: contact@company.com</b>
+                                            <b class="desc">Email: {{$contact->email}}</b>
                                         </p>
                                     </li>
                                     <li>
                                         <p class="info-item">
                                             <i class="biolife-icon icon-clock"></i>
-                                            <b class="desc">Hours: 7 Days a week from 10:00 am</b>
+                                            <b class="desc">Hours: {{$contact->store_open}}</b>
                                         </p>
                                     </li>
                                 </ul>
                             </div>
                             <div class="biolife-social inline">
                                 <ul class="socials">
-                                    <li><a href="#" title="twitter" class="socail-btn"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                    <li><a href="#" title="facebook" class="socail-btn"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                    <li><a href="#" title="pinterest" class="socail-btn"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                    <li><a href="#" title="youtube" class="socail-btn"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
-                                    <li><a href="#" title="instagram" class="socail-btn"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                    @foreach($socials as $social)
+                                    <li>
+                                        <a href="{{$social->link}}" title="" class="socail-btn">
+                                            <i class="{{$social->icon_class}}" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </section>
@@ -103,7 +106,7 @@
                     </div>
                     <div class="col-lg-6 col-sm-6 col-xs-12">
                         <div class="copy-right-text">
-                            <p><a href="templateshub.net">Templates Hub</a></p>
+                            <p><a href="{{route('home')}}">@lang($general->site_name)</a></p>
                         </div>
                     </div>
                     <div class="col-lg-6 col-sm-6 col-xs-12">
@@ -112,8 +115,6 @@
                                 <li><a href="#" class="payment-link"><img src="assets/images/card1.jpg" width="51" height="36" alt=""></a></li>
                                 <li><a href="#" class="payment-link"><img src="assets/images/card2.jpg" width="51" height="36" alt=""></a></li>
                                 <li><a href="#" class="payment-link"><img src="assets/images/card3.jpg" width="51" height="36" alt=""></a></li>
-                                <li><a href="#" class="payment-link"><img src="assets/images/card4.jpg" width="51" height="36" alt=""></a></li>
-                                <li><a href="#" class="payment-link"><img src="assets/images/card5.jpg" width="51" height="36" alt=""></a></li>
                             </ul>
                         </div>
                     </div>

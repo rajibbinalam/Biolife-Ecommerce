@@ -136,7 +136,7 @@ class GeneralSetController extends Controller
         $delete = Slider::find($id)->first();
         $delete->delete();
         unlink(public_path($delete->image));
-        return back()->with('success', 'Logo Deleted!');
+        return back()->with('success', 'Slider Deleted!');
     }
 
 
