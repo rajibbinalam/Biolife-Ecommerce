@@ -65,7 +65,7 @@
               
               <div class="col-md-6">
                 <h4>Address</h4>
-                <p>{{ $contact->address}}</p>
+                <p>{{strip_tags(htmlspecialchars_decode($contact->address))}}</p>
               </div>
               <div class="col-md-6">
                 <h4>Phone</h4>

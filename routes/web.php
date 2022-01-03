@@ -16,6 +16,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/','HomeController@Home')->name('home');
 Route::post('/','HomeController@subscribe')->name('subscribe');
+Route::get('/contact','HomeController@contactPage')->name('contactPage');
+Route::post('/contact','HomeController@contactMessage')->name('contactMessage');
+
+Route::get('/products','HomeController@allProducts')->name('all.products');
+
+Route::get('/blogs','HomeController@blogs')->name('blogs');
+Route::get('/blogs/{id}/{title}','HomeController@singleBlog')->name('singleBlog');
+
+Route::get('/category-wise','HomeController@CategoryWise')->name('CategoryWise');
+Route::get('/brand-wise','HomeController@BrandWise')->name('BrandWise');
+
+
+Route::get('/product/{id}/{name}','HomeController@singleProduct')->name('singleProduct');
 
 // Route::get('/', function () {
 //     return view('welcome');

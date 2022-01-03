@@ -11,7 +11,7 @@
                 <ul class="social-list">
                     @foreach($socials as $social)
                         <li><a href="{{$social->link}}"><i class="{{$social->icon_class}}" aria-hidden="true"></i></a></li>
-                        @endforeach
+                    @endforeach
                 </ul>
                 <ul class="horizontal-menu">
                     <li class="horz-menu-item currency">
@@ -47,17 +47,18 @@
                             <li class="menu-item"><a href="{{url('/')}}">Home</a></li>
                             
                             <li class="menu-item menu-item-has-children has-child">
-                                <a href="#" class="menu-name" data-title="Products">Products</a>
+                                <a href="" class="menu-name" data-title="Products">Products</a>
                                 <ul class="sub-menu">
                                    
-                                    <li class="menu-item"><a href="#">Category Wise</a></li>
-                                    <li class="menu-item"><a href="#">Brand Wise</a></li>
+                                    <li class="menu-item"><a href="{{route('CategoryWise')}}">Category Wise</a></li>
+                                    <li class="menu-item"><a href="{{route('BrandWise')}}">Brand Wise</a></li>
                                     
                                 </ul>
                             </li>
                             
-                            <li class="menu-item"><a href="contact.html">Blog</a></li>
-                            <li class="menu-item"><a href="contact.html">Contact</a></li>
+                            <li class="menu-item"><a href="{{route('all.products')}}">All Products</a></li>
+                            <li class="menu-item"><a href="{{route('blogs')}}">Blog</a></li>
+                            <li class="menu-item"><a href="{{route('contactPage')}}">Contact</a></li>
                         </ul>
                     </div>
                 </div>

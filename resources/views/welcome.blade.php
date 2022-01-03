@@ -37,7 +37,7 @@
                 <div class="slide-contain biolife-banner__special">
                     <div class="banner-contain">
                         <div class="media">
-                            <a href="" class="bn-link">
+                            <a href="{{url('/product/'.$bannerpsoduct->id.'/'.$bannerpsoduct->name)}}" class="bn-link">
                                 <figure><img src="{{asset(explode('|',$bannerpsoduct->image)[0])}}" width="616" height="483" alt=""></figure>
                             </a>
                         </div>
@@ -69,21 +69,21 @@
                     <div class="service-inner">
                         <span class="number">1</span>
                         <span class="biolife-icon icon-beer"></span>
-                        <a class="srv-name" href="#">full stamped product</a>
+                        <a class="srv-name" href="">full stamped product</a>
                     </div>
                 </li>
                 <li>
                     <div class="service-inner">
                         <span class="number">2</span>
                         <span class="biolife-icon icon-schedule"></span>
-                        <a class="srv-name" href="#">place and delivery on time</a>
+                        <a class="srv-name" href="">place and delivery on time</a>
                     </div>
                 </li>
                 <li>
                     <div class="service-inner">
                         <span class="number">3</span>
                         <span class="biolife-icon icon-car"></span>
-                        <a class="srv-name" href="#">Free shipping in the city</a>
+                        <a class="srv-name" href="">Free shipping in the city</a>
                     </div>
                 </li>
             </ul>
@@ -125,14 +125,14 @@
                         <!-- <li class="product-item"> -->
                             <div class="contain-product layout-default col-md-3">
                                 <div class="product-thumb">
-                                    <a href="#" class="link-to-product">
+                                    <a href="{{url('/product/'.$product->id.'/'.$product->name)}}" class="link-to-product">
                                         <img src="{{asset(explode('|',$product->image)[0])}}" alt="Vegetables" width="270" height="270" class="product-thumnail">
                                     </a>
                                     <a class="lookup btn_call_quickview" href="#"><i class="biolife-icon icon-search"></i></a>
                                 </div>
                                 <div class="info">
                                     <b class="categories">Vegetables</b>
-                                    <h4 class="product-title"><a href="#" class="pr-name">{{$product->name}}</a></h4>
+                                    <h4 class="product-title"><a href="{{url('/product/'.$product->id.'/'.$product->name)}}" class="pr-name">{{$product->name}}</a></h4>
                                     <div class="price ">
                                         <ins><span class="price-amount"><span class="currencySymbol">£</span>{{$product->new_price}}</span></ins>
                                         <del><span class="price-amount"><span class="currencySymbol">£</span>{{$product->old_price}}</span></del>
@@ -197,16 +197,19 @@
     <div class="biolife-banner promotion2 biolife-banner__promotion2">
         <div class="banner-contain">
             <div class="container">
+                @foreach ($bottom_banners as $bottom_banner)
+                    
                 <div class="media"></div>
                 <div class="text-content">
-                    <b class="first-line">Food Heaven Made</b>
-                    <span class="second-line">Easy <i>Healthy, Happy Life</i></span>
-                    <p class="third-line">Food Heaven Made Easy sounds like the name of an amazingly delicious food delivery service, but don't be fooled. The blog is actually a compilation of recipes, cooking videos, and nutrition tips.</p>
+                    <b class="first-line">{{$bottom_banner->first_tag_line}}</b>
+                    <span class="second-line">Easy <i>{{$bottom_banner->name}}</i></span>
+                    <p class="third-line">{{$bottom_banner->second_tag_line}}</p>
                     <p class="buttons">
-                        <a href="#" class="btn btn-bold">Read More</a>
-                        <a href="#" class="btn btn-thin">View Menu Now</a>
+                       
+                        <a href="" class="btn btn-thin">Shop Now</a>
                     </p>
                 </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -226,7 +229,7 @@
                         <li class="product-item">
                             <div class="contain-product deal-layout contain-product__deal-layout">
                                 <div class="product-thumb">
-                                    <a href="" class="link-to-product">
+                                    <a href="{{url('/product/'.$deal->id.'/'.$deal->name)}}" class="link-to-product">
                                         <img src="{{asset(explode('|',$deal->image)[0])}}" alt="dd" width="330" height="330" class="product-thumnail">
                                     </a>
                                     <div class="labels">
@@ -236,7 +239,7 @@
                                 <div class="info">
                                     <div class="biolife-countdown" data-datetime="2020/02/18 00:00:00"></div>
                                     <b class="categories">{{$deal->category->name}}</b>
-                                    <h4 class="product-title"><a href="" class="pr-name">{{$deal->name}}</a></h4>
+                                    <h4 class="product-title"><a href="{{url('/product/'.$deal->id.'/'.$deal->name)}}" class="pr-name">{{$deal->name}}</a></h4>
                                     <div class="price ">
                                         <ins><span class="price-amount"><span class="currencySymbol">£</span>{{$deal->new_price}}</span></ins>
                                         <del><span class="price-amount"><span class="currencySymbol">£</span>{{$deal->old_price}}</span></del>
@@ -266,13 +269,13 @@
                         <li class="product-item">
                             <div class="contain-product right-info-layout contain-product__right-info-layout">
                                 <div class="product-thumb">
-                                    <a href="#" class="link-to-product">
-                                        <img src="{{asset(explode('|',$top_product->image)[0])}}" alt="dd" width="270" height="270" class="product-thumnail">
+                                    <a href="{{url('/product/'.$top_product->id.'/'.$top_product->name)}}" class="link-to-product">
+                                        <img src="{{asset(explode('|',$top_product->image)[0])}}" alt="dd" width="270" height="150" class="product-thumnail">
                                     </a>
                                 </div>
                                 <div class="info">
                                     <b class="categories">{{$top_product->category->name}}</b>
-                                    <h4 class="product-title"><a href="" class="pr-name">{{$top_product->name}}</a></h4>
+                                    <h4 class="product-title"><a href="{{url('/product/'.$top_product->id.'/'.$top_product->name)}}" class="pr-name">{{$top_product->name}}</a></h4>
                                     <div class="price ">
                                         <ins><span class="price-amount"><span class="currencySymbol">£</span>{{$top_product->new_price}}</span></ins>
                                         <del><span class="price-amount"><span class="currencySymbol">£</span>{{$top_product->old_price}}</span></del>
@@ -332,12 +335,12 @@
             <li>
                 <div class="post-item effect-01 style-bottom-info layout-02 ">
                     <div class="thumbnail">
-                        <a href="" class="link-to-post"><img src="{{asset($blog_post->image)}}" width="370" height="270" alt=""></a>
+                        <a href="{{url('/blogs/'.$blog_post->id.'/'.$blog_post->title)}}" class="link-to-post"><img src="{{asset($blog_post->image)}}" width="370" height="270" alt=""></a>
                     </div>
                     <div class="post-content">
-                        <h4 class="post-name"><a href="#" class="linktopost">{{$blog_post->name}}</a></h4>
+                        <h4 class="post-name"><a href="{{url('/blogs/'.$blog_post->id.'/'.$blog_post->title)}}" class="linktopost">{{$blog_post->title}}</a></h4>
                         <div class="post-meta">
-                            <a href="#" class="post-meta__item author">
+                            <a href="{{url('/blogs/'.$blog_post->id.'/'.$blog_post->title)}}" class="post-meta__item author">
                             @if(1==0)
                                 <img src="" width="28" height="28" alt="">
                             @else
@@ -359,9 +362,9 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="excerpt">{{!! $blog_post->details !!}}</p>
+                        <p class="excerpt">{{ Str::limit(strip_tags(htmlspecialchars_decode($blog_post->details)), 120, ' ...') }}</p>
                         <div class="group-buttons">
-                            <a href="" class="btn readmore">continue reading</a>
+                            <a href="{{url('/blogs/'.$blog_post->id.'/'.$blog_post->title)}}" class="btn readmore">continue reading</a>
                         </div>
                     </div>
                 </div>

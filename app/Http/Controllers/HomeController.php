@@ -21,6 +21,7 @@ use App\Models\SocialLink;
 use App\Models\SubCategory;
 use App\Models\Subscriber;
 use App\Models\HomePage;
+use App\Models\Brand;
 
 class HomeController extends Controller
 {
@@ -30,34 +31,40 @@ class HomeController extends Controller
 
         $sliders = Slider::all();
         $middle_banners = MiddleBanner::orderBy('created_at')->limit(1)->get();
+        $bottom_banners = BottomBanner::orderBy('created_at')->limit(1)->get();
         $deals = Product::orderBy('created_at')->limit(3)->get();
         $banner_product = Product::orderBy('created_at')->limit(5)->get();
         $products = Product::orderBy('created_at')->limit(8)->get();
         $top_products = Product::orderBy('created_at')->limit(12)->get();
         $partiners = Partner::all();
-        $contact = Contact::first();
         $blog_posts = BlogPost::orderBy('created_at')->limit(6)->get();
-        $socials = SocialLink::all();
         $feature_page = HomePage::first();
         $categories = Category::all();
         $pageNo = $feature_page->web_page;
         if($pageNo == 1){
-            return view('welcome',compact('sliders','banner_product','products','middle_banners','deals','top_products','partiners','blog_posts','contact','socials','categories'));
+            return view('welcome',compact('sliders','banner_product','products','middle_banners','deals','top_products','partiners','blog_posts','categories','bottom_banners'));
         }
         if($pageNo == 2){
-            return view('welcome1',compact('sliders','banner_product','products','middle_banners','deals','top_products','partiners','blog_posts','contact'));
+            return view('welcome1',compact('sliders','banner_product','products','middle_banners','deals','top_products','partiners','blog_posts'));
         }
         if($pageNo == 3){
-            return view('welcome2',compact('sliders','banner_product','products','middle_banners','deals','top_products','partiners','blog_posts','contact'));
+            return view('welcome2',compact('sliders','banner_product','products','middle_banners','deals','top_products','partiners','blog_posts'));
         }
         if($pageNo == 4){
-            return view('welcome3',compact('sliders','banner_product','products','middle_banners','deals','top_products','partiners','blog_posts','contact'));
+            return view('welcome3',compact('sliders','banner_product','products','middle_banners','deals','top_products','partiners','blog_posts'));
         }
         if($pageNo == 5){
-            return view('welcome4',compact('sliders','banner_product','products','middle_banners','deals','top_products','partiners','blog_posts','contact'));
+            return view('welcome4',compact('sliders','banner_product','products','middle_banners','deals','top_products','partiners','blog_posts'));
         }
 
         
+    }
+
+    public function allProducts(){
+        $pageTitle = "Shop Your Fevourite Items";
+        $brands = Brand::all();
+        $products = Product::orderBy('id','DESC')->get();
+        return view('style1.all_products',compact('products','pageTitle','brands'));
     }
 
     //============== Subscrib section
@@ -67,6 +74,66 @@ class HomeController extends Controller
         $subscribe->save();
         return back();
 
+    }
+    // ============  Contact Page
+    public function contactPage(){
+        $pageTitle = "Contact Page";
+        return view('style1.contact',compact('pageTitle'));
+    }
+    public function contactMessage(Request $request){
+        $message = new Message();
+        $message->name = $request->name;
+        $message->phone = $request->phone;
+        $message->email = $request->email;
+        $message->message = $request->message;
+        $message->save();
+        return back();
+    }
+
+    //========  Blog Posts
+    public function blogs(){
+        $pageTitle = "Blog Page";
+        $blog_posts = BlogPost::orderBy('created_at','DESC')->limit(8)->get();
+        return view('style1.blog',compact('pageTitle','blog_posts'));
+    }
+
+    //==== Single Blog Post
+    public function singleBlog($id){
+        $single = BlogPost::find($id);
+        $pageTitle = "Post - Blog";
+        $recent_posts = BlogPost::orderBy('created_at','DESC')->limit(3)->get();
+        $blog_categories = BlogCategory::orderBy('created_at','DESC')->limit(6)->get();
+        return view('style1.single_blog',compact('pageTitle','single','recent_posts','blog_categories'));
+    }
+
+    //============= category wise Products
+    public function CategoryWise(){
+        $categories = Category::all();
+        $subcategories = SubCategory::all();
+        $pageTitle = "Products - Category Wise";
+        $products = Product::orderBy('created_at','DESC')->get();
+        return view('style1.categorywise',compact('pageTitle','categories','subcategories','products'));
+    }
+    //============= Brand wise Products
+    public function BrandWise(){
+        $brands = Brand::all();
+       //$subcategories = SubCategory::all();
+        $pageTitle = "Products - Brand Wise";
+        $products = Product::orderBy('created_at','DESC')->get();
+        return view('style1.brandwise',compact('pageTitle','brands','products'));
+    }
+
+
+
+
+    //============ Single Products
+
+    public function singleProduct($id){
+        $single_product = Product::find($id);
+        $releted_products = Product::where('category_id', $single_product->category_id)->where('id','!=',$single_product->id)->limit(8)->get();
+        $product_image = explode('|',$single_product->image);
+        $pageTitle = "Products - ".$single_product->name;
+        return view('style1.single_product',compact('pageTitle','single_product','product_image','releted_products'));
     }
 
 

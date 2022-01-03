@@ -49,18 +49,15 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <form method="POST" action="{{ route('logout') }}">
+                  <form method="POST" action="{{ route('admin.logout') }}">
                       @csrf
 
 
                       <input type="submit" name="submit" class="btn btn-default btn-flat" value="{{ __('Log Out') }}">
-                      <!-- <x-dropdown-link :href="route('logout')"
-                              onclick="event.preventDefault();
-                                          this.closest('form').submit();">
-                          {{ __('Log Out') }}
-                      </x-dropdown-link> -->
+                     
+                          {{-- {{ __('Log Out') }} --}}
+                      
                   </form>
-                  <!-- <a href="" class="btn btn-default btn-flat">Sign out</a> -->
                 </div>
               </li>
             </ul>

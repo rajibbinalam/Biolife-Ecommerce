@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Models\GeneralSetting;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use App\Models\Contact;
+use App\Models\SocialLink;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,9 +33,10 @@ class AppServiceProvider extends ServiceProvider
         $general = GeneralSetting::first();
         View::share('general', $general);
 
-        //   Front Web Page
-
-        // $general = GeneralSetting::first();
-        // View::share('general', $general);
+        $contact = Contact::first();
+        View::share('contact', $contact);
+        $socials = SocialLink::all();
+        View::share('socials', $socials);
+        
     }
 }

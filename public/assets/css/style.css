@@ -83,7 +83,7 @@ label .required{
 }
 img{
     max-width: 100%;
-    height: auto;
+    /* height: auto; */
     outline: none;
 }
 figure{
@@ -1536,6 +1536,7 @@ body.open-mobile-search .header-area.layout-02{
 .contain-product.layout-02{
     display: inline-block;
     width: 100%;
+    padding: 9px 10px 20px 8px;
 }
 .advance-product-box_countdown{
     border: 2px solid #e6e6e6;
@@ -14566,4 +14567,8 @@ body.open-quickview-block .biolife-quickview-block{
     .biolife-carousel.nav-none-on-mobile.nav-center-03 .slick-arrow.next{
         display: none !important;
     }
+}
+
+.category-wise{
+    padding: 8px 2px 15px 2px;
 }
