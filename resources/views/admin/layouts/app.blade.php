@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{asset('admin/bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
     <link rel="stylesheet" href="{{asset('admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin/css/toast.css')}}">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     
@@ -102,6 +103,15 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{asset('admin/dist/js/demo.js')}}"></script>
     <script src="{{asset('admin/js/iziToast.js')}}"></script>
+
+    <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready( function () {
+            $('#data_table').DataTable();
+        } );
+    </script>
+
+
 
     <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
     <script type="text/javascript">

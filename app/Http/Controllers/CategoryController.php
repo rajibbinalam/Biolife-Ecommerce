@@ -32,6 +32,7 @@ class CategoryController extends Controller
         $category = new Category();
         $category->name = $request->name;
         $category->slug = $request->slug;
+        $category->add_by = $request->add_by;
 
         if ($request->hasFile('icon')) {
             $file = $request->file('icon');
@@ -72,13 +73,11 @@ class CategoryController extends Controller
             'name' => $request->has('name') ? $request->input('name') : '',
             'slug' => $request->has('slug') ? $request->input('slug') : '',
             'category_id' => $request->get('category_id'),
+            'add_by' => $request->get('add_by'),
         ]);
 
         return back()->with('success', 'Sub Category Added Success!');
     }
-
-
-
 
 
 
@@ -121,6 +120,7 @@ class CategoryController extends Controller
             'name' => $request->has('name') ? $request->input('name') : '',
             'slug' => $request->has('slug') ? $request->input('slug') : '',
             'sub_categories_id' => $request->get('sub_categories_id'),
+            'add_by' => $request->get('add_by'),
         ]);
 
         return back()->with('success', 'Child Category Added!');

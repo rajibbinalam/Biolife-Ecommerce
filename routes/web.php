@@ -61,7 +61,9 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
     Route::get('/index','DashboardController@index')->name('index');
 
 
-
+    //========== admin Profile
+    Route::get('/profile','AdminController@adminProfile')->name('adminProfile');
+    Route::post('/profile/update/{id}','AdminController@adminProfileupdate')->name('adminProfileupdate');
 
     //================= Home Pages
     Route::get('/home-pages', 'HomeController@homePages')->name('homePages');

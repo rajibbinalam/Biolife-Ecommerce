@@ -5,7 +5,7 @@
   <div class="col-lg-12">
     <div class="box box-primary">
       <div class="box-body">
-        <table class="table card-body" style="margin-top: 34px;">
+        <table id="data_table" class="table card-body" style="margin-top: 34px;">
           <thead>
             <tr>
               <th scope="form-group col-md-6">#</th>
@@ -76,6 +76,7 @@
           @error('image')
               <div class="text-danger">{{ $message }}</div>
           @enderror
+          <input type="hidden" value="{{auth()->guard('admin')->user()->name}}" name="add_by" id="">
           </div>
         </form>
       </div>

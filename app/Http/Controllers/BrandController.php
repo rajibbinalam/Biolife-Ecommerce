@@ -20,6 +20,7 @@ class BrandController extends Controller
         ]);
         Brand::insert([
             'name'=> $request->input('name'),
+            'add_by'=> $request->input('add_by'),
         ]); 
         return back()->with('success', 'Brand Added Success!');
         }

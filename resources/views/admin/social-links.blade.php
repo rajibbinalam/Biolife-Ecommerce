@@ -5,7 +5,7 @@
   <div class="col-lg-12">
     <div class="box box-primary">
       <div class="box-body">
-      <table class="table">
+      <table id="data_table" class="table">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -70,6 +70,7 @@
             @error('icon_class')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
+            <input type="hidden" value="{{auth()->guard('admin')->user()->name}}" name="add_by" id="">
           </div>
           
         </form>

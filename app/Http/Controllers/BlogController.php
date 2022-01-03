@@ -27,6 +27,7 @@ class BlogController extends Controller
                 BlogCategory::insert([
                     'name'=> $request->input('name'),
                     'slug'=> $request->input('slug'),
+                    'add_by'=> $request->input('add_by'),
                 ]);
             
             
@@ -82,6 +83,7 @@ public function blogPostcreate(){
                     'details'=> $request->input('details'),
                     'tags'=> implode(',', $tags),
                     'blog_categories_id'=> $request->input('blog_categories_id'),
+                    'add_by'=> $request->input('add_by'),
                     'image'=> $imageLocation,
                 ]);
             
@@ -130,6 +132,7 @@ public function blogPostcreate(){
             $blogpost->title = $request->input('title');
             $blogpost->blog_categories_id = $request->input('blog_categories_id');
             $blogpost->details = $request->input('details');
+            $blogpost->add_by = $request->input('add_by');
             $blogpost->tags = implode(',', $tags);
             $blogpost->save();
             return redirect('/admin/blog-post')->with('success', 'Blog Post Update Success!');

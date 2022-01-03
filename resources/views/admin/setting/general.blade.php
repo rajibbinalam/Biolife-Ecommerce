@@ -25,6 +25,7 @@
                     <div class="form-group col-md-6">
                         <label for="">@lang('Address')</label>
                         <input  value="{{$general->address}}" type="text" class="form-control" name="address">
+                        <input type="hidden" value="{{auth()->guard('admin')->user()->name}}" name="add_by" id="">
                     </div>
                     <div class="form-group col-md-12">
                         <button type="submit" class="btn btn-primary">@lang('Update')</button>

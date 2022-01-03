@@ -5,7 +5,7 @@
   <div class="col-lg-12">
     <div class="box box-primary">
       <div class="box-body">
-        <table class="table card-body" style="margin-top: 34px;">
+        <table id="data_table" class="table card-body" style="margin-top: 34px;">
           <thead>
             <tr>
               <th scope="col" style="width: 79px;">SL</th>
@@ -56,6 +56,7 @@
                 <option value="{{ $product->id}}">{{ $product->name}} sku:{{ $product->sku}}</option>
                 @endforeach
                 </select>
+                <input type="hidden" name="add_by" id="" value="{{auth()->guard('admin')->user()->name}}">
             </div>
 
         </form>

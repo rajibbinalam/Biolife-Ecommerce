@@ -38,8 +38,10 @@ class HomeController extends Controller
         $top_products = Product::orderBy('created_at')->limit(12)->get();
         $partiners = Partner::all();
         $blog_posts = BlogPost::orderBy('created_at')->limit(6)->get();
+
         $feature_page = HomePage::first();
         $categories = Category::all();
+
         $pageNo = $feature_page->web_page;
         if($pageNo == 1){
             return view('welcome',compact('sliders','banner_product','products','middle_banners','deals','top_products','partiners','blog_posts','categories','bottom_banners'));
@@ -182,12 +184,14 @@ class HomeController extends Controller
     public function HomePage1(Request $request){
         $home1 = HomePage::first();
         $home1->web_page = $request->get('web_page');
+        $home1->add_by = $request->get('add_by');
         $home1->save();
         return back()->with('success','Homa Page 1 Selected');
     }
     public function HomePage2(Request $request){
         $home2 = HomePage::first();
         $home2->web_page = $request->get('web_page');
+        $home2->add_by = $request->get('add_by');
         $home2->save();
         return back()->with('success','Homa Page 2 Selected');
     }
@@ -195,18 +199,21 @@ class HomeController extends Controller
         //dd($request->all());
         $home3 = HomePage::first();
         $home3->web_page = $request->get('web_page');
+        $home3->add_by = $request->get('add_by');
         $home3->save();
         return back()->with('success','Homa Page 3 Selected');
     }
     public function HomePage4(Request $request){
         $home4 = HomePage::first();
         $home4->web_page = $request->get('web_page');
+        $home4->add_by = $request->get('add_by');
         $home4->save();
         return back()->with('success','Homa Page 4 Selected');
     }
     public function HomePage5(Request $request){
         $home5 = HomePage::first();
         $home5->web_page = $request->get('web_page');
+        $home5->add_by = $request->get('add_by');
         $home5->save();
         return back()->with('success','Homa Page 5 Selected');
     }

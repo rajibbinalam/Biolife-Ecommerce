@@ -13,6 +13,7 @@
             @csrf
             <input type="hidden" name="web_page" id="" value="1">
             <input type="submit" name="submit" id="" value="@if($page_no==1) activate @else  active @endif">
+            <input type="hidden" value="{{auth()->guard('admin')->user()->name}}" name="add_by" id="">
           </form>
         </div>
         <div class="col-md-4">
@@ -22,6 +23,7 @@
             @csrf
             <input type="hidden" name="web_page" id="" value="2">
             <input type="submit" name="submit" id="" value="@if($page_no==2) activate @else  active @endif">
+            <input type="hidden" value="{{auth()->guard('admin')->user()->name}}" name="add_by" id="">
           </form>
         </div>
         <div class="col-md-4">
@@ -31,6 +33,7 @@
             @csrf
             <input type="hidden" name="web_page" id="" value="3">
             <input type="submit" name="submit" id="" value="@if($page_no==3) activate @else  active @endif">
+            <input type="hidden" value="{{auth()->guard('admin')->user()->name}}" name="add_by" id="">
           </form>
         </div>
         <div class="col-md-4">
@@ -40,6 +43,7 @@
             @csrf
             <input type="hidden" name="web_page" id="" value="4">
             <input type="submit" name="submit" id="" value="@if($page_no==4) activate @else  active @endif">
+            <input type="hidden" value="{{auth()->guard('admin')->user()->name}}" name="add_by" id="">
           </form>
         </div>
         <div class="col-md-4">
@@ -49,6 +53,7 @@
             @csrf
             <input type="hidden" name="web_page" id="" value="5">
             <input type="submit" name="submit" id="" value="@if($page_no==5) activate @else  active @endif">
+            <input type="hidden" value="{{auth()->guard('admin')->user()->name}}" name="add_by" id="">
           </form>
         </div>
         

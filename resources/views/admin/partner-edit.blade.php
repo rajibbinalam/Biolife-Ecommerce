@@ -26,6 +26,7 @@
               @error('links')
                   <div class="text-danger">{{ $message }}</div>
               @enderror
+              <input type="hidden" value="{{auth()->guard('admin')->user()->name}}" name="add_by" id="">
             </div>
             <div class="form-group col-md-6">
               <button type="submit" class="btn btn-primary float-right mt-4">Update</button>

@@ -5,7 +5,7 @@
   <div class="col-lg-12">
     <div class="box box-primary">
       <div class="box-body">
-      <table class="table card-body">
+      <table id="data_table" class="table card-body">
           <thead>
             <tr>
               <th scope="col">SL</th>
@@ -59,6 +59,7 @@
             @error('links')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
+            <input type="hidden" value="{{auth()->guard('admin')->user()->name}}" name="add_by" id="">
           </div>
 
         </form>

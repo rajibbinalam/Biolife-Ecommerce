@@ -27,6 +27,7 @@ class ContactSocialController extends Controller
                 'email'=> $request->input('email'),
                 'map_link'=> $request->input('map_link'),
                 'store_open'=> $request->input('store_open'),
+                'add_by'=> $request->input('add_by'),
             ]);
             return back()->with('success','Contact Added Success!');
         }
@@ -50,6 +51,7 @@ class ContactSocialController extends Controller
         $contacts->email = $request->input('email');
         $contacts->map_link = $request->input('map_link');
         $contacts->store_open = $request->input('store_open');
+        $contacts->add_by = $request->input('add_by');
 
         $contacts->save();
 
@@ -80,6 +82,7 @@ public function socialCreate()
                 'name'=> $request->input('name'),
                 'link'=> $request->input('link'),
                 'icon_class'=> $request->input('icon_class'),
+                'add_by'=> $request->input('add_by'),
             ]);
             return back()->with('success','Link Added Success!');
         }
@@ -101,6 +104,7 @@ public function socialCreate()
         $social->name = $request->input('name');
         $social->link = $request->input('link');
         $social->icon_class = $request->input('icon_class');
+        $social->add_by = $request->input('add_by');
 
         $social->save();
 

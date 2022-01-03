@@ -5,14 +5,14 @@
   <div class="col-lg-12">
     <div class="box box-primary">
       <div class="box-body">
-        <table class="table card-body" style="margin-top: 34px;">
+        <table id="data_table" class="table card-body" style="margin-top: 34px;">
           <thead>
             <tr>
               <th scope="col" style="width: 79px;">SL</th>
               <th scope="col">Name</th>
               <th scope="col">Slug</th>
               <th scope="col">Icon</th>
-              <th scope="col" style="width: 79px;">Action</th>
+              <th scope="col" class="widgth-120">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -30,10 +30,10 @@
               </td>
               <td>
                 <a href="{{url('/admin/category/edit/'.$category->id)}}"
-                  style="color: white; background-color: #ff0000; padding: 8px; border-radius: 24px;"><i
+                  class="edit"><i
                     class="fa fa-edit"></i></a>
                 <a href="{{url('/admin/category/delete/'.$category->id)}}"
-                  style="color: white; background-color: #ff0000; padding: 8px; border-radius: 24px;"
+                  class="delete"
                   OnClick='return (confirm("Are you sure Delete {{ $category->name}}"));'><i
                     class="fa fa-trash"></i></a>
               </td>
@@ -70,6 +70,7 @@
           <div class="form-group">
             <label for="">@lang('Icon')</label>
             <input type="file" class="form-control" name="icon">
+            <input type="hidden" value="{{auth()->guard('admin')->user()->name}}" name="add_by" id="">
           </div>
         </form>
       </div>

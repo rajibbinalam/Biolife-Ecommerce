@@ -121,6 +121,7 @@ class GeneralSetController extends Controller
                 'name' => $request->input('name'),
                 'first_tag_line' => $request->input('first_tag_line'),
                 'second_tag_line' => $request->input('second_tag_line'),
+                'add_by' => $request->input('add_by'),
                 'image' => $imageLocation,
             ]);
 
@@ -168,6 +169,7 @@ class GeneralSetController extends Controller
                 'first_tag_line' => $request->input('first_tag_line'),
                 'second_tag_line' => $request->input('second_tag_line'),
                 'price' => $request->input('price'),
+                'add_by' => $request->input('add_by'),
                 'image' => $imageLocation,
             ]);
 
@@ -211,6 +213,7 @@ class GeneralSetController extends Controller
         $tpbanner->first_tag_line = $request->input('first_tag_line');
         $tpbanner->second_tag_line = $request->input('second_tag_line');
         $tpbanner->price = $request->input('price');
+        $tpbanner->add_by = $request->input('add_by');
         $tpbanner->save();
         return redirect('/admin/top-banner')->with('success', 'Top Banner Update Success!');
     }
@@ -254,6 +257,7 @@ class GeneralSetController extends Controller
                 'first_tag_line' => $request->input('first_tag_line'),
                 'second_tag_line' => $request->input('second_tag_line'),
                 'price' => $request->input('price'),
+                'add_by' => $request->input('add_by'),
                 'image' => $imageLocation,
             ]);
 
@@ -297,6 +301,7 @@ class GeneralSetController extends Controller
         $midbanner->first_tag_line = $request->input('first_tag_line');
         $midbanner->second_tag_line = $request->input('second_tag_line');
         $midbanner->price = $request->input('price');
+        $midbanner->add_by = $request->input('add_by');
         $midbanner->save();
         return redirect('/admin/middle-banner')->with('success', 'Top Banner Update Success!');
     }
@@ -339,6 +344,7 @@ class GeneralSetController extends Controller
                 'first_tag_line' => $request->input('first_tag_line'),
                 'second_tag_line' => $request->input('second_tag_line'),
                 'price' => $request->input('price'),
+                'add_by' => $request->input('add_by'),
                 'image' => $imageLocation,
             ]);
 
@@ -382,6 +388,7 @@ class GeneralSetController extends Controller
         $midbanner->first_tag_line = $request->input('first_tag_line');
         $midbanner->second_tag_line = $request->input('second_tag_line');
         $midbanner->price = $request->input('price');
+        $midbanner->add_by = $request->input('add_by');
         $midbanner->save();
         return redirect('/admin/bottom-banner')->with('success', 'Top Banner Update Success!');
     }
@@ -421,6 +428,7 @@ class GeneralSetController extends Controller
 
             Partner::insert([
                 'links' => $request->input('links'),
+                'add_by' => $request->input('add_by'),
                 'logo' => $imageLocation,
             ]);
 
@@ -461,6 +469,7 @@ class GeneralSetController extends Controller
             $partner->logo = $old_image;
         }
         $partner->links = $request->input('links');
+        $partner->add_by = $request->input('add_by');
         $partner->save();
         return redirect('/admin/partner')->with('success', 'Partner Update Success!');
     }

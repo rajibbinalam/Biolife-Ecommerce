@@ -270,6 +270,7 @@ class ProductController extends Controller
         if(($best_all->count())<5){
             $best_pro = new BestSeller();
             $best_pro->best_product_id = $request->best_product_id;
+            $best_pro->add_by = $request->add_by;
             $best_pro->save();
             return back()->with('success','Product Added Success');
         }

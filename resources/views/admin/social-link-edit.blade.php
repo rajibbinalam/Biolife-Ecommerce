@@ -27,6 +27,7 @@
               @error('icon_class')
                   <div class="text-danger">{{ $message }}</div>
               @enderror
+              <input type="hidden" value="{{auth()->guard('admin')->user()->name}}" name="add_by" id="">
             </div>
             <div class="form-group col-md-6" style="padding-top: 24px;">
               <button type="submit" class="btn btn-primary" name="submit" style="float: right;">Submit</button>

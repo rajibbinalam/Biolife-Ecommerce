@@ -26,6 +26,7 @@ class SettingController extends Controller
         $general = GeneralSetting::first();
         $general->site_name = $request->sitename;
         $general->address = $request->address;
+        $general->add_by = $request->add_by;
         $old_logo = $general->logo;
         $old_favicon = $general->favicon;
 
@@ -51,6 +52,6 @@ class SettingController extends Controller
         }
 
         $general->save();
-        return back();
+        return back()->with('success','Settings Update Success');
     }
 }

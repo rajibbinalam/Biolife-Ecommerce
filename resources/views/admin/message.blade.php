@@ -4,7 +4,7 @@
   <div class="col-lg-12">
     <div class="box box-primary">
       <div class="box-body">
-      <table class="table card-body">
+      <table id="data_table" class="table card-body">
         <thead>
           <tr>
             <th scope="col">SL</th>

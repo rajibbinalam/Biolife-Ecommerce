@@ -50,6 +50,7 @@
               @error('image')
                   <div class="text-danger">{{ $message }}</div>
               @enderror
+              <input type="hidden" name="add_by" value="{{auth()->guard('admin')->user()->name}}" id="">
             </div>
             
 

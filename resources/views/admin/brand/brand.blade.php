@@ -5,7 +5,7 @@
   <div class="col-lg-12">
     <div class="box box-primary">
       <div class="box-body">
-        <table class="table card-body" style="margin-top: 34px;">
+        <table id="data_table" class="table card-body" style="margin-top: 34px;">
           <thead>
             <tr>
               <th scope="col" style="width: 79px;">SL</th>
@@ -50,6 +50,7 @@
           <div class="form-group">
             <label for="">@lang('Brand Name')</label>
             <input type="text" class="form-control" name="name" required placeholder="Brand Name">
+            <input type="hidden" value="{{auth()->guard('admin')->user()->name}}" name="add_by" id="">
           </div>
         </form>
       </div>
