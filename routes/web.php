@@ -30,6 +30,11 @@ Route::get('/brand-wise','HomeController@BrandWise')->name('BrandWise');
 
 Route::get('/product/{id}/{name}','HomeController@singleProduct')->name('singleProduct');
 
+Route::post('/add-to-cart','HomeController@addToCart')->name('addToCart');
+Route::get('/checkout','HomeController@checkOut')->name('checkout');
+Route::get('/cart-remove/{rowId}','HomeController@removeItem')->name('removeItem');
+//Route::get('/view-cart','HomeController@viewCart')->name('viewCart');
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -220,3 +225,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/login', [LoginController::class, 'login'])->name('login');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
+
+
+

@@ -16,8 +16,8 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/font-awesome.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/nice-select.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/slick.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/main-color.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
 
 </head>
 
@@ -60,6 +60,28 @@
     <script src="{{asset('assets/js/slick.min.js')}}"></script>
     <script src="{{asset('assets/js/biolife.framework.js')}}"></script>
     <script src="{{asset('assets/js/functions.js')}}"></script>
+
+    <script>
+        $(document).ready(function () {
+           @if($errors->any())
+                @foreach ($errors->all() as $error)
+                    iziToast.error({
+                        title: 'error',
+                        message:"{{$error}}",
+                        position:'topRight'
+                    });
+                @endforeach
+            @endif
+            @if(session()->has('success'))
+                  
+                  iziToast.success({
+                  title: 'success',
+                  message: '{{session()->get('success')}}',
+          });
+              @endif
+            
+        });
+    </script>
 </body>
 
 </html>

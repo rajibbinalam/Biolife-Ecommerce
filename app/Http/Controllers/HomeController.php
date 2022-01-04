@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use App\Models\Banner;
 use App\Models\BottomBanner;
@@ -47,16 +48,16 @@ class HomeController extends Controller
             return view('welcome',compact('sliders','banner_product','products','middle_banners','deals','top_products','partiners','blog_posts','categories','bottom_banners'));
         }
         if($pageNo == 2){
-            return view('welcome1',compact('sliders','banner_product','products','middle_banners','deals','top_products','partiners','blog_posts'));
-        }
-        if($pageNo == 3){
             return view('welcome2',compact('sliders','banner_product','products','middle_banners','deals','top_products','partiners','blog_posts'));
         }
-        if($pageNo == 4){
+        if($pageNo == 3){
             return view('welcome3',compact('sliders','banner_product','products','middle_banners','deals','top_products','partiners','blog_posts'));
         }
-        if($pageNo == 5){
+        if($pageNo == 4){
             return view('welcome4',compact('sliders','banner_product','products','middle_banners','deals','top_products','partiners','blog_posts'));
+        }
+        if($pageNo == 5){
+            return view('welcome5',compact('sliders','banner_product','products','middle_banners','deals','top_products','partiners','blog_posts'));
         }
 
         
@@ -138,7 +139,7 @@ class HomeController extends Controller
         return view('style1.single_product',compact('pageTitle','single_product','product_image','releted_products'));
     }
 
-
+    // =============   Home Page Insertion
      public function homePagesinsert(Request $request){
         $request->validate([
             'Feature'=> 'required|max:1024',
@@ -227,8 +228,44 @@ class HomeController extends Controller
 
 
 
+    //      ============= Add To Cart
+    public function addToCart(Request $request){
+        $id = $request->get('pid');
+        $name = $request->get('name');
+        $price = $request->get('new_price');
+        $quantity = $request->get('quantity');
+        // $image = $request->get('image');
+        $size = $request->get('size');
+
+        $images = Product::find($id)->image;
+        $image = explode('|',$images)[0];
+
+        $cart = Cart::content()->where('id',$id)->first();
+        if(isset($cart)&& $cart != null){
+            $quantity = ((int)$quantity + (int)$cart->qty);
+            $total = ((int)$quantity * (int)$price);
+            Cart::update($cart->rowId,['qty'=>$quantity , 'options'=>['size'=>$size , 'image'=>$image , 'total'=>$total]]);
+        }else{
+            $total = ((int)$quantity * (int)$price);
+            Cart::add($id,$name,$quantity,$price,['size'=>$size , 'image'=>$image , 'total'=>$total]);
+        }
+        
+        return back()->with('success','Product Added To Cart');
+    }
+
+    public function checkOut(){
+        $carts = Cart::content();
+        $subTotal = Cart::subtotal();
+        $count = Cart::count();
+        $tex = Cart::tax();
+        return view('checkout',compact('carts','subTotal','count','tex'));
+    }
 
 
+    public function removeItem($rowId){
+        Cart::remove($rowId);
+        return back()->with('success','Item Remove from Cart');
+    }
 
 
 

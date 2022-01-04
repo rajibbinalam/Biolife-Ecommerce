@@ -201,8 +201,40 @@ select option{
     -ms-transform: rotate( -180deg );
     transform: rotate( -180deg );
 }
-.nice-select .current{
+.quantity{
+    width: 84px;
+    border-radius: 50px;
+    border: none;
+    padding: 12px 16px 8px 24px;
+}
+.remove{
+    color: red;
+}
+.cust-select{
+    border-radius: 50px;
+    border: white;
+    background-color: white;
+    padding: 17px 17px 15px 20px;
+}
+.add-cart-btn{
+    margin-top: 76px;
+    font-size: 15px;
+    line-height: 24px;
     color: #ffffff;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: block;
+    border-radius: 100px;
+    border: none;
+    background-color: #e73918;
+    padding: 12px 71px 11px;
+}
+.add-cart-btn:hover{
+    color: white;
+    background-color: #5d6a96;
+}
+.nice-select .current{
+    /* color: #ffffff; */
     display: inline-block;
     padding: 14px 0;
 }
@@ -5466,7 +5498,23 @@ body.open-overlay #overlay{
     border-radius: 9999px;
     color: #ffffff;
     text-transform: uppercase;
-    background-color: #aaaaaa;
+    background-color: #d82424;
+    font-weight: 700;
+    padding: 12px 10px;
+    min-width: 180px;
+    text-align: center;
+}
+.checkout-btn:hover{
+    background-color: #444444;
+    color: white;
+}
+.checkout-btn{
+    display: inline-block;
+    border: none;
+    border-radius: 9999px;
+    color: #ffffff;
+    text-transform: uppercase;
+    background-color: #d82424;
     font-weight: 700;
     padding: 12px 10px;
     min-width: 180px;

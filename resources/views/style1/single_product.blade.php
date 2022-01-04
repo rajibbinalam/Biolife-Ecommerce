@@ -15,6 +15,13 @@
         </ul>
     </nav>
 </div>
+<div>
+    @if(session()->has('success'))
+    <div class="alert alert-success">
+        {{ session()->get('success') }}
+    </div>
+@endif
+</div>
 
 <div class="page-contain single-product">
     <div class="container">
@@ -73,12 +80,12 @@
                         <p class="star-rating"><span class="width-80percent"></span></p>
                         <span class="review-count">(04 Reviews)</span>
                         <span class="qa-text">Q&amp;A</span>
-                        <b class="category">By: {{$single_product->add_by}}</b>
+                        <b class="category">By: {{$single_product->added->name}}</b>
                     </div>
                     <span class="sku">Sku: {{$single_product->sku}}</span>
                     <p class="excerpt">{{ Str::limit(strip_tags(htmlspecialchars_decode($single_product->details)), 120, ' ...') }}</p>
                     <div class="price">
-                        <ins><span class="price-amount"><span class="currencySymbol">£</span>{{$single_product->new_price}}</span></ins>
+                        <ins><span class="price-amount"><span class="currencySymbol">Price : £</span>{{$single_product->new_price}}</span></ins>
                     </div>
                     <div class="shipping-info">
                         <p class="shipping-day">3-Day Shipping</p>
@@ -86,18 +93,39 @@
                     </div>
                 </div>
                 <div class="action-form">
-                    <div class="quantity-box">
-                        <span class="title">Quantity: ( {{$single_product->quantity}} Item in stock)</span>
-                        <div class="qty-input">
-                            <form action="" id="form" method="post">
+                    <div class="quantity-box row">
+                        
+                        <div class="col-md-12">
+                            <form action="{{route('addToCart')}}" id="form" method="post">
                                 @csrf
-                                <input type="number" value="1" name="qty">
+                                <span class="title">Quantity: ( {{$single_product->quantity}} Item in stock)</span>
+                                <div class="col-md-6">
+                                    
+                                    <input class="quantity" type="number" value="1" name="quantity">
+                                </div>
+                                <input type="hidden" value="{{$single_product->id}}" name="pid">
+                                <input type="hidden" value="{{$single_product->name}}" name="name">
+                                <input type="hidden" value="{{$single_product->new_price}}" name="new_price">
+                                <input type="hidden" value="{{$single_product->image}}" name="imgae[]">
+                                {{-- <label>Select Size</label> --}}
+                                <div class="col-md-6">
+                                    <select name="size" class="custom-select cust-select" >
+                                        <option value="">Select Size</option>
+                                        <option value="S">S</option>
+                                        <option value="L">L</option>
+                                        <option value="M">M</option>
+                                        <option value="XL">XL</option>
+                                    </select>
+                                </div>
+                                <div class="">
+                                    <button type="submit" form="form" class="btn add-cart-btn">add to cart</button>
+                                </div>
+                                
                             </form>
-                            
                         </div>
                     </div>
                     <div class="buttons">
-                        <button type="submit" form="form" class="btn add-to-cart-btn">add to cart</button>
+                        
                         {{-- <a href="" class="btn add-to-cart-btn">add to cart</a> --}}
                         <p class="pull-row">
                             <a href="" class="btn wishlist-btn">wishlist</a>
