@@ -27,7 +27,9 @@
                                     <div class="box-content">
                                         <p class="txt-desc">Checking out as a <a class="pmlink" href="#">Guest?</a> You’ll be able to save your details to create an account with us later.</p>
                                         <div class="login-on-checkout">
+                                            @guest
                                             <form action="" name="frm-login" method="post">
+                                                @csrf
                                                 <p class="form-row">
                                                     <label for="input_email">Email Address</label>
                                                     <input type="email" name="email" id="input_email" value="" placeholder="Your email">
@@ -39,6 +41,8 @@
                                                 </p>
                                                 <p class="msg">Already have an account? <a href="{{url('/login')}}" class="link-forward">Sign in now</a></p>
                                             </form>
+                                            @else
+                                            @endguest
                                         </div>
                                     </div>
                                 </div>

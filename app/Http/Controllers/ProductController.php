@@ -152,7 +152,7 @@ class ProductController extends Controller
     public function editProduct($id)
     {
         $edit = Product::find($id);
-        $pageTitle = "All Products";
+        $pageTitle = "Edit Products";
         $images = explode('|',$edit->image);
         $brands = Brand::all();
         $categories = Category::all();

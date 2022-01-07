@@ -86,13 +86,13 @@
                                 <li class="product-item col-lg-3 col-md-3 col-sm-4 col-xs-6">
                                     <div class="contain-product layout-default">
                                         <div class="product-thumb">
-                                            <a href="" class="link-to-product">
+                                            <a href="{{url('/product/'.$product->id.'/'.$product->name)}}" class="link-to-product">
                                                 <img src="{{asset(explode('|',$product->image)[0])}}" alt="product Image" width="270" height="270" class="product-thumnail">
                                             </a>
                                         </div>
                                         <div class="info">
                                             <b class="categories">{{$product->brand->name}}</b>
-                                            <h4 class="product-title"><a href="#" class="pr-name">{{$product->name}}</a></h4>
+                                            <h4 class="product-title"><a href="{{url('/product/'.$product->id.'/'.$product->name)}}" class="pr-name">{{$product->name}}</a></h4>
                                             <div class="price">
                                                 <ins><span class="price-amount"><span class="currencySymbol">£</span>{{$product->new_price}}</span></ins>
                                                 <del><span class="price-amount"><span class="currencySymbol">£</span>{{$product->old_price}}</span></del>
@@ -104,8 +104,30 @@
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
                                                 <div class="buttons">
-                                                    <a href="" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                                    <a href="" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
+                                                    <form action="{{route('addWishlist')}}" method="POST">
+                                                        @csrf
+                                                        @if(isset(Auth::user()->id))
+                                                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}" id="">
+                                                        @endif
+                                                        <input type="hidden" name="product_id" value="{{$product->id}}" id="">
+                                                        <button class="wishlist-button" type="submit"><i class="fa fa-heart" aria-hidden="true"></i></button>
+                                                    </form>
+                                                    {{-- <a href="" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a> --}}
+                                                    
+                                                    <form action="{{route('addToCart')}}" method="post">
+                                                        @csrf
+                                                        <input type="hidden" value="{{$product->id}}" name="pid">
+                                                        <input type="hidden" value="{{$product->name}}" name="name">
+                                                        <input type="hidden" value="{{$product->new_price}}" name="new_price">
+                                                        <input type="hidden" value="{{$product->image}}" name="imgae[]">
+                                                        <input type="hidden" value="1" name="quantity">
+                                                        <input type="hidden" value="" name="size">
+                                                        <div class="cart-btn-div">
+                                                            <button type="submit" class="btn product-add-to-cart-btn">@lang('add to cart')</button>
+                                                        </div>
+
+                                                    </form>
+
                                                     <a href="" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>

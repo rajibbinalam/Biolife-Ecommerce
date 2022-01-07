@@ -2,11 +2,12 @@
 
 namespace App\Providers;
 
-use App\Models\GeneralSetting;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\View;
 use App\Models\Contact;
+use App\Models\Category;
 use App\Models\SocialLink;
+use App\Models\GeneralSetting;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 class AppServiceProvider extends ServiceProvider
@@ -38,19 +39,14 @@ class AppServiceProvider extends ServiceProvider
         View::share('contact', $contact);
 
         $socials = SocialLink::all();
-        View::share('socials', $socials);
+
+        view()->composer('partials.header',function($view){
+            $view->with([
+                'categories' => Category::select('id','name')->with('subCategories:id,name,category_id')->get()
+            ]);
+        });
+       View::share(['socials' => $socials]);
 
 
-        //  Shopping Cart 
-        $carts = Cart::content();
-        View::share('carts', $carts);
-        $subTotal = Cart::subtotal();
-        View::share('subTotal', $subTotal);
-        $count = Cart::count();
-        View::share('count', $count);
-        $tex = Cart::tax();
-        View::share('tex', $tex);
-
-        
     }
 }

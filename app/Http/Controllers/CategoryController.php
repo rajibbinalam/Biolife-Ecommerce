@@ -47,6 +47,47 @@ class CategoryController extends Controller
     }
 
 
+    public function categoriesEdit($id){
+        $edit = Category::find($id);
+        $pageTitle = "Edit Category";
+        return view('admin.category.edit-category',compact('edit','pageTitle'));
+    }
+    public function categoriesUpdate(Request $request,$id){
+        $update = Category::find($id);
+        $old_icon = $update->icon;
+
+        if($request->hasFile('icon')){
+            if(isset($old_icon)){
+                unlink(public_path($old_icon));
+            }
+            
+            $file = $request->file('icon');
+            $extension = $file->getClientOriginalExtension();
+            $fileName= 'category'. time() . '.' . $extension;
+            $location= '/images/categories/';
+            $file->move(public_path() . $location, $fileName);
+            $imageLocation = $location. $fileName;
+            $update->icon = $imageLocation;
+
+        }
+            $update->name = $request->name;
+            $update->slug = $request->slug;
+            $update->add_by = $request->add_by;
+            $update->save();
+
+
+       return back()->with('success', 'Category Updated!');
+    }
+
+
+
+    public function categoriesDelete($id){
+        $delete = Category::find($id);
+        $delete->delete();
+        return back()->with('success','Category Deleted Success');
+    }
+
+
 
 
     //===============sub Category
@@ -63,7 +104,6 @@ class CategoryController extends Controller
 
     public function addSubCategory(Request $request)
     {
-
         $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
@@ -77,6 +117,30 @@ class CategoryController extends Controller
         ]);
 
         return back()->with('success', 'Sub Category Added Success!');
+    }
+
+    public function subCategoriesEdit($id){
+        $edit = SubCategory::find($id);
+        $pageTitle = "Edit Sub Category";
+        $categories = Category::all();
+        return view('admin.sub_category.edit_sub_category',compact('pageTitle','edit','categories'));
+    }
+
+    public function subCategoriesUpdate(Request $request ,$id){
+        $update = SubCategory::find($id);
+        $update->name = $request->name;
+        $update->slug = $request->slug;
+        $update->category_id = $request->category_id;
+        $update->add_by = $request->add_by;
+        $update->save();
+        return back()->with('success','Sub Category Item Updated');
+
+    }
+
+    public function subCategoriesDelete($id){
+        $delete = SubCategory::find($id);
+        $delete->delete();
+        return back()->wuth('success','Sub Catgeory Item Deleted');
     }
 
 

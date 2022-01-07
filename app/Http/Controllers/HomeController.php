@@ -23,6 +23,8 @@ use App\Models\SubCategory;
 use App\Models\Subscriber;
 use App\Models\HomePage;
 use App\Models\Brand;
+use App\Models\Wishlist;
+use App\Models\ProductReview;
 
 class HomeController extends Controller
 {
@@ -136,7 +138,8 @@ class HomeController extends Controller
         $releted_products = Product::where('category_id', $single_product->category_id)->where('id','!=',$single_product->id)->limit(8)->get();
         $product_image = explode('|',$single_product->image);
         $pageTitle = "Products - ".$single_product->name;
-        return view('style1.single_product',compact('pageTitle','single_product','product_image','releted_products'));
+        $product_reviews = ProductReview::where('product_id',$id)->get();
+        return view('style1.single_product',compact('pageTitle','single_product','product_image','releted_products','product_reviews'));
     }
 
     // =============   Home Page Insertion
@@ -254,11 +257,12 @@ class HomeController extends Controller
     }
 
     public function checkOut(){
+        $pageTitle = "My Cart";
         $carts = Cart::content();
         $subTotal = Cart::subtotal();
         $count = Cart::count();
         $tex = Cart::tax();
-        return view('checkout',compact('carts','subTotal','count','tex'));
+        return view('checkout',compact('carts','subTotal','count','tex','pageTitle'));
     }
 
 
@@ -267,9 +271,40 @@ class HomeController extends Controller
         return back()->with('success','Item Remove from Cart');
     }
 
+        //================= Wishlist 
+        public function addWishlist(Request $request){
+            $wishlist = new Wishlist();
+            $wishlist->user_id = $request->user_id;
+            $wishlist->product_id = $request->product_id;
+            $wishlist->save();
+            return back();
+        }
+
+        public function MyWishlist($user_id){
+            $pageTitle = "My Wishlist";
+            //$allWishlist = Wishlist::all();
+            $wishlists[] = Wishlist::where('user_id',$user_id)->get('product_id');
+            $products = Product::whereIn('id',$wishlists[0])->get();
+            return view('style1.wishlist',compact('products','pageTitle','wishlists'));
+        }
+
+        public function removeWishlist($user_id, $product_id){
+            $delete = Wishlist::where('user_id',$user_id)->where('product_id',$product_id)->delete('id');
+            return back()->with('success','My Wishlist Item Deleted Success');
+        }
 
 
 
 
+        public function productReview(Request $request){
+            //dd($request->all());
+            $review = new ProductReview();
+            $review->star = $request->input('star');
+            $review->user_id = $request->input('user_id');
+            $review->product_id = $request->input('product_id');
+            $review->comment = $request->input('comment');
+            $review->save();
+            return back()->with('success','Thanks for your review');
+        }
 
 }

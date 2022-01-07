@@ -1,5 +1,4 @@
 @extends('partials.app')
-
 @section('content')
 <div class="main-slide block-slider">
     <ul class="biolife-carousel nav-none-on-mobile" data-slick='{"arrows": true, "dots": false, "slidesMargin": 0, "slidesToShow": 1, "infinite": true, "speed": 800}'>
@@ -18,8 +17,8 @@
                     <h3 class="second-line">{{$slider->name}}</h3>
                     <p class="third-line">{{$slider->second_tag_line}}</p>
                     <p class="buttons">
-                        <a href="" class="btn btn-bold">Shop now</a>
-                        <a href="" class="btn btn-thin">View lookbook</a>
+                        <a href="{{route('all.products')}}" class="btn btn-bold">Shop now</a>
+                        <a href="{{route('blogs')}}" class="btn btn-thin">View lookbook</a>
                     </p>
                 </div>
             </div>
@@ -52,7 +51,18 @@
                                     <del><span class="price-amount"><span class="currencySymbol">£</span>{{$bannerpsoduct->old_price}}</span></del>
                                 </div>
                                 <div class="buttons">
-                                    <a href="#" class="btn add-to-cart-btn">add to cart</a>
+                                    <form action="{{route('addToCart')}}" method="post">
+                                        @csrf
+                                        <input type="hidden" value="{{$bannerpsoduct->id}}" name="pid">
+                                        <input type="hidden" value="{{$bannerpsoduct->name}}" name="name">
+                                        <input type="hidden" value="{{$bannerpsoduct->new_price}}" name="new_price">
+                                        <input type="hidden" value="{{$bannerpsoduct->image}}" name="imgae[]">
+                                        <input type="hidden" value="1" name="quantity">
+                                        <input type="hidden" value="" name="size">
+                                        <div class="">
+                                            <button type="submit" class="btn add-to-cart-btn">@lang('add to cart')</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -128,7 +138,7 @@
                                     <a href="{{url('/product/'.$product->id.'/'.$product->name)}}" class="link-to-product">
                                         <img src="{{asset(explode('|',$product->image)[0])}}" alt="Vegetables" width="270" height="270" class="product-thumnail">
                                     </a>
-                                    <a class="lookup btn_call_quickview" href="#"><i class="biolife-icon icon-search"></i></a>
+                                    <a class="lookup btn_call_quickview" href=""><i class="biolife-icon icon-search"></i></a>
                                 </div>
                                 <div class="info">
                                     <b class="categories">Vegetables</b>
@@ -140,9 +150,29 @@
                                     <div class="slide-down-box">
                                         <p class="message">All products are carefully selected to ensure food safety.</p>
                                         <div class="buttons">
-                                            <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                            <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                            <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
+                                            <form action="{{route('addWishlist')}}" method="POST">
+                                                @csrf
+                                                @if(isset(Auth::user()->id))
+                                                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}" id="">
+                                                @endif
+                                                <input type="hidden" name="product_id" value="{{$product->id}}" id="">
+                                                <button class="wishlist-button" type="submit"><i class="fa fa-heart" aria-hidden="true"></i></button>
+                                            </form>
+                                            {{-- <a href="" style="color: #333;" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a> --}}
+
+                                            <form action="{{route('addToCart')}}" method="post">
+                                                @csrf
+                                                <input type="hidden" value="{{$product->id}}" name="pid">
+                                                <input type="hidden" value="{{$product->name}}" name="name">
+                                                <input type="hidden" value="{{$product->new_price}}" name="new_price">
+                                                <input type="hidden" value="{{$product->image}}" name="imgae[]">
+                                                <input type="hidden" value="1" name="quantity">
+                                                <input type="hidden" value="" name="size">
+                                                <div class="cart-btn-div">
+                                                    <button type="submit" class="btn welcome-allproduct-add-to-cart-btn">@lang('add to cart')</button>
+                                                </div>
+                                            </form>
+                                            <a href="" style="color: #333;" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -161,7 +191,7 @@
 <div class="banner-promotion-01 xs-margin-top-50px sm-margin-top-11px">
     <div class="biolife-banner promotion biolife-banner__promotion">
         <div class="banner-contain">
-            <!-- <div class="media background-biolife-banner__promotion">
+            <div class="media background-biolife-banner__promotion">
                 <div class="img-moving position-1">
                     <img src="assets/images/home-03/img-moving-pst-1.png" width="149" height="139" alt="img msv">
                 </div>
@@ -174,7 +204,7 @@
                 <div class="img-moving position-4">
                     <img src="assets/images/home-03/img-moving-pst-4.png" width="198" height="269" alt="img msv">
                 </div>
-            </div> -->
+            </div>
             <div class="text-content">
                 <div class="container text-wrap">
                     @foreach($middle_banners as $middle_banner)
@@ -183,7 +213,7 @@
                     <p class="third-line">{{$middle_banner->second_tag_line}}</p>
                     <div class="product-detail">
                         <p class="txt-price"><span>Only:</span> £{{$middle_banner->price}}</p>
-                        <a href="#" class="btn add-to-cart-btn">Shop Now</a>
+                        <a href="{{route('all.products')}}" class="btn add-to-cart-btn">Shop Now</a>
                     </div>
                     @endforeach
                 </div>
@@ -206,7 +236,7 @@
                     <p class="third-line">{{$bottom_banner->second_tag_line}}</p>
                     <p class="buttons">
                        
-                        <a href="" class="btn btn-thin">Shop Now</a>
+                        <a href="{{route('all.products')}}" class="btn btn-thin">Shop Now</a>
                     </p>
                 </div>
                 @endforeach
@@ -247,9 +277,33 @@
                                     <div class="slide-down-box">
                                         <p class="message">All products are carefully selected to ensure food safety.</p>
                                         <div class="buttons">
-                                            <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                            <a href="#" class="btn add-to-cart-btn">add to cart</a>
-                                            <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
+                                            <form action="{{route('addWishlist')}}" method="POST">
+                                                @csrf
+                                                @if(isset(Auth::user()->id))
+                                                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}" id="">
+                                                @endif
+                                                <input type="hidden" name="product_id" value="{{$deal->id}}" id="">
+                                                <button class="wishlist-btn-deal" type="submit"><i class="fa fa-heart" aria-hidden="true"></i></button> 
+                                            </form>
+                                            {{-- <a href="#" style="color: black;" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a> --}}
+
+                                            <form action="{{route('addToCart')}}" method="post">
+                                                @csrf
+                                                <input type="hidden" value="{{$product->id}}" name="pid">
+                                                <input type="hidden" value="{{$product->name}}" name="name">
+                                                <input type="hidden" value="{{$product->new_price}}" name="new_price">
+                                                <input type="hidden" value="{{$product->image}}" name="imgae[]">
+                                                <input type="hidden" value="1" name="quantity">
+                                                <input type="hidden" value="" name="size">
+                                                <div class="">
+                                                    <button type="submit" class="welcome-add-to-cart-btn">@lang('add to cart')</button>
+                                                </div>
+                                                {{-- <a href="" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a> --}}
+
+                                            </form>
+
+                                            {{-- <a href="#" class="btn add-to-cart-btn">add to cart</a> --}}
+                                            <a href="#" style="color: black;" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                         </div>
                                     </div>
                                 </div>

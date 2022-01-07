@@ -39,7 +39,8 @@ class BlogController extends Controller
 
 
         public function blogCategoryDelete($id){
-        $delete = BlogCategory::find($id)->first();
+        $delete = BlogCategory::find($id);
+        // dd($delete);
         $delete->delete();
         return back()->with('success','Blog Category Deleted!');
     }

@@ -96,6 +96,7 @@
                     <div class="quantity-box row">
                         
                         <div class="col-md-12">
+
                             <form action="{{route('addToCart')}}" id="form" method="post">
                                 @csrf
                                 <span class="title">Quantity: ( {{$single_product->quantity}} Item in stock)</span>
@@ -120,8 +121,8 @@
                                 <div class="">
                                     <button type="submit" form="form" class="btn add-cart-btn">add to cart</button>
                                 </div>
-                                
                             </form>
+
                         </div>
                     </div>
                     <div class="buttons">
@@ -223,6 +224,7 @@
                     <div id="tab_4th" class="tab-contain review-tab">
                         <div class="container">
                             <div class="row">
+                                
                                 <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
                                     <div class="rating-info">
                                         <p class="index"><strong class="rating">4.4</strong>out of 5</p>
@@ -277,63 +279,97 @@
                                         </ul>
                                     </div>
                                 </div>
+                                @guest
+                                @else
                                 <div class="col-lg-7 col-md-7 col-sm-6 col-xs-12">
                                     <div class="review-form-wrapper">
+                                        
                                         <span class="title">Submit your review</span>
-                                        <form action="#" name="frm-review" method="post">
+                                        <form action="{{route('productReview')}}" name="frm-review" method="post">
+                                            @csrf
                                             <div class="comment-form-rating">
-                                                <label>1. Your rating of this products:</label>
-                                                <p class="stars">
-                                                    <span>
-                                                        <a class="btn-rating" data-value="star-1" href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-                                                        <a class="btn-rating" data-value="star-2" href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-                                                        <a class="btn-rating" data-value="star-3" href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-                                                        <a class="btn-rating" data-value="star-4" href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-                                                        <a class="btn-rating" data-value="star-5" href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-                                                    </span>
-                                                </p>
+                                                <p style="display: inline-block; ">1. Your rating of this products:</p>
+                                                <div class="rate bg-success py-3 text-white mt-3">
+                                                    <div class="rating">
+                                                        <input type="radio" name="star" value="5" id="5"><label for="5">☆</label>
+                                                        <input type="radio" name="star" value="4" id="4"><label for="4">☆</label>
+                                                        <input type="radio" name="star" value="3" id="3"><label for="3">☆</label>
+                                                        <input type="radio" name="star" value="2" id="2"><label for="2">☆</label>
+                                                        <input type="radio" name="star" value="1" id="1"><label for="1">☆</label>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <p class="form-row wide-half">
-                                                <input type="text" name="name" value="" placeholder="Your name">
-                                            </p>
-                                            <p class="form-row wide-half">
-                                                <input type="email" name="email" value="" placeholder="Email address">
-                                            </p>
+                                            <input type="hidden" name="user_id" value="{{Auth::user()->id}}" id="">
+                                            <input type="hidden" name="product_id" value="{{$single_product->id}}" id="">
                                             <p class="form-row">
                                                 <textarea name="comment" id="txt-comment" cols="30" rows="10" placeholder="Write your review here..."></textarea>
                                             </p>
                                             <p class="form-row">
-                                                <button type="submit" name="submit">submit review</button>
+                                                <button type="submit" name="submit">Submit Review</button>
                                             </p>
                                         </form>
+                                        
                                     </div>
                                 </div>
+                                @endguest
                             </div>
                             <div id="comments">
                                 <ol class="commentlist">
                                     <li class="review">
                                         <div class="comment-container">
+                                           
+                                                
                                             <div class="row">
                                                 <div class="comment-content col-lg-8 col-md-9 col-sm-8 col-xs-12">
-                                                    <p class="comment-in"><span class="post-name">Quality is our way of life</span><span class="post-date">01/04/2018</span></p>
-                                                    <div class="rating"><p class="star-rating"><span class="width-80percent"></span></p></div>
-                                                    <p class="author">by: <b>Shop organic</b></p>
-                                                    <p class="comment-text">There are few things in life that please people more than the succulence of quality fresh fruit and vegetables.  At Fresh Fruits we work to deliver the world’s freshest, choicest, and juiciest produce to discerning customers across the UAE and GCC.</p>
-                                                </div>
-                                                <div class="comment-review-form col-lg-3 col-lg-offset-1 col-md-3 col-sm-4 col-xs-12">
-                                                    <span class="title">Was this review helpful?</span>
-                                                    <ul class="actions">
-                                                        <li><a href="#" class="btn-act like" data-type="like"><i class="fa fa-thumbs-up" aria-hidden="true"></i>Yes (100)</a></li>
-                                                        <li><a href="#" class="btn-act hate" data-type="dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i>No (20)</a></li>
-                                                        <li><a href="#" class="btn-act report" data-type="dislike"><i class="fa fa-flag" aria-hidden="true"></i>Report</a></li>
-                                                    </ul>
+
+                                                    <p class="comment-in"><span class="post-name">Quality is our way of life</span></p>
+                                                    @foreach ($product_reviews as $product_review)
+                                                        <div class="stars text-center">
+                                                            @if ($product_review->star == 5)
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                            @endif
+                                                            @if ($product_review->star == 4)
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                            @endif
+                                                            @if ($product_review->star == 3)
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                            @endif
+                                                            @if ($product_review->star == 2)
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                            @endif
+                                                            @if ($product_review->star == 1)
+                                                                <i class="fa fa-star"></i>
+                                                            @endif
+                                                            
+                                                        </div>
+            
+                                                        {{-- <div class="rating">
+                                                            <p class="star-rating">
+                                                                <span class="width-80percent"></span>
+                                                            </p>
+                                                        </div> --}}
+                                                        <p class="author">by: <b>{{$product_review->user->name}}</b>
+                                                            <span style="font-size: 11px; margin-left: 10px;" class="post-date">{{ $product_review->created_at->format('d-M-Y') }}</span></p>
+                                                        <p class="comment-text">{{$product_review->comment}}</p>
+                                                    @endforeach
                                                 </div>
                                             </div>
+                                            
                                         </div>
                                     </li>
                                 </ol>
 
-                                <div class="biolife-panigations-block version-2">
+                                {{-- <div class="biolife-panigations-block version-2">
                                     <ul class="panigation-contain">
                                         <li><span class="current-page">1</span></li>
                                         <li><a href="#" class="link-page">2</a></li>
@@ -346,7 +382,7 @@
                                         <p class="txt-count"><b>1-5</b> of <b>126</b> reviews</p>
                                         <a href="#" class="link-to">See all<i class="fa fa-caret-right" aria-hidden="true"></i></a>
                                     </div>
-                                </div>
+                                </div> --}}
 
                             </div>
                         </div>
@@ -379,12 +415,33 @@
                                     </div>
                                     <div class="slide-down-box">
                                         <p class="message">All products are carefully selected to ensure food safety.</p>
-                                        <div class="buttons">
-                                            <form action="" method="">
-                                                <a href="" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                                <a href="" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                <a href="" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
+                                        <div class="buttons releted-product-btn">
+                                            <form action="{{route('addWishlist')}}" method="POST">
+                                                @csrf
+                                                @if(isset(Auth::user()->id))
+                                                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}" id="">
+                                                @endif
+                                                <input type="hidden" name="product_id" value="{{$releted_product->id}}" id="">
+                                                <button class="wishlist-button" type="submit"><i class="fa fa-heart" aria-hidden="true"></i></button>
                                             </form>
+                                            {{-- <a href="" style="color: #333;" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a> --}}
+                                            
+                                            <form action="{{route('addToCart')}}" method="post">
+                                                @csrf
+                                                <input type="hidden" value="{{$releted_product->id}}" name="pid">
+                                                <input type="hidden" value="{{$releted_product->name}}" name="name">
+                                                <input type="hidden" value="{{$releted_product->new_price}}" name="new_price">
+                                                <input type="hidden" value="{{$releted_product->image}}" name="imgae[]">
+                                                <input type="hidden" value="1" name="quantity">
+                                                <input type="hidden" value="" name="size">
+                                                <div class="cart-btn-div">
+                                                    <button type="submit" class="btn releted-product-add-to-cart">@lang('add to cart')</button>
+                                                </div>
+                                                {{-- <a href="" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a> --}}
+
+                                            </form>
+                                            
+                                            <a href="" style="color: #333;" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                         </div>
                                     </div>
                                 </div>

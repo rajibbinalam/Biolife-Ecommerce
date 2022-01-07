@@ -3,7 +3,7 @@
 @section('content')
 <!--Hero Section-->
 <div class="hero-section hero-background">
-    <h1 class="page-title">Find Your Favourite Products</h1>
+    <h1 class="page-title">My Favourite Products</h1>
 </div>
 
 <!--Navigation section-->
@@ -11,7 +11,7 @@
     <nav class="biolife-nav">
         <ul>
             <li class="nav-item"><a href="{{route('home')}}" class="permal-link">Home</a></li>
-            <li class="nav-item"><span class="current-page">Fresh Fruit</span></li>
+            <li class="nav-item"><span class="current-page">My Wishlist</span></li>
         </ul>
     </nav>
 </div>
@@ -23,60 +23,7 @@
             <!-- Main content -->
             <div id="main-content" class="main-content col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-                <div class="block-item recently-products-cat md-margin-bottom-39">
-                    <ul class="products-list biolife-carousel nav-center-02 nav-none-on-mobile" data-slick='{"rows":1,"arrows":true,"dots":false,"infinite":false,"speed":400,"slidesMargin":0,"slidesToShow":5, "responsive":[{"breakpoint":1200, "settings":{ "slidesToShow": 3}},{"breakpoint":992, "settings":{ "slidesToShow": 3, "slidesMargin":30}},{"breakpoint":768, "settings":{ "slidesToShow": 2, "slidesMargin":10}}]}' >
-                        @foreach ($categories as $category)
-                            
-                            <li class="product-item category-wise">
-                                <div class="contain-product layout-02">
-                                    <div class="product-thumb">
-                                        <a href="" class="link-to-product">
-                                            <img src="{{asset($category->icon)}}" alt="dd" height: 150px; width: 100px; class="product-thumnail">
-                                        </a>
-                                    </div>
-                                    <div class="info">
-                                        <b class="categories"></b>
-                                        <h4 class="product-title"><a href="" class="pr-name">{{$category->name}}</a></h4>
-                                        
-                                    </div>
-                                </div>
-                            </li>
-                        @endforeach
-                        
-                    </ul>
-                </div>
-
                 <div class="product-category grid-style">
-
-                    <div id="top-functions-area" class="top-functions-area" >
-                        <div class="flt-item to-left group-on-mobile">
-                            <span class="flt-title">Refine</span>
-                            
-                            <div class="wrap-selectors">
-                                <form action="#" name="frm-refine" method="get">
-                                    <span class="title-for-mobile">Refine Products By</span>
-                                    <div data-title="Price:" class="selector-item">
-                                        <select name="price" class="selector">
-                                            <option value="all">Price</option>
-                                            <option value="class-1st">Less than 5$</option>
-                                            <option value="class-2nd">$5-10$</option>
-                                            <option value="class-3rd">$10-20$</option>
-                                            <option value="class-4th">$20-45$</option>
-                                            <option value="class-5th">$45-100$</option>
-                                            <option value="class-6th">$100-150$</option>
-                                            <option value="class-7th">More than 150$</option>
-                                        </select>
-                                    </div>
-                                    <div data-title="Brand:" class="selector-item">
-                                        <select name="brad" class="selector">
-                                            <option value="all">Top brands</option>
-                                        </select>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                       
-                    </div>
 
                     <div class="row">
                         <ul class="products-list">
@@ -103,15 +50,8 @@
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
                                                 <div class="buttons">
-                                                    <form action="{{route('addWishlist')}}" method="POST">
-                                                        @csrf
-                                                        @if(isset(Auth::user()->id))
-                                                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}" id="">
-                                                        @endif
-                                                        <input type="hidden" name="product_id" value="{{$product->id}}" id="">
-                                                        <button class="wishlist-button" type="submit"><i class="fa fa-heart" aria-hidden="true"></i></button>
-                                                    </form>
-                                                    {{-- <a href="" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a> --}}
+                                                    
+                                                    <a href="{{url('/my-wishlist/remove/'.Auth::user()->id.'/'.$product->id)}}" style="color: #333;" class="btn wishlist-btn"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                                                     
                                                     <form action="{{route('addToCart')}}" method="post">
                                                         @csrf
@@ -121,13 +61,14 @@
                                                         <input type="hidden" value="{{$product->image}}" name="imgae[]">
                                                         <input type="hidden" value="1" name="quantity">
                                                         <input type="hidden" value="" name="size">
-                                                        <div class="cart-btn-div">
+                                                        <div class="">
                                                             <button type="submit" class="btn product-add-to-cart-btn">@lang('add to cart')</button>
                                                         </div>
+                                                        {{-- <a href="" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a> --}}
 
                                                     </form>
-
-                                                    <a href="" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
+                                                    
+                                                    <a href="" style="color: #333;" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>

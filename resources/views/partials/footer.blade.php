@@ -63,7 +63,7 @@
                                     <li>
                                         <p class="info-item">
                                             <i class="biolife-icon icon-location"></i>
-                                            <b class="desc">{{$contact->address}}</b>
+                                            <b class="desc">{{strip_tags(htmlspecialchars_decode($contact->address))}}</b>
                                         </p>
                                     </li>
                                     <li>

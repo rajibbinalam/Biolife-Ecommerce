@@ -24,11 +24,9 @@
               <td>{{ $subcategory->slug}}</td> 
               <td>{{ $subcategory->category->name}}</td> 
               <td>
-                <a href="{{url('/admin/subcategory/edit/'.$subcategory->id)}}"
-                  style="color: white; background-color: #ff0000; padding: 8px; border-radius: 24px;"><i
+                <a href="{{url('/admin/Sub_Category/edit/'.$subcategory->id)}}" class="edit"><i
                     class="fa fa-edit"></i></a>
-                <a href="{{url('/admin/subcategory/delete/'.$subcategory->id)}}"
-                  style="color: white; background-color: #ff0000; padding: 8px; border-radius: 24px;"
+                <a href="{{url('/admin/Sub_Category/delete/'.$subcategory->id)}}" class="delete"
                   OnClick='return (confirm("Are you sure Delete"));'><i
                     class="fa fa-trash"></i></a>
               </td>

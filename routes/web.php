@@ -30,14 +30,22 @@ Route::get('/brand-wise','HomeController@BrandWise')->name('BrandWise');
 
 Route::get('/product/{id}/{name}','HomeController@singleProduct')->name('singleProduct');
 
-Route::post('/add-to-cart','HomeController@addToCart')->name('addToCart');
-Route::get('/checkout','HomeController@checkOut')->name('checkout');
-Route::get('/cart-remove/{rowId}','HomeController@removeItem')->name('removeItem');
-//Route::get('/view-cart','HomeController@viewCart')->name('viewCart');
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+    //============== Add To Cart Section
+Route::post('/add-to-cart','HomeController@addToCart')->name('addToCart')->middleware('auth');
+Route::get('/checkout','HomeController@checkOut')->name('checkout')->middleware('auth');    // View Cart
+Route::get('/cart-remove/{rowId}','HomeController@removeItem')->name('removeItem')->middleware('auth');
+
+    //====== Wishlist
+Route::post('/add-wishlist','HomeController@addWishlist')->name('addWishlist')->middleware('auth');
+Route::get('/my-wishlist/{user_id}','HomeController@MyWishlist')->name('MyWishlist')->middleware('auth');
+
+Route::get('/my-wishlist/remove/{user_id}/{product_id}','HomeController@removeWishlist')->name('removeWishlist')->middleware('auth');
+Route::post('/product/review','HomeController@productReview')->name('productReview')->middleware('auth');
+
+
+
+
 
 Route::get('/dashboard', function () {
     return redirect('/admin');
@@ -163,13 +171,19 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
     Route::name('category.')->prefix('category')->group(function () {
         Route::get('/index', 'CategoryController@categoriesCreate')->name('index');
         Route::post('/store', 'CategoryController@addCategory')->name('store');
+        Route::get('/edit/{id}', 'CategoryController@categoriesEdit')->name('categoriesEdit');
+        Route::post('/update/{id}', 'CategoryController@categoriesUpdate')->name('categoriesUpdate');
+        Route::get('/delete/{id}', 'CategoryController@categoriesDelete')->name('categoriesDelete');
 
     });
 
  //==============  sub category
     Route::name('Sub_Category.')->prefix('Sub_Category')->group(function () {
-        Route::get('/sub-ctegories', 'CategoryController@subCategoriesCreate')->name('index');
-        Route::post('/sub-ctegories', 'CategoryController@addSubCategory')->name('store');
+        Route::get('/index', 'CategoryController@subCategoriesCreate')->name('index');
+        Route::post('/index', 'CategoryController@addSubCategory')->name('store');
+        Route::get('/edit/{id}', 'CategoryController@subCategoriesEdit')->name('subCategoriesEdit');
+        Route::post('/update/{id}', 'CategoryController@subCategoriesUpdate')->name('subCategoriesUpdate');
+        Route::get('/delete/{id}', 'CategoryController@subCategoriesDelete')->name('subCategoriesDelete');
  
  });
     //==============  Child category

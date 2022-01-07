@@ -25,7 +25,7 @@
                 @if(!$category->icon)
                 <p>No Icon</p>
                 @else
-                <img src="{{ $category->icon}}" alt="No category icon" style="height: 41px; width: 100px;">
+                <img src="{{ $category->icon}}" alt="No category icon" style="height: 41px; width: 50px;">
                 @endif
               </td>
               <td>
@@ -86,9 +86,7 @@
 @endsection
 
 @push('breadcrumb')
-
-<button type="button" class="btn btn-primary" style="float: right;" data-toggle="modal"
-  data-target="#exampleModalCenter">
+<button type="button" class="btn btn-primary" style="float: right;" data-toggle="modal" data-target="#exampleModalCenter">
 @lang('Add New Category')
 </button>
 

@@ -30,7 +30,28 @@
                             <option value="jp">Japan (JPY)</option>
                         </select>
                     </li>
-                    <li><a href="login.html" class="login-link"><i class="biolife-icon icon-login"></i>Login/Register</a></li>
+                    <li>
+                        @guest
+                            <a href="{{route('login')}}" class="login-link"><i class="biolife-icon icon-login"></i>Login/Register</a>
+                        @else
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: transparent;color: white;">{{Auth::user()->name}}</button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item user-profile" style="color: black" href="">@lang('My Profile')</a>
+                                    <form action="{{route('logout')}}" method="post" style="margin-left: 55px;">
+                                        @csrf
+                                        {{-- <input type="submit" name="submit" class="dropdown-item user-profile" value="{{ __('Log Out') }}"> --}}
+                                        <button type="submit" class="dropdown-item log-out-btn" style="color: black">
+                                            @lang('Log Out')
+                                        </button>
+                                        {{-- <a class="dropdown-item user-profile" type="submit" style="color: black" href="">@lang('Log Out')</a> --}}
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        @endguest
+                        
+                    </li>
                 </ul>
             </div>
         </div>
@@ -79,27 +100,36 @@
                             </div>
                         </div>
                         <div class="wishlist-block hidden-sm hidden-xs">
-                            <a href="#" class="link-to">
+                            @if(isset(Auth::user()->id))
+                                <a href="{{url('/my-wishlist/'.Auth::user()->id)}}" class="link-to">
+                                    <span class="icon-qty-combine">
+                                        <i class="icon-heart-bold biolife-icon"></i>
+                                        {{-- <span class="qty"></span> --}}
+                                    </span>
+                                </a>
+                            @else
+                            <a href="{{route('login')}}" class="link-to">
                                 <span class="icon-qty-combine">
                                     <i class="icon-heart-bold biolife-icon"></i>
-                                    <span class="qty">4</span>
+                                    {{-- <span class="qty"></span> --}}
                                 </span>
                             </a>
+                            @endif
                         </div>
                         <div class="minicart-block">
                             <div class="minicart-contain">
                                 <a href="{{route('checkout')}}" class="link-to">
                                     <span class="icon-qty-combine">
                                         <i class="icon-cart-mini biolife-icon"></i>
-                                        <span class="qty">{{$count}}</span>
+                                        <span class="qty">{{Cart::count()}}</span>
                                     </span>
                                     <span class="title">My Cart -</span>
-                                    <span class="sub-total">£ {{$subTotal}}</span>
+                                    <span class="sub-total">£ {{Cart::subTotal()}}</span>
                                 </a>
                                 <div class="cart-content">
                                     <div class="cart-inner">
                                         <ul class="products">
-                                            @foreach ($carts as $cart)
+                                            @foreach (Cart::content() as $cart)
                                                 
                                             <li>
                                                 <div class="minicart-item">
@@ -161,183 +191,41 @@
                         </div>
                         <div class="wrap-menu">
                             <ul class="menu clone-main-menu">
+
+
+                                @foreach ($categories as $category)
                                 <li class="menu-item menu-item-has-children has-megamenu">
-                                    <a href="#" class="menu-name" data-title="Fruit & Nut Gifts"><i class="biolife-icon icon-fruits"></i>Fruit & Nut Gifts</a>
-                                    <div class="wrap-megamenu lg-width-900 md-width-640">
-                                        <div class="mega-content">
-                                            <div class="row">
-                                                <div class="col-lg-3 col-md-4 col-sm-12 xs-margin-bottom-25 md-margin-bottom-0">
-                                                    <div class="wrap-custom-menu vertical-menu">
-                                                        <h4 class="menu-title">Fresh Fuits</h4>
-                                                        <ul class="menu">
-                                                            <li><a href="#">Fruit & Nut Gifts</a></li>
-                                                            <li><a href="#">Mixed Fruits</a></li>
-                                                            <li><a href="#">Oranges</a></li>
-                                                            <li><a href="#">Bananas & Plantains</a></li>
-                                                            <li><a href="#">Fresh Gala Apples</a></li>
-                                                            <li><a href="#">Berries</a></li>
-                                                            <li><a href="#">Pears</a></li>
-                                                            <li><a href="#">Produce</a></li>
-                                                            <li><a href="#">Snack Foods</a></li>
-                                                        </ul>
+                                    <a href="#" class="menu-name" data-title="Fruit & Nut Gifts">
+                                       <i class="biolife-icon icon-fruits"></i>
+                                       {{$category->name}}</a>
+                                        @if ($category->subCategories->count()>0)
+                                        <div class="wrap-megamenu lg-width-900 md-width-640">
+                                            <div class="mega-content">
+                                                <div class="row">
+                                                    @foreach ($category->subCategories as $subCategory)
+                                                    <div class="col-lg-3 col-md-4 col-sm-12 xs-margin-bottom-25 md-margin-bottom-0">
+                                                        <div class="wrap-custom-menu vertical-menu">
+                                                            <h4 class="menu-title">{{$subCategory->name}}</h4>
+                                                            <ul class="menu">
+                                                                <li><a href="#">Fruit & Nut Gifts</a></li>
+                                                                <li><a href="#">Mixed Fruits</a></li>
+                                                                <li><a href="#">Oranges</a></li>
+                                                                <li><a href="#">Bananas & Plantains</a></li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
+                                                    @endforeach
+                                                    
                                                 </div>
-                                                <div class="col-lg-3 col-md-4 col-sm-12 lg-padding-left-23 xs-margin-bottom-25 md-margin-bottom-0">
-                                                    <div class="wrap-custom-menu vertical-menu">
-                                                        <h4 class="menu-title">Nut Gifts</h4>
-                                                        <ul class="menu">
-                                                            <li><a href="#">Non-Dairy Coffee Creamers</a></li>
-                                                            <li><a href="#">Coffee Creamers</a></li>
-                                                            <li><a href="#">Mayonnaise</a></li>
-                                                            <li><a href="#">Almond Milk</a></li>
-                                                            <li><a href="#">Ghee</a></li>
-                                                            <li><a href="#">Beverages</a></li>
-                                                            <li><a href="#">Ranch Salad Dressings</a></li>
-                                                            <li><a href="#">Hemp Milk</a></li>
-                                                            <li><a href="#">Nuts & Seeds</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-4 col-sm-12 lg-padding-left-50 xs-margin-bottom-25 md-margin-bottom-0">
-                                                    <div class="biolife-products-block max-width-270">
-                                                        <h4 class="menu-title">Bestseller Products</h4>
-                                                        <ul class="products-list default-product-style biolife-carousel nav-none-after-1k2 nav-center" data-slick='{"rows":1,"arrows":true,"dots":false,"infinite":false,"speed":400,"slidesMargin":30,"slidesToShow":1, "responsive":[{"breakpoint":767, "settings":{ "arrows": false}}]}'>
-                                                            <!-- loop == itme 3 -->
-                                                            <li class="product-item">
-                                                                <div class="contain-product none-overlay">
-                                                                    <div class="product-thumb">
-                                                                        <a href="#" class="link-to-product">
-                                                                            <img src="assets/images/products/p-08.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="info">
-                                                                        <b class="categories">Fresh Fruit</b>
-                                                                        <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
-                                                                        <div class="price">
-                                                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- there was brand -->
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="menu-item menu-item-has-children has-megamenu">
-                                    <a href="#" class="menu-name" data-title="Vegetables"><i class="biolife-icon icon-broccoli-1"></i>Vegetables</a>
-                                    <div class="wrap-megamenu lg-width-900 md-width-640 background-mega-01">
-                                        <div class="mega-content">
-                                            <div class="row">
-                                                <div class="col-lg-3 col-md-4 col-sm-12 xs-margin-bottom-25 md-margin-bottom-0">
-                                                    <div class="wrap-custom-menu vertical-menu">
-                                                        <h4 class="menu-title">Vegetables</h4>
-                                                        <ul class="menu">
-                                                            <li><a href="#">Fruit & Nut Gifts</a></li>
-                                                            <li><a href="#">Mixed Fruits</a></li>
-                                                            <li><a href="#">Oranges</a></li>
-                                                            <li><a href="#">Bananas & Plantains</a></li>
-                                                            <li><a href="#">Fresh Gala Apples</a></li>
-                                                            <li><a href="#">Berries</a></li>
-                                                            <li><a href="#">Pears</a></li>
-                                                            <li><a href="#">Produce</a></li>
-                                                            <li><a href="#">Snack Foods</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-md-4 col-sm-12 lg-padding-left-23 xs-margin-bottom-25 md-margin-bottom-0">
-                                                    <div class="wrap-custom-menu vertical-menu">
-                                                        <h4 class="menu-title">Gifts</h4>
-                                                        <ul class="menu">
-                                                            <li><a href="#">Non-Dairy Coffee Creamers</a></li>
-                                                            <li><a href="#">Coffee Creamers</a></li>
-                                                            <li><a href="#">Mayonnaise</a></li>
-                                                            <li><a href="#">Almond Milk</a></li>
-                                                            <li><a href="#">Ghee</a></li>
-                                                            <li><a href="#">Beverages</a></li>
-                                                            <li><a href="#">Ranch Salad Dressings</a></li>
-                                                            <li><a href="#">Hemp Milk</a></li>
-                                                            <li><a href="#">Nuts & Seeds</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                
+                                                <!-- there was brand -->
                                             </div>
                                         </div>
-                                    </div>
+                                        @endif
                                 </li>
-                                <li class="menu-item menu-item-has-children has-megamenu">
-                                    <a href="#" class="menu-name" data-title="Fresh Berries"><i class="biolife-icon icon-grape"></i>Fresh Berries</a>
-                                    <div class="wrap-megamenu lg-width-900 md-width-640 background-mega-02">
-                                        <div class="mega-content">
-                                            <div class="row">
-                                                <div class="col-lg-3 col-md-4 sm-col-12 md-margin-bottom-83 xs-margin-bottom-25">
-                                                    <div class="wrap-custom-menu vertical-menu">
-                                                        <h4 class="menu-title">Fresh Berries</h4>
-                                                        <ul class="menu">
-                                                            <li><a href="#">Fruit & Nut Gifts</a></li>
-                                                            <li><a href="#">Mixed Fruits</a></li>
-                                                            <li><a href="#">Oranges</a></li>
-                                                            <li><a href="#">Bananas & Plantains</a></li>
-                                                            <li><a href="#">Fresh Gala Apples</a></li>
-                                                            <li><a href="#">Berries</a></li>
-                                                            <li><a href="#">Pears</a></li>
-                                                            <li><a href="#">Produce</a></li>
-                                                            <li><a href="#">Snack Foods</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3 col-md-4 sm-col-12 lg-padding-left-23 xs-margin-bottom-36px md-margin-bottom-0">
-                                                    <div class="wrap-custom-menu vertical-menu">
-                                                        <h4 class="menu-title">Gifts</h4>
-                                                        <ul class="menu">
-                                                            <li><a href="#">Non-Dairy Coffee Creamers</a></li>
-                                                            <li><a href="#">Coffee Creamers</a></li>
-                                                            <li><a href="#">Mayonnaise</a></li>
-                                                            <li><a href="#">Almond Milk</a></li>
-                                                            <li><a href="#">Ghee</a></li>
-                                                            <li><a href="#">Beverages</a></li>
-                                                            <li><a href="#">Ranch Salad Dressings</a></li>
-                                                            <li><a href="#">Hemp Milk</a></li>
-                                                            <li><a href="#">Nuts & Seeds</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-4 sm-col-12 lg-padding-left-25 md-padding-top-55">
-                                                    <div class="biolife-banner layout-01">
-                                                        <h3 class="top-title">Farm Fresh</h3>
-                                                        <p class="content"> All the Lorem Ipsum generators on the Internet tend.</p>
-                                                        <b class="bottomm-title">Berries Series</b>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="menu-item"><a href="#" class="menu-name" data-title="Ocean Foods"><i class="biolife-icon icon-fish"></i>Ocean Foods</a></li>
-                                <li class="menu-item menu-item-has-children has-child">
-                                    <a href="#" class="menu-name" data-title="Butter & Eggs"><i class="biolife-icon icon-honey"></i>Butter & Eggs</a>
-                                    <ul class="sub-menu">
-                                        <li class="menu-item"><a href="#">Breakfast Scrambles</a></li>
-                                        <li class="menu-item menu-item-has-children has-child"><a href="#" class="menu-name" data-title="Eggs & other considerations">Eggs & other considerations</a>
-                                            <ul class="sub-menu">
-                                                <li class="menu-item"><a href="#">Bacon Avo Egg Sandwich</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="menu-item"><a href="#">Griddle</a></li>
-                                        <li class="menu-item menu-item-has-children has-child"><a href="#" class="menu-name" data-title="Sides & Extras">Sides & Extras</a>
-                                            <ul class="sub-menu">
-                                                <li class="menu-item"><a href="#">Fruit & Yogurt Parfait</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item"><a href="#" class="menu-title"><i class="biolife-icon icon-fast-food"></i>Fastfood</a></li>
-                                <li class="menu-item"><a href="#" class="menu-title"><i class="biolife-icon icon-beef"></i>Fresh Meat</a></li>
+                                @endforeach
+                                
+                                
+                                
                             </ul>
                         </div>
                     </div>

@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="{{asset('admin/bower_components/Ionicons/css/ionicons.min.css')}}">
   <link rel="stylesheet" href="{{asset('admin/dist/css/AdminLTE.min.css')}}">
   <link rel="stylesheet" href="{{asset('admin/plugins/iCheck/square/blue.css')}}">
+  
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition login-page">
@@ -18,9 +19,7 @@
     <div class="login-logo">
       <a href="{{url('/')}}"><b>Admin</b>LTE</a>
     </div>
-
-
-                     <!--       It is For user admin Dashboard        -->
+    
     
     @yield('content')
 
@@ -35,6 +34,7 @@
 <script src="{{asset('admin/bower_components/jquery/dist/jquery.min.js')}}"></script>
 <script src="{{asset('admin/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('admin/plugins/iCheck/icheck.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
   $(function () {
     $('input').iCheck({
