@@ -89,6 +89,4 @@
 <button type="button" class="btn btn-primary" style="float: right;" data-toggle="modal" data-target="#exampleModalCenter">
 @lang('Add New Category')
 </button>
-
-
 @endpush

@@ -48,7 +48,7 @@
         </li>
 
         <li class="treeview">
-          <a href="#">
+          <a href="">
             <i class="fa fa-pie-chart"></i>
             <span>@lang('General Settings')</span>
             <span class="pull-right-container">
@@ -56,8 +56,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{route('admin.faviconcreate')}}"><i class="fa fa-circle-o"></i> @lang('Favicons')</a></li>
-            <li><a href="{{route('admin.logocreate')}}"><i class="fa fa-circle-o"></i> @lang('Logo')</a></li>
+            <li><a href="{{route('admin.themeColor')}}"><i class="fa fa-circle-o"></i> @lang('Theme Color')</a></li>
             <li><a href="{{route('admin.slidercreate')}}"><i class="fa fa-circle-o"></i> @lang('Sliders')</a></li>
             <li class="treeview">
               <a href="#"><i class="fa fa-circle-o"></i> @lang('Banner')
@@ -72,7 +71,9 @@
                 
               </ul>
             </li>
-
+            <li><a href="{{route('admin.pickup')}}"><i class="fa fa-circle-o"></i> @lang('PickUp Location')</a></li>
+            <li><a href="{{route('admin.shippingMethod')}}"><i class="fa fa-circle-o"></i> @lang('Shipping Method')</a></li>
+            <li><a href="{{route('admin.returnPolicy')}}"><i class="fa fa-circle-o"></i> @lang('Product Return Policy')</a></li>
             <li><a href="{{route('admin.partnercreate')}}"><i class="fa fa-circle-o"></i> @lang('Partners')</a></li>
             <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> @lang('CHefs Banner')</a></li>
           </ul>
@@ -89,7 +90,9 @@
           <ul class="treeview-menu">
             <li><a href="{{route('admin.contactcreate')}}"><i class="fa fa-circle-o"></i> @lang('Contact Page')</a></li>
             <li><a href="{{route('admin.socialcreate')}}"><i class="fa fa-circle-o"></i> @lang('Social Links')</a></li>
-            <li><a href=""><i class="fa fa-circle-o"></i> @lang('Footer')</a></li>
+            <li><a href="{{route('admin.fqa')}}"><i class="fa fa-circle-o"></i> @lang('FAQ Page')</a></li>
+            <li><a href="{{route('admin.termsAndConditions')}}"><i class="fa fa-circle-o"></i> @lang('Terms & Condiotions')</a></li>
+            <li><a href="{{route('admin.PrivacyAndPolicy')}}"><i class="fa fa-circle-o"></i> @lang('Privacy & Policy')</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -121,6 +124,9 @@
             <li><a href="{{route('admin.messages')}}"><i class="fa fa-circle-o"></i> @lang('Message')</a></li>
           </ul>
         </li>
+        <li class="active treeview">
+          <li><a href="{{route('admin.manageStaffs')}}"><i class="fa fa-circle-o"></i> @lang('Manage Staffs')</a></li>
+      </li>
 
       </ul>
     </section>

@@ -21,8 +21,10 @@ Route::post('/contact','HomeController@contactMessage')->name('contactMessage');
 
 Route::get('/products','HomeController@allProducts')->name('all.products');
 
+//           Blog Post
 Route::get('/blogs','HomeController@blogs')->name('blogs');
 Route::get('/blogs/{id}/{title}','HomeController@singleBlog')->name('singleBlog');
+Route::post('/blogs/comment','HomeController@blogComment')->name('blogComment')->middleware('auth');
 
 Route::get('/category-wise','HomeController@CategoryWise')->name('CategoryWise');
 Route::get('/brand-wise','HomeController@BrandWise')->name('BrandWise');
@@ -31,17 +33,41 @@ Route::get('/brand-wise','HomeController@BrandWise')->name('BrandWise');
 Route::get('/product/{id}/{name}','HomeController@singleProduct')->name('singleProduct');
 
 
+    
+Route::middleware('auth')->group(function () {
     //============== Add To Cart Section
-Route::post('/add-to-cart','HomeController@addToCart')->name('addToCart')->middleware('auth');
-Route::get('/checkout','HomeController@checkOut')->name('checkout')->middleware('auth');    // View Cart
-Route::get('/cart-remove/{rowId}','HomeController@removeItem')->name('removeItem')->middleware('auth');
+    Route::post('/add-to-cart','HomeController@addToCart')->name('addToCart');
+    Route::get('/checkout','HomeController@checkOut')->name('checkout');    // View Cart
+    Route::get('/cart-remove/{rowId}','HomeController@removeItem')->name('removeItem');
+    Route::post('/customer/update-billing/{id}','HomeController@customerBillingUpdate')->name('customerBillingUpdate');
+    Route::post('/update-cart','HomeController@UpdateCart')->name('UpdateCart');
+    Route::get('/checkout/payment-methods','HomeController@paymentMethod')->name('paymentMethod');    // View Cart
+    Route::get('/order','HomeController@orderProduct')->name('orderProduct');
 
-    //====== Wishlist
-Route::post('/add-wishlist','HomeController@addWishlist')->name('addWishlist')->middleware('auth');
-Route::get('/my-wishlist/{user_id}','HomeController@MyWishlist')->name('MyWishlist')->middleware('auth');
+        //====== Wishlist
+    Route::post('/add-wishlist','HomeController@addWishlist')->name('addWishlist');
+    Route::get('/my-wishlist/{user_id}','HomeController@MyWishlist')->name('MyWishlist');
+    Route::get('/my-wishlist/remove/{user_id}/{product_id}','HomeController@removeWishlist')->name('removeWishlist');
 
-Route::get('/my-wishlist/remove/{user_id}/{product_id}','HomeController@removeWishlist')->name('removeWishlist')->middleware('auth');
-Route::post('/product/review','HomeController@productReview')->name('productReview')->middleware('auth');
+    Route::post('/product/review','HomeController@productReview')->name('productReview');
+
+});
+
+// Facebook Login URL
+Route::prefix('facebook')->name('facebook.')->group( function(){
+    Route::get('login', [App\Http\Controllers\SocialLoginController::class, 'loginUsingFacebook'])->name('login');
+    Route::get('/callback', [App\Http\Controllers\SocialLoginController::class, 'callbackFromFacebook'])->name('callback');
+});
+// Google Login URL
+Route::prefix('google')->name('google.')->group( function(){
+    Route::get('login', [App\Http\Controllers\SocialLoginController::class, 'loginWithGoogle'])->name('login');
+    Route::any('/callback', [App\Http\Controllers\SocialLoginController::class, 'callbackFromGoogle'])->name('callback');
+});
+// GitHUb Login URL
+Route::prefix('github')->name('github.')->group( function(){
+    Route::get('login', [App\Http\Controllers\SocialLoginController::class, 'loginWithGitHub'])->name('login');
+    Route::any('/callback', [App\Http\Controllers\SocialLoginController::class, 'callbackFromGitHub'])->name('callback');
+});
 
 
 
@@ -89,15 +115,6 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
     Route::post('/home-pages/5', 'HomeController@HomePage5');
     //Route::get('/home-pages/delete', 'HomeController@delete')->name('delete');
 
-    //===========favicon
-    Route::get('/favicon', 'GeneralSetController@faviconcreate')->name('faviconcreate');
-    Route::post('favicon', 'GeneralSetController@faviconInsert')->name('faviconinsert');
-
-    //======logo
-    Route::get('/logo', 'GeneralSetController@logocreate')->name('logocreate');
-    Route::post('logo', 'GeneralSetController@logoInsert')->name('logoinsert');
-    Route::get('/logo/delete/{id}', 'GeneralSetController@logoDelete')->name('logodelete');
-
     //==========slider
     Route::get('/slider', 'GeneralSetController@slidercreate')->name('slidercreate');
     Route::post('slider', 'GeneralSetController@sliderInsert')->name('sliderinsert');
@@ -125,6 +142,41 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
     Route::post('/bottom-banner/update/{id}', 'GeneralSetController@bottombannerUpdate');
     Route::get('/bottom-banner/delete/{id}', 'GeneralSetController@bottombannerDelete')->name('bottombannerdelete');
 
+    // ============ Pickup[ Locations
+    Route::get('/pickup-locations','GeneralSetController@pickupLocation')->name('pickup');
+    Route::post('/pickup-locations','GeneralSetController@pickupLocationCreate')->name('pickupLocationCreate');
+    Route::get('/pickup/delete/{id}','GeneralSetController@pickupLocationDelete')->name('pickupLocationDelete');
+
+    // =============  Shipping Methods
+    Route::get('/shipping-method','GeneralSetController@shippingMethod')->name('shippingMethod');
+    Route::post('/shipping-method','GeneralSetController@shippingMethodInsert')->name('shippingMethodInsert');
+    Route::get('/shipping/delete/{id}','GeneralSetController@shippingMethodDelete')->name('shippingMethodDelete');
+    // =============  Return Policy
+    Route::get('/return-policy','GeneralSetController@returnPolicy')->name('returnPolicy');
+    Route::post('/return-policy','GeneralSetController@returnPolicyInsert')->name('returnPolicyInsert');
+    Route::get('/return_policy/edit/{id}','GeneralSetController@returnPolicyEdit')->name('returnPolicyEdit');
+    Route::post('/return_policy/update/{id}','GeneralSetController@returnPolicyUpdate')->name('returnPolicyUpdate');
+    Route::get('/return_policy/delete/{id}','GeneralSetController@returnPolicyDelete')->name('returnPolicyDelete');
+
+    // ==================  Theme Color Set
+    Route::get('theme-color','GeneralSetController@themeColor')->name('themeColor');
+    Route::post('theme-color/admin','GeneralSetController@adminColorUpdate')->name('adminColorUpdate');
+    Route::post('theme-color/admin-sidebar','GeneralSetController@adminSidebarUpdate')->name('adminSidebarUpdate');
+    Route::post('theme-color/web','GeneralSetController@webColorUpdate')->name('webColorUpdate');
+
+    //================ FAQ Page
+    Route::get('/fqa', 'ContactSocialController@fqa')->name('fqa');
+    Route::post('/fqa', 'ContactSocialController@fqaInsert')->name('fqaInsert');
+    Route::get('/fqa/delete/{id}', 'ContactSocialController@fqaDelete')->name('fqaDelete');
+
+    // ============== Terms and Conditions
+    Route::get('/terms-and-conditons', 'ContactSocialController@termsAndConditions')->name('termsAndConditions');
+    Route::post('/terms-and-conditons/{id}', 'ContactSocialController@termsAndConditionsUpdate')->name('termsAndConditionsUpdate');
+    // ============== Terms and Conditions
+    Route::get('/privacy-policy', 'ContactSocialController@PrivacyAndPolicy')->name('PrivacyAndPolicy');
+    Route::post('/privacy-policy/{id}', 'ContactSocialController@PrivacyAndPolicyUpdate')->name('PrivacyAndPolicyUpdate');
+
+    
 
     //==========partners
     Route::get('/partner', 'GeneralSetController@partnercreate')->name('partnercreate');
@@ -203,6 +255,8 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
     //================== Product section   
 
     Route::resource('products',ProductController::class);
+    Route::post('/bulk-product','ProductController@BulkProductImport')->name('BulkProductImport');
+    Route::get('/product/export/', 'ProductController@BulkProductExport')->name('BulkProductExport');
 
     Route::post('/products_ctegories', 'ProductController@SubCategories')->name('productCat');
     Route::get('product/category/wise/sub/category/{id}', 'ProductController@categoryWiseSubCatgoery')->name('product.category.wise.sub.category');
@@ -215,9 +269,11 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
     Route::get('/product/edit/{id}', 'ProductController@editProduct')->name('editProduct');
     Route::post('/products_ctegories', 'ProductController@editSubCategories')->name('editproductCat');
     Route::get('category/wise/sub/category/{id}', 'ProductController@editcategoryWiseSubCatgoery')->name('editcategory.wise.sub.category');
-
     Route::post('/product/update/{id}', 'ProductController@updateProduct')->name('updateProduct');
     Route::get('/product/delete/{id}', 'ProductController@deleteProduct')->name('deleteProduct');
+    //   ====    product Status Update
+    Route::post('/product/status/update/{id}', 'ProductController@statusUpdate')->name('statusUpdate');
+
 
     //======================= brand
     Route::get('/brand', 'BrandController@index')->name('brand');
@@ -228,6 +284,14 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
     Route::get('/best-product', 'ProductController@bestSeller')->name('bestSeller');
     Route::post('/best-product', 'ProductController@bestSellerIput')->name('bestSellerIput');
     Route::get('/best-product/delete/{id}', 'ProductController@bestSellerDelete')->name('bestSellerDelete');
+
+
+    //==================== Manage Stafs
+    Route::get('/manage-staffs','AdminController@manageStaffs')->name('manageStaffs');
+    Route::post('/staff/status/update/{id}','AdminController@adminStatusUpdate')->name('adminStatusUpdate');
+    Route::get('/staff/delete/{id}','AdminController@adminStaffDelete')->name('adminStaffDelete');
+
+    Route::post('/staff','AdminController@newStaff')->name('newStaff');
 
 
 

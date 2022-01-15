@@ -259,4 +259,7 @@
             },3000);
         }
     });
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+        })
 })(jQuery);

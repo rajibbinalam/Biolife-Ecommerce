@@ -10,91 +10,14 @@ use App\Models\TopBanner;
 use App\Models\MiddleBanner;
 use App\Models\BottomBanner;
 use App\Models\Partner;
+use App\Models\PickupLocation;
+use App\Models\ReturnPolicy;
+use App\Models\ShippingMethod;
+use App\Models\ThemeColor;
+use PhpParser\Node\Stmt\Return_;
 
 class GeneralSetController extends Controller
 {
-    //
-
-
-    //======favicon
-    public function faviconcreate()
-    {
-        $icon = Favicon::all();
-        return view('admin.favicon', compact('icon'));
-    }
-
-    public function faviconInsert(Request $request)
-    {
-
-        $iconid = Favicon::find(1);
-
-
-        if ($request->hasFile('icon')) {
-            unlink(public_path($iconid->icon));
-            $file = $request->file('icon');
-
-            $extension = $file->getClientOriginalExtension();
-            $fileName = 'favicon' . time() . '.' . $extension;
-            $location = '/images/favicon/';
-            $file->move(public_path() . $location, $fileName);
-            $imageLocation = $location . $fileName;
-
-            $iconid->icon = $imageLocation;
-            $iconid->save();
-
-
-            return back();
-        } else {
-            return back()->with('error', 'Somethink Wrong!');
-        }
-    }
-
-
-
-
-    //=========logo
-    public function logocreate()
-    {
-        $logoo = Logo::all();
-        return view('admin.logo', compact('logoo'));
-    }
-
-
-
-    public function logoInsert(Request $request)
-    {
-
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-
-            $extension = $file->getClientOriginalExtension();
-            $fileName = 'logo' . time() . '.' . $extension;
-            $location = '/images/logo/';
-            $file->move(public_path() . $location, $fileName);
-            $imageLocation = $location . $fileName;
-
-            Logo::insert([
-                'name' => $request->input('name'),
-                'status' => $request->get('status'),
-                'image' => $imageLocation,
-            ]);
-
-
-            return back();
-        } else {
-            return back()->with('error', 'Somethink Wrong!');
-        }
-    }
-
-    public function logoDelete($id)
-    {
-        $delete = Logo::find($id)->first();
-        $delete->delete();
-        unlink(public_path($delete->image));
-        return back()->with('success', 'Logo Deleted!');
-    }
-
-
     //============slider
 
     public function slidercreate()
@@ -404,7 +327,138 @@ class GeneralSetController extends Controller
     }
 
 
+    // =============  PickUp Locations
+    public function pickupLocation(){
+        $pageTitle = "Pickup Location";
+        $pickups = PickupLocation::all();
+        return view('admin.general_settings.pickup_locations',compact('pickups','pageTitle'));
+    }
 
+    public function pickupLocationCreate(Request $request){
+        $pickup = new PickupLocation();
+        $pickup->name = $request->get('name');
+        $pickup->add_by = $request->get('add_by');
+        $pickup->save();
+        return back()->with('success','Location Created Success');
+    }
+    public function pickupLocationDelete($id){
+        $delete = PickupLocation::find($id);
+        $delete->delete();
+        return back()->with('success','Location Deleted');
+    }
+
+    //=============  Shipping Methods
+    
+    public function shippingMethod(){
+        $pageTitle = "Shipping Method";
+        $shippings = ShippingMethod::all();
+        return view('admin.general_settings.shipping_method',compact('pageTitle','shippings'));
+    }
+    public function shippingMethodInsert(Request $request)
+    {
+        $shipping = new ShippingMethod();
+        $shipping->title = $request->title;
+        $shipping->duration = $request->duration;
+        $shipping->price = $request->price;
+        $shipping->add_by = $request->add_by;
+        $shipping->save();
+        return back()->with('success','Shipping Mehtod Create Success');
+    }
+
+    public function shippingMethodDelete($id){
+        $delete = ShippingMethod::find($id);
+        $delete->delete();
+        return back()->with('success','Shipping Method Deleted');
+    }
+
+
+
+    // ============= Return Policy
+    public function returnPolicy(){
+        $return_policies = ReturnPolicy::first();
+        $pageTitle = "Product Return Policy";
+        return view('admin.general_settings.return_policy',compact('pageTitle','return_policies'));
+    }
+    public function returnPolicyInsert(Request $request){
+        $return_policy = new ReturnPolicy();
+        $return_policy->descriptions = $request->descriptions;
+        $return_policy->add_by = $request->add_by;
+        $return_policy->save();
+        return back()->with('success','Return Policy Added Success');
+    }
+
+    public function returnPolicyEdit($id){
+        $edit = ReturnPolicy::find($id);
+        $pageTitle = "Product Return Policy Edit";
+        return view('admin.general_settings.return_policy_edit',compact('edit','pageTitle'));
+    }
+
+    public function returnPolicyUpdate(Request $request, $id){
+        $returnPolicy_update =  ReturnPolicy::find($id);
+        $returnPolicy_update->descriptions = $request->descriptions;
+        $returnPolicy_update->add_by = $request->add_by;
+        $returnPolicy_update->save();
+        return back()->with('success','Return Policy Update Success');
+    }
+
+    public function returnPolicyDelete($id){
+        $delete = ReturnPolicy::find($id);
+        $delete->delete();
+        return back()->with('success','Return Policy Deleted');
+    }
+
+
+    //=========== Theme Color
+    public function themeColor(){
+        $pageTitle = "Theme Colors";
+        return view('admin.general_settings.ThemeColor',compact('pageTitle'));
+    }
+    public function adminColorUpdate(Request $request){
+        $count = ThemeColor::all()->count();
+        if($count<1){
+            $Admincolor = new ThemeColor();
+            $Admincolor->admin = $request->admin_color;
+            $Admincolor->add_by = $request->add_by;
+            $Admincolor->save();
+        }
+        $Admincolor = ThemeColor::first();
+        $Admincolor->admin = $request->admin_color;
+        $Admincolor->add_by = $request->add_by;
+        $Admincolor->save();
+        return back()->with('success','Admin Theme Color Changed');
+    }
+
+    
+    public function adminSidebarUpdate(Request $request){
+        $count = ThemeColor::all()->count();
+        if($count<1){
+            $Admincolor = new ThemeColor();
+            $Admincolor->adminSideBar = $request->adminSideBar;
+            $Admincolor->add_by = $request->add_by;
+            $Admincolor->save();
+        }
+        $Admincolor = ThemeColor::first();
+        $Admincolor->adminSideBar = $request->adminSideBar;
+        $Admincolor->add_by = $request->add_by;
+        $Admincolor->save();
+        return back()->with('success','Admin Theme Color Changed');
+    }
+
+
+    public function webColorUpdate(Request $request){
+        $count = ThemeColor::all()->count();
+        if($count<1){
+            $Admincolor = new ThemeColor();
+            $Admincolor->WebPage = $request->web_color;
+            $Admincolor->add_by = $request->add_by;
+            $Admincolor->save();
+        }
+        $Admincolor = ThemeColor::first();
+        $Admincolor->WebPage = $request->web_color;
+        $Admincolor->add_by = $request->add_by;
+        $Admincolor->save();
+        return back()->with('success','Web Theme Color Changed');
+    }
     //============= Partners
 
     public function partnercreate()

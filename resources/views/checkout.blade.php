@@ -22,7 +22,7 @@
                     <div class="checkout-progress-wrap">
                         <ul class="steps">
                             <li class="step 1st">
-                                <div class="checkout-act active">
+                                <div class="checkout-act">
                                     <h3 class="title-box"><span class="number">1</span>Customer</h3>
                                     <div class="box-content">
                                         <p class="txt-desc">Checking out as a <a class="pmlink" href="#">Guest?</a> You’ll be able to save your details to create an account with us later.</p>
@@ -47,14 +47,50 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="step 2nd">
-                                <div class="checkout-act"><h3 class="title-box"><span class="number">2</span>Shipping</h3></div>
+                            <li class="step 2nd row">
+                                <div class="checkout-act col-md-6">
+                                    <h3 class="title-box"><span class="number">2</span>Shipping Methods</h3>
+                                </div>
+                                <div class="fomt-control col-md-6">
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                    @foreach ($shipping_methods as $shipping_method)
+                                        <option class="option" style="margin: 0 !important;" value="{{$shipping_method->id}}">{{$shipping_method->title}} + £ {{$shipping_method->price}}</option>
+                                    @endforeach
+                                </select>
+                                </div>
+                                
                             </li>
                             <li class="step 3rd">
-                                <div class="checkout-act"><h3 class="title-box"><span class="number">3</span>Billing</h3></div>
+                                <div class="checkout-act"><h3 class="title-box" style="margin-bottom: 20px;"><span class="number">3</span>Billing</h3></div>
+                                <form action="{{url('/customer/update-billing/'.Auth::user()->id)}}" method="post">
+                                    @csrf
+                                    <div class="form-group col-md-6">
+                                        <label for=""> Name</label>
+                                        <input type="text" class="form-control" name="name" id="" value="{{Auth::user()->name}}">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for=""> Phone</label>
+                                        <input type="text" class="form-control" name="phone" id="" value="{{Auth::user()->phone}}">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for=""> Email Address</label>
+                                        <input type="email" class="form-control" name="email" id="" value="{{Auth::user()->email}}">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for=""> District</label>
+                                        <input type="text" class="form-control" name="district" id="" value="{{Auth::user()->district}}">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="address">Billing Address</label>
+                                        <textarea name="address" id="address" cols="80" rows="4" placeholder="Billing Address">{{Auth::user()->address}}</textarea>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </form>
                             </li>
                             <li class="step 4th">
-                                <div class="checkout-act"><h3 class="title-box"><span class="number">4</span>Payment</h3></div>
+                                <div class="checkout-act"><h3 class="title-box" style="margin-top: 30px; "><span class="number">4</span>Let's Check Out</h3></div>
                             </li>
                         </ul>
                     </div>
@@ -65,69 +101,103 @@
                     <div class="order-summary sm-margin-bottom-80px">
                         <div class="title-block">
                             <h3 class="title">Order Summary</h3>
-                             <a href="" class="link-forward">Edit Cart</a>
+                            
+                             {{-- <a href="" class="link-forward">Edit Cart</a> --}}
                         </div>
-                        <div class="cart-list-box short-type">
+                        <div class="cart-list-box short-type" style="margin: 14px 3px 12px 6px;">
                             <span class="number">{{$count}} items</span>
+                            <div class="" style="display: block; float: right;">
+                                <button type="submit" class="btn btn-primary" form="cartUpdate">Save</button>
+                            </div>
                             <ul class="cart-list">
                                 @foreach ($carts as $cart)
-                                    
                                 <li class="cart-elem">
-                                    <div class="cart-item">
+                                    <div class="cart-item row">
                                         <a href="{{url('/cart-remove/'.$cart->rowId)}}" class="remove"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                         <div class="product-thumb">
                                             
                                             <a class="prd-thumb" href="{{url('/product/'.$cart->id.'/'.$cart->name)}}">
-                                                {{-- use $image = ; --}}
                                                 <figure><img src="{{asset(explode('|',App\Models\Product::find($cart->id)->image)[0])}}" width="80" height="60" alt="shop-cart" ></figure>
                                             </a>
                                         </div>
-                                        <div class="info">
-                                            <span class="txt-quantity">{{$cart->qty}}X</span>
+                                        <div class="info col-md-6">
+                                            <form action="{{route('UpdateCart')}}" method="post" id="cartUpdate">
+                                                @csrf
+                                                <span class="txt-quantity">
+                                                    <input type="number" class="form-control" name="quantity" value="{{$cart->qty}}">
+                                                </span>
+                                                <span class="txt-quantity">
+                                                    <input type="hidden" class="form-control" name="size" value="{{$cart->options['size']}}">
+                                                </span>
+                                                <span class="txt-quantity">
+                                                    <input type="hidden" class="form-control" name="colors" value="{{$cart->options['colors']}}">
+                                                </span>
+                                                <input type="hidden" value="{{$cart->id}}" name="pid">
+                                                <input type="hidden" value="{{$cart->name}}" name="name">
+                                                <input type="hidden" value="{{$cart->new_price}}" name="new_price">
+                                                <input type="hidden" value="{{$cart->size}}" name="size">
+                                                <input type="hidden" value="{{$cart->image}}" name="imgae[]">
+                                            </form>
                                             <a href="{{url('/product/'.$cart->id.'/'.$cart->name)}}" class="pr-name">{{$cart->name}}</a>
                                         </div>
                                         <div class="price price-contain">
                                             <ins><span class="price-amount"><span class="currencySymbol">£</span> {{$cart->price}}</span></ins>
-                                            {{-- <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del> --}}
                                         </div>
                                     </div>
+                                    
                                 </li>
                                 @endforeach
+                                
                             </ul>
                             <ul class="subtotal">
                                 <li>
                                     <div class="subtotal-line">
                                         <b class="stt-name">Subtotal</b>
-                                        <span class="stt-price">£{{$subTotal}}</span>
+                                        <span class="stt-price">£{{Cart::subtotal()}}</span>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="subtotal-line">
                                         <b class="stt-name">Shipping</b>
-                                        <span class="stt-price">£00.00</span>
+                                        <span class="stt-price">£{{(int)$shipping = 10}}</span>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="subtotal-line">
                                         <b class="stt-name">Tax</b>
-                                        <span class="stt-price">£{{$tex}}</span>
+                                        <span class="stt-price">£{{Cart::tax()}}</span>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="subtotal-line">
-                                        <a href="#" class="link-forward">Promo/Gift Certificate</a>
+                                        <a href="" class="link-forward">Promo/Gift</a>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="subtotal-line">
                                         <b class="stt-name">total:</b>
-                                        <span class="stt-price">£{{$subTotal + $tex}}</span>
+                                        <span class="stt-price">£{{Cart::subtotal() }}</span>
                                     </div>
                                 </li>
                             </ul>
-                            
                         </div>
-                            <button type="submit" name="btn-sbmt" class="btn checkout-btn">Check Out</button>
+                        @foreach ($carts as $cart)
+                        {{-- {{$cart->count()}} --}}
+                        <form action="{{route('orderProduct')}}" id="checkOut" method="post">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{$cart->id}}" id="">
+                            <input type="hidden" name="user_id" value="{{Auth::user()->id}}" id="">
+                            <input type="hidden" name="total_cost" value="{{Cart::subtotal()}}" id="">
+                            <input type="hidden" name="quantity" value="{{$cart->qty}}" id="">
+                            <input type="hidden" name="color" value="{{$cart->options['colors']}}" id="">
+                            <input type="hidden" name="size" value="{{$cart->options['size']}}" id="">
+                            
+                        </form>
+                        @endforeach
+                        <button type="submit" name="btn-sbmt" form="checkOut" class="btn checkout-btn">Check Out</button>
+                        
+                        <a href="{{route('paymentMethod')}}">Check Out</a>
+                            
                         
 
                     </div>

@@ -9,6 +9,9 @@ use App\Models\Category;
 use App\Models\SubCategory;
 use App\Models\ChildCategory;
 use App\Models\Brand;
+use App\Exports\ProductExport;
+use App\Imports\ProductImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -35,6 +38,20 @@ class ProductController extends Controller
         $categories = Category::all();
         $brands = Brand::all();
         return view('admin.product.add-product',compact('categories','pageTitle','brands'));
+        
+    }
+
+
+    // =========== Bulk Product Upload
+    public function BulkProductImport(Request $request) 
+    {
+        Excel::import(new ProductImport, $request->bulk_product);
+        
+        return back()->with('success', 'You Product Uploaded!');
+    }
+    public function BulkProductExport() 
+    {
+        return Excel::download(new ProductExport, 'Product.xlsx');
     }
 //======================Show Category For Store Products
     public function SubCategories(Request $request)
@@ -84,8 +101,6 @@ class ProductController extends Controller
             'new_price'=> 'required',
             'old_price'=> 'required',
             'quantity'=> 'required',
-            //'size'=> 'string',
-            //'add_by '=> 'required',
             'image'=> 'required',
             'details'=> 'required',
             'category_id '=> 'string',
@@ -114,7 +129,12 @@ class ProductController extends Controller
             $product->old_price = $request->old_price;
             $product->quantity = $request->quantity;
             $product->details = $request->details;
-            $product->size = $request->size;
+            $product->size = implode(',',$request->size);
+            $product->colors = implode(',',$request->colors);
+            $product->measurement = $request->measurement;
+            $product->shipping_time = $request->shipping_time;
+            $product->whole_sell_quantity = $request->whole_sell_quantity;
+            $product->whole_sell_persentage = $request->whole_sell_persentage;
             $product->category_id = $request->category_id;
             $product->sub_category_id = $request->sub_category_id;
             $product->child_category_id = $request->child_category_id;
@@ -231,10 +251,25 @@ class ProductController extends Controller
             //$update_product->child_category_id = $request->child_category_id;
             $update_product->add_by = $request->add_by;
             $update_product->brand_id = $request->brand_id;
+            $update_product->size = implode(',',$request->size);
+            $update_product->colors = implode(',',$request->colors);
+            $update_product->measurement = $request->measurement;
+            $update_product->shipping_time = $request->shipping_time;
+            $update_product->whole_sell_quantity = $request->whole_sell_quantity;
+            $update_product->whole_sell_persentage = $request->whole_sell_persentage;
             $update_product->save();
 
 
        return back()->with('success', 'Product Updated!');
+    }
+
+
+    //==============  Product Status Update
+    public function statusUpdate(Request $request,$id){
+        $status_update = Product::find($id);
+        $status_update->status = $request->status;
+        $status_update->save();
+        return back()->with('success','Product Status Update');
     }
 
     /**

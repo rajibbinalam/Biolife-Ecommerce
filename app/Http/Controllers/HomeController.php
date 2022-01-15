@@ -8,6 +8,7 @@ use App\Models\Banner;
 use App\Models\BottomBanner;
 use App\Models\TopBanner;
 use App\Models\BlogCategory;
+use App\Models\BlogComment;
 use App\Models\BlogPost;
 use App\Models\Category;
 use App\Models\ChildCategory;
@@ -23,8 +24,11 @@ use App\Models\SubCategory;
 use App\Models\Subscriber;
 use App\Models\HomePage;
 use App\Models\Brand;
+use App\Models\Orders;
 use App\Models\Wishlist;
 use App\Models\ProductReview;
+use App\Models\ShippingMethod;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -102,13 +106,24 @@ class HomeController extends Controller
         return view('style1.blog',compact('pageTitle','blog_posts'));
     }
 
+    // =========   Blog Comment
+    public function blogComment(Request $request){
+        $commet = new BlogComment();
+        $commet->user_id = $request->user_id;
+        $commet->blog_post_id = $request->blog_post_id;
+        $commet->comment = $request->comment;
+        $commet->save();
+        return back();
+    }
+
     //==== Single Blog Post
     public function singleBlog($id){
         $single = BlogPost::find($id);
         $pageTitle = "Post - Blog";
         $recent_posts = BlogPost::orderBy('created_at','DESC')->limit(3)->get();
         $blog_categories = BlogCategory::orderBy('created_at','DESC')->limit(6)->get();
-        return view('style1.single_blog',compact('pageTitle','single','recent_posts','blog_categories'));
+        $post_comments = BlogComment::where('blog_post_id',$id)->get();
+        return view('style1.single_blog',compact('pageTitle','single','recent_posts','blog_categories','post_comments'));
     }
 
     //============= category wise Products
@@ -137,9 +152,11 @@ class HomeController extends Controller
         $single_product = Product::find($id);
         $releted_products = Product::where('category_id', $single_product->category_id)->where('id','!=',$single_product->id)->limit(8)->get();
         $product_image = explode('|',$single_product->image);
+        $product_size = explode(',',$single_product->size);
+        $product_color = explode(',',$single_product->colors);
         $pageTitle = "Products - ".$single_product->name;
         $product_reviews = ProductReview::where('product_id',$id)->get();
-        return view('style1.single_product',compact('pageTitle','single_product','product_image','releted_products','product_reviews'));
+        return view('style1.single_product',compact('pageTitle','single_product','product_image','releted_products','product_reviews','product_size','product_color'));
     }
 
     // =============   Home Page Insertion
@@ -237,6 +254,7 @@ class HomeController extends Controller
         $name = $request->get('name');
         $price = $request->get('new_price');
         $quantity = $request->get('quantity');
+        $colors = $request->get('colors');
         // $image = $request->get('image');
         $size = $request->get('size');
 
@@ -244,16 +262,52 @@ class HomeController extends Controller
         $image = explode('|',$images)[0];
 
         $cart = Cart::content()->where('id',$id)->first();
-        if(isset($cart)&& $cart != null){
-            $quantity = ((int)$quantity + (int)$cart->qty);
-            $total = ((int)$quantity * (int)$price);
-            Cart::update($cart->rowId,['qty'=>$quantity , 'options'=>['size'=>$size , 'image'=>$image , 'total'=>$total]]);
+        $Totalquantity = Product::find($id)->quantity;
+        if($quantity > $Totalquantity){
+            return back()->with('error','You Must select Less Then '.$Totalquantity);
         }else{
-            $total = ((int)$quantity * (int)$price);
-            Cart::add($id,$name,$quantity,$price,['size'=>$size , 'image'=>$image , 'total'=>$total]);
+            if(isset($cart)&& $cart != null){
+                $quantity = ((int)$quantity + (int)$cart->qty);
+                $total = ((int)$quantity * (int)$price);
+                Cart::update($cart->rowId,['qty'=>$quantity , 'options'=>['size'=>$size ,'colors'=>$colors , 'image'=>$image , 'total'=>$total]]);
+            }else{
+                $total = ((int)$quantity * (int)$price);
+                Cart::add($id,$name,$quantity,$price,['size'=>$size , 'colors'=>$colors , 'image'=>$image , 'total'=>$total]);
+            }
+            
+            return back()->with('success','Product Added To Cart');
         }
         
-        return back()->with('success','Product Added To Cart');
+    }
+
+    public function UpdateCart(Request $request){
+        $id = $request->get('pid');
+        $name = $request->get('name');
+        $price = $request->get('new_price');
+        $quantity = $request->get('quantity');
+        $colors = $request->get('colors');
+        // $image = $request->get('image');
+        $size = $request->get('size');
+
+        $images = Product::find($id)->image;
+        $image = explode('|',$images)[0];
+
+        $cart = Cart::content()->where('id',$id)->first();
+        $Totalquantity = Product::find($id)->quantity;
+        if($quantity > $Totalquantity){
+            return back()->with('error','You Must select Less Then '.$Totalquantity);
+        }else{
+            if(isset($cart)&& $cart != null){
+                // $quantity = ((int)$quantity + (int)$cart->qty);
+                $total = ((int)$quantity * (int)$price);
+                Cart::update($cart->rowId,['qty'=>$quantity , 'options'=>['size'=>$size ,'colors'=>$colors , 'image'=>$image , 'total'=>$total]]);
+            }else{
+                $total = ((int)$quantity * (int)$price);
+                Cart::add($id,$name,$quantity,$price,['size'=>$size ,'colors'=>$colors , 'image'=>$image , 'total'=>$total]);
+            }
+            
+            return back()->with('success','Product Added To Cart');
+        }
     }
 
     public function checkOut(){
@@ -262,13 +316,43 @@ class HomeController extends Controller
         $subTotal = Cart::subtotal();
         $count = Cart::count();
         $tex = Cart::tax();
-        return view('checkout',compact('carts','subTotal','count','tex','pageTitle'));
+        $shipping_methods = ShippingMethod::all();
+        return view('checkout',compact('carts','subTotal','count','tex','pageTitle','shipping_methods'));
+    }
+    public function customerBillingUpdate(Request $request, $id){
+        $updateCustomer = User::find($id);
+        $updateCustomer->name = $request->name;
+        $updateCustomer->email = $request->email;
+        $updateCustomer->phone = $request->phone;
+        $updateCustomer->district = $request->district;
+        $updateCustomer->district = $request->district;
+        $updateCustomer->address = $request->address;
+        $updateCustomer->save();
+        return back();
     }
 
 
     public function removeItem($rowId){
         Cart::remove($rowId);
         return back()->with('success','Item Remove from Cart');
+    }
+
+    //===============  payment Methods
+    public function paymentMethod(){
+        return view('/payment');
+    }
+
+    public function orderProduct(Request $request){
+        $order = new Orders();
+        $order->order_number = 'BIOLIFE'.time();
+        $order->product_id = $request->product_id;
+        $order->user_id = $request->user_id;
+        $order->total_cost = $request->total_cost;
+        $order->quantity = $request->quantity;
+        $order->size = $request->size;
+        $order->color = $request->color;
+        $order->save();
+        return back()->with('success','Your Order Confirmed');
     }
 
         //================= Wishlist 

@@ -30,17 +30,13 @@ class BlogController extends Controller
                     'add_by'=> $request->input('add_by'),
                 ]);
             
-            
             return back()->with('success', 'Blog Category Added Success!');
         
-
-
         }
 
 
-        public function blogCategoryDelete($id){
+    public function blogCategoryDelete($id){
         $delete = BlogCategory::find($id);
-        // dd($delete);
         $delete->delete();
         return back()->with('success','Blog Category Deleted!');
     }
@@ -61,7 +57,6 @@ public function blogPostcreate(){
         $pageTitle = "Add Blog Post";
         $categories = BlogCategory::all();
         return view('admin.add-blog-post', compact('categories','pageTitle'));
-        //return view('admin.add-blog-post');
     }
 
 
@@ -93,10 +88,7 @@ public function blogPostcreate(){
          }  else{
                 return back()->with('error', 'Somethink Wrong!');
             }
-
-
         }
-
 
         public function blogPostEdit($id){
             

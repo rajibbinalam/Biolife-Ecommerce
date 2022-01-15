@@ -7,7 +7,6 @@
     <title> {{__(@$pageTitle)}} || @lang($general->site_name)</title>
     <meta name="csrf-token" content="">
     <link rel="icon" type="image/x-icon" href="{{asset($general->favicon)}}">
-
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="{{asset('admin/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('admin/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
@@ -22,9 +21,10 @@
     <link rel="stylesheet" href="{{asset('admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin/css/toast.css')}}">
     <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
-    
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-    
+    <style>
+        @include('admin.layouts.theme-color.color')
+    </style>
 
 </head>
 
@@ -151,6 +151,8 @@
  
 @stack('script')
 @stack('postscript')
+
+
 
 
 </body>

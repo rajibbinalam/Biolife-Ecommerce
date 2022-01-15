@@ -64,7 +64,9 @@
 
                         <div class="auth-info">
                             <div class="ath">
-                                <a href="#" class="avata"><img src="customer-image" width="29" height="28" alt="">Customer Name</a>
+                                <a href="" class="avata">
+                                    <img src="{{asset('images/user.png')}}" width="29" height="28" alt="">
+                                    {{$single->auth_name}}</a>
                                 <span class="count-item viewer"><i class="fa fa-eye" aria-hidden="true"></i>630</span>
                                 <span class="count-item commented"><i class="fa fa-commenting" aria-hidden="true"></i>26</span>
                             </div>
@@ -86,68 +88,57 @@
                 <!--Comment Block-->
                 <div class="post-comments">
                     <h3 class="cmt-title">Comments<sup>(26)</sup></h3>
+                    @guest
 
+                    @else
+                    
                     <div class="comment-form">
-                        <form action="#" method="post" name="frm-post-comment">
+                        <form action="{{route('blogComment')}}" method="post" name="frm-post-comment">
+                            @csrf
                             <p class="form-row">
-                                <textarea name="txt-comment" id="txt-comment-ath-3364" cols="30" rows="10" placeholder="Write your comment"></textarea>
-                                <a href="#" class="current-author"><img src="assets/images/blogpost/viewer-avt.png" width="41" height="41" alt=""></a>
+                                <textarea name="comment" id="txt-comment-ath-3364" cols="30" rows="10" placeholder="Write your comment"></textarea>
+                                @if (isset(Auth::user()->image))
+                                    <a href="" class="current-author"><img src="{{Auth::user()->image}}" width="40" height="40" alt=""></a>
+                                @else
+                                    <a href="" class="current-author"><img src="{{asset('images/user.png')}}" width="40" height="40" alt=""></a>
+                                @endif
+                                
                             </p>
+                            <input type="hidden" name="user_id" value="{{Auth::user()->id}}" id="">
+                            <input type="hidden" name="blog_post_id" value="{{$single->id}}" id="">
                             <p class="form-row last-btns">
                                 <button type="submit" class="btn btn-sumit">post a comment</button>
-                                <a href="#" class="btn btn-fn-1"><i class="fa fa-smile-o" aria-hidden="true"></i></a>
-                                <a href="#" class="btn btn-fn-1"><i class="fa fa-paperclip" aria-hidden="true"></i></a>
-                                <a href="#" class="btn btn-fn-1"><i class="fa fa-file-image-o" aria-hidden="true"></i></a>
                             </p>
                         </form>
                     </div>
-
+                    @endguest
                     <div class="comment-list">
 
                         <ol class="post-comments lever-0">
                             <li class="comment-elem">
                                 <div class="wrap-post-comment">
-
-                                    <div class="cmt-inner">
-                                        <div class="auth-info">
-                                            <a href="#" class="author-contact"><img src="assets/images/blogpost/author-02.png" alt="" width="29" height="28">Christiano Bale</a>
-                                            <span class="cmt-time">4 days ago</span>
+                                    @foreach ($post_comments as $comment)
+                                        <div class="cmt-inner">
+                                            <div class="auth-info">
+                                                <a href="" class="author-contact">
+                                                    @if (isset($comment->user->image))
+                                                        <img src="{{asset($comment->user->image)}}" alt="" width="29" height="28">
+                                                    @endif
+                                                    {{$comment->user->name}}
+                                                </a>
+                                                <span class="cmt-time">{{ $comment->created_at->format('d-M-Y - h:i A') }}</span>
+                                            </div>
+                                            <div class="cmt-content">
+                                                <p>
+                                                    {{$comment->comment}}
+                                                </p>
+                                            </div>
+                                            <div class="cmt-fooot">
+                                                <a href="" class="btn btn-like"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>9</a>
+                                                <a href="" class="btn btn-dislike"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i>1</a>
+                                            </div>
                                         </div>
-                                        <div class="cmt-content">
-                                            <p>Nam sed eleifend dui, eu eleifend leo.Mauris ornare eros quis placerat mollis. Duis ornare euismod risus at dictum. Proin<br>
-                                                at porttitor metus. Nunc luctus nisl suscipit, hendrerit ligula non.</p>
-                                        </div>
-                                        <div class="cmt-fooot">
-                                            <a href="#" class="btn btn-response"><i class="fa fa-commenting" aria-hidden="true"></i>Comment</a>
-                                            <a href="#" class="btn btn-like"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>9</a>
-                                            <a href="#" class="btn btn-dislike"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i>1</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="comment-resposes">
-                                        <ol class="post-comments lever-1">
-                                            <li class="comment-elem">
-                                                <div class="wrap-post-comment">
-                                                    <div class="cmt-inner">
-                                                        <div class="auth-info">
-                                                            <a href="#" class="author-contact"><img src="assets/images/blogpost/author-03.png" alt="" width="29" height="28">Samuel Godi</a>
-                                                            <span class="cmt-time">4 days ago</span>
-                                                        </div>
-                                                        <div class="cmt-content">
-                                                            <p>Ut pellentesque gravida justo non rhoncus. Nunc ullamcorper tortor id aliquet luctus. Proin varius aliquam<br>
-                                                                consequat.Curabitur a commodo diam, vitae pellentesque urna.</p>
-                                                        </div>
-                                                        <div class="cmt-fooot">
-                                                            <a href="#" class="btn btn-response"><i class="fa fa-commenting" aria-hidden="true"></i>Comment</a>
-                                                            <a href="#" class="btn btn-like"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>9</a>
-                                                            <a href="#" class="btn btn-dislike"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i>1</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ol>
-                                    </div>
-
+                                    @endforeach
                                 </div>
                             </li>
                         </ol>

@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Contact;
+use App\Models\FAQ;
+use App\Models\PrivacyAndPolicy;
 use App\Models\SocialLink;
+use App\Models\TermsAndCondition;
 
 class ContactSocialController extends Controller
 {
@@ -118,6 +121,65 @@ public function socialCreate()
         return back()->with('success','Link Deleted!');
     }
 
+
+
+    // ============== FAQ Page
+    
+    public function fqa(){
+        $pageTitle = "Frequently Asked Question";
+        $questions = FAQ::all();
+        return view('admin.manu_page_settings.FAQ_page',compact('pageTitle','questions'));
+    }
+    public function fqaInsert(Request $request){
+        $fqa = new FAQ();
+        $fqa->title = $request->title;
+        $fqa->answer = $request->answer;
+        $fqa->add_by = $request->add_by;
+        $fqa->save();
+        return back()->with('success','FAQ Added Success');
+    }
+
+    public function fqaDelete($id){
+        $delete = FAQ::find($id);
+        $delete->delete();
+        return back()->with('success','FAQ Deleted Success');
+    }
+
+    //============== Terms And Conditions
+    public function termsAndConditions(){
+        $pageTitle = "Terms And Conditions";
+        $terms = TermsAndCondition::first();
+        return view('admin.manu_page_settings.terms_and_conditions',compact('pageTitle','terms'));
+    }
+
+    public function termsAndConditionsUpdate(Request $request,$id){
+        $termsCondition = TermsAndCondition::find($id);
+        $termsCondition->title = $request->title;
+        $termsCondition->slug = $request->slug;
+        $termsCondition->descripton = $request->descripton;
+        $termsCondition->add_by = $request->add_by;
+        $termsCondition->position = $request->position;
+        $termsCondition->save();
+        return back()->with('success','Terms And Conditions Updated');
+    }
+
+
+    // ==================== Privacy And Policy
+    public function PrivacyAndPolicy(){
+        $pageTitle = "Privacy And policy";
+        $privacy = PrivacyAndPolicy::first();
+        return view('admin.manu_page_settings.privacy_and_policy',compact('pageTitle','privacy'));
+    }
+    public function PrivacyAndPolicyUpdate(Request $request,$id){
+        $privacy_and_policy = PrivacyAndPolicy::find($id);
+        $privacy_and_policy->title = $request->title;
+        $privacy_and_policy->slug = $request->slug;
+        $privacy_and_policy->descripton = $request->descripton;
+        $privacy_and_policy->add_by = $request->add_by;
+        $privacy_and_policy->position = $request->position;
+        $privacy_and_policy->save();
+        return back()->with('success','Privacy And Policy Updated');
+    }
 
 
 

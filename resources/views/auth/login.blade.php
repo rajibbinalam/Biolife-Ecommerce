@@ -55,6 +55,7 @@
                               @endif
                           </p>
                       </form>
+                      
                   </div>
               </div>
 
@@ -64,13 +65,11 @@
                       <div class="intro">
                           <h4 class="box-title">New Customer?</h4>
                           <p class="sub-title">Create an account with us and you’ll be able to:</p>
-                          <ul class="lis">
-                              <li>Check out faster</li>
-                              <li>Save multiple shipping anddesses</li>
-                              <li>Access your order history</li>
-                              <li>Track new orders</li>
-                              <li>Save items to your Wishlist</li>
-                          </ul>
+                          <div class="mt-4">
+                            <a href="{{route('facebook.login')}}" class="btn btn-fb">Login with Facebook</a>
+                            <a href="{{route('google.login')}}" class="btn btn-google">Login with Google</a>
+                            <a href="{{route('github.login')}}" class="btn btn-github">Login with GitHub</a>
+                          </div>
                           <a href="{{route('register')}}" class="btn btn-bold">Create an account</a>
                       </div>
                   </div>

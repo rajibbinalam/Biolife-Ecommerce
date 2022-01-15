@@ -10,21 +10,27 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:600&amp;display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400i,700i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu&amp;display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="shortcut icon" type="image/x-icon" href="{{asset($general->favicon)}}" />
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/animate.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/font-awesome.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/nice-select.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/slick.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/main-color.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/main-color.php')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
+    <style>
+        @include('partials.theme-color.main-color')
+    </style>
 
 </head>
 
 <body class="biolife-body">
 
 <!-- Preloader -->
-    <div id="biof-loading">
+    {{-- <div id="biof-loading">
         <div class="biof-loading-center">
             <div class="biof-loading-center-absolute">
                 <div class="dot dot-one"></div>
@@ -32,7 +38,7 @@
                 <div class="dot dot-three"></div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- HEADER -->
     @include('partials.header')
@@ -60,6 +66,8 @@
     <script src="{{asset('assets/js/slick.min.js')}}"></script>
     <script src="{{asset('assets/js/biolife.framework.js')}}"></script>
     <script src="{{asset('assets/js/functions.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 
     <script>
         $(document).ready(function () {

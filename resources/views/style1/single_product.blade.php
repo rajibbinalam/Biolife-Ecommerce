@@ -74,6 +74,7 @@
                         
                     </ul>
                 </div>
+
                 <div class="product-attribute">
                     <h3 class="title">{{$single_product->name}}</h3>
                     <div class="rating">
@@ -85,9 +86,15 @@
                     <span class="sku">Sku: {{$single_product->sku}}</span>
                     <p class="excerpt">{{ Str::limit(strip_tags(htmlspecialchars_decode($single_product->details)), 120, ' ...') }}</p>
                     <div class="price">
-                        <ins><span class="price-amount"><span class="currencySymbol">Price : £</span>{{$single_product->new_price}}</span></ins>
+                        <ins>
+                            <span class="price-amount"><span class="currencySymbol">Price : £</span>{{$single_product->new_price}}</span>
+                        </ins>
+                        <br><br><br>
+                        
                     </div>
-                    <div class="shipping-info">
+                    <br><br>
+                    <div class="shipping-info" style="margin-top:20px; ">
+                        <br>
                         <p class="shipping-day">3-Day Shipping</p>
                         <p class="for-today">Pree Pickup Today</p>
                     </div>
@@ -100,8 +107,7 @@
                             <form action="{{route('addToCart')}}" id="form" method="post">
                                 @csrf
                                 <span class="title">Quantity: ( {{$single_product->quantity}} Item in stock)</span>
-                                <div class="col-md-6">
-                                    
+                                <div class="col-md-12">
                                     <input class="quantity" type="number" value="1" name="quantity">
                                 </div>
                                 <input type="hidden" value="{{$single_product->id}}" name="pid">
@@ -110,14 +116,26 @@
                                 <input type="hidden" value="{{$single_product->image}}" name="imgae[]">
                                 {{-- <label>Select Size</label> --}}
                                 <div class="col-md-6">
-                                    <select name="size" class="custom-select cust-select" >
-                                        <option value="">Select Size</option>
-                                        <option value="S">S</option>
-                                        <option value="L">L</option>
-                                        <option value="M">M</option>
-                                        <option value="XL">XL</option>
+                                    <label for="">Size: </label>
+                                    <select name="size" class="form-control">
+                                        <option value="">Available Size</option>
+                                        @foreach ($product_size as $p_size)
+                                            <option value="{{$p_size}}">{{$p_size}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
+                                <div class="col-md-6">
+                                    <label for="">Color: </label>
+                                    <select name="colors" class="form-control">
+                                        <option value="">Available Color</option>
+                                        @foreach ($product_color as $p_color)
+                                            <option value="{{$p_color}}">{{$p_color}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                {{-- <br> --}}
+                                <hr>
+                                <br>
                                 <div class="">
                                     <button type="submit" form="form" class="btn add-cart-btn">add to cart</button>
                                 </div>
@@ -126,32 +144,11 @@
                         </div>
                     </div>
                     <div class="buttons">
-                        
-                        {{-- <a href="" class="btn add-to-cart-btn">add to cart</a> --}}
                         <p class="pull-row">
                             <a href="" class="btn wishlist-btn">wishlist</a>
                             <a href="" class="btn compare-btn">compare</a>
                         </p>
                     </div>
-                    {{-- <div class="location-shipping-to">
-                        <span class="title">Ship to:</span>
-                        <select name="shipping_to" class="country">
-                            <option value="-1">Select Country</option>
-                            <option value="america">America</option>
-                            <option value="france">France</option>
-                            <option value="germany">Germany</option>
-                            <option value="japan">Japan</option>
-                        </select>
-                    </div> --}}
-                    {{-- <div class="social-media">
-                        <ul class="social-list">
-                            <li><a href="#" class="social-link"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                            <li><a href="#" class="social-link"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                            <li><a href="#" class="social-link"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                            <li><a href="#" class="social-link"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
-                            <li><a href="#" class="social-link"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div> --}}
                     <div class="acepted-payment-methods">
                         <ul class="payment-methods">
                             <li><img src="assets/images/card1.jpg" alt="" width="51" height="36"></li>
@@ -161,6 +158,8 @@
                         </ul>
                     </div>
                 </div>
+
+
             </div>
 
             <!-- Tab info -->
@@ -175,15 +174,12 @@
                 </div>
                 <div class="tab-content">
                     <div id="tab_1st" class="tab-contain desc-tab active">
-                        <p class="desc"> {{strip_tags(htmlspecialchars_decode($single_product->details))}}</p>
-                        {{-- <div class="desc-expand">
-                            <span class="title">Organic Fresh Fruit</span>
-                            <ul class="list">
-                                <li>100% real fruit ingredients</li>
-                                <li>100 fresh fruit bags individually wrapped</li>
-                                <li>Blending Eastern & Western traditions, naturally</li>
-                            </ul>
-                        </div> --}}
+                        <p class="desc"> 
+                            @php
+                                echo $single_product->details;
+                            @endphp
+                        
+                        </p>
                     </div>
                     <div id="tab_2nd" class="tab-contain addtional-info-tab">
                         <table class="tbl_attributes">
@@ -196,29 +192,18 @@
                                 <th>Size</th>
                                 <td><p>{{$single_product->size}}</p></td>
                             </tr>
+                            <tr>
+                                <th>Colors</th>
+                                <td><p>{{$single_product->colors}}</p></td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
                     <div id="tab_3rd" class="tab-contain shipping-delivery-tab">
                         <div class="accodition-tab biolife-accodition">
-                            <ul class="tabs">
-                                <li class="tab-item">
-                                    <span class="title btn-expand">How long will it take to receive my order?</span>
-                                    <div class="content">
-                                        <p>Orders placed before 3pm eastern time will normally be processed and shipped by the following business day. For orders received after 3pm, they will generally be processed and shipped on the second business day. For example if you place your order after 3pm on Monday the order will ship on Wednesday. Business days do not include Saturday and Sunday and all Holidays. Please allow additional processing time if you order is placed on a weekend or holiday. Once an order is processed, speed of delivery will be determined as follows based on the shipping mode selected:</p>
-                                        <div class="desc-expand">
-                                            <span class="title">Shipping mode</span>
-                                            <ul class="list">
-                                                <li>Standard (in transit 3-5 business days)</li>
-                                                <li>Priority (in transit 2-3 business days)</li>
-                                                <li>Express (in transit 1-2 business days)</li>
-                                                <li>Gift Card Orders are shipped via USPS First Class Mail. First Class mail will be delivered within 8 business days</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                                
-                            </ul>
+                            <p>@php
+                                echo App\Models\ReturnPolicy::first()->descriptions;
+                            @endphp</p>
                         </div>
                     </div>
                     <div id="tab_4th" class="tab-contain review-tab">

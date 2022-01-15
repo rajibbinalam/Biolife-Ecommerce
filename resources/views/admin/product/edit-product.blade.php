@@ -48,6 +48,17 @@
       			@enderror
           </div>
           <div class="form-group col-md-6">
+            <label><strong>Size :</strong><span class="text-muted">( Selected :{{$edit->size}} )</span></label><br>
+            <label><input style="margin: 6px;" type="checkbox" name="size[]" value="M"> M</label>
+            <label><input style="margin: 6px;" type="checkbox" name="size[]" value="S"> S</label>
+            <label><input style="margin: 6px;" type="checkbox" name="size[]" value="L"> L</label>
+            <label><input style="margin: 6px;" type="checkbox" name="size[]" value="XL"> XL</label>
+            <label><input style="margin: 6px;" type="checkbox" name="size[]" value="XXL"> XXL</label>
+            <label><input style="margin: 6px;" type="checkbox" name="size[]" value="XXXL"> XXXL</label>
+            <label><input style="margin: 6px;" type="checkbox" name="size[]" value="4XL"> 4XL</label>
+        </div>
+
+          <div class="form-group col-md-6">
               <label for="exampleFormControlSelect1">Select Brand</label>
               <select class="form-control" id="editcategory" name="brand_id">
                 <option value="">Select Brand</option>
@@ -72,21 +83,59 @@
             </select>
           </div>
           <div class="form-group col-md-6">
-            <label for="exampleFormControlSelect1">Select Size</label>
-            <select class="form-control" id="size" name="size">
-              <option value=""></option>
-              <option value="SM" @if($edit->size == 'SM') selected @endif>SM</option>
-              <option value="S" @if($edit->size == 'S') selected @endif>S</option>
-              <option value="M" @if($edit->size == 'M') selected @endif>M</option>
-              <option value="L" @if($edit->size == 'L') selected @endif>L</option>
-              <option value="XL" @if($edit->size == 'XL') selected @endif>XL</option>
-              <option value="XXL" @if($edit->size == 'XXL') selected @endif>XXL</option>
-              <option value="XXXL" @if($edit->size == 'XXXL') selected @endif>XXXL</option>
-            </select>
-            @error('size')
-			    <div class="text-danger">{{ $message }}</div>
-			@enderror
+            <label><strong>Colors :</strong><span class="text-muted">( Selected :{{$edit->colors}} )</span></label><br>
+            <label><input style="margin: 6px;" type="checkbox" name="colors[]" value="Blue"> Blue</label>
+            <label><input style="margin: 6px;" type="checkbox" name="colors[]" value="White"> White</label>
+            <label><input style="margin: 6px;" type="checkbox" name="colors[]" value="Red"> Red</label>
+            <label><input style="margin: 6px;" type="checkbox" name="colors[]" value="Purple"> Purple</label>
+            <label><input style="margin: 6px;" type="checkbox" name="colors[]" value="Green"> Green</label>
+            <label><input style="margin: 6px;" type="checkbox" name="colors[]" value="Black"> Black</label>
+            <label><input style="margin: 6px;" type="checkbox" name="colors[]" value="Yollow"> Yollow</label>
+            <label><input style="margin: 6px;" type="checkbox" name="colors[]" value="Sky"> Sky</label>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="exampleFormControlSelect1">Select Measurement</label>
+          <select class="form-control" id="size" name="measurement">
+            <option value="">Select Measurement</option>
+            <option value="Kilogram" @if($edit->measurement == "Kilogram") selected @endif>Kilogram</option>
+            <option value="Gram" @if($edit->measurement == "Gram") selected @endif>Gram</option>
+            <option value="Meter" @if($edit->measurement == "Meter") selected @endif>Meter</option>
+            <option value="Pound" @if($edit->measurement == "Pound") selected @endif>Pound</option>
+            <option value="Inch" @if($edit->measurement == "Inch") selected @endif>Inch</option>
+            <option value="Foot" @if($edit->measurement == "Foot") selected @endif>Foot</option>
+            <option value="Litter" @if($edit->measurement == "Litter") selected @endif>Litter</option>
+          </select>
+          @error('measurement')
+            <div class="text-danger">{{ $message }}</div>
+          @enderror
+        </div>
+        @if(isset($edit->shipping_time))
+          <div class="form-group col-md-6">
+            <label for="">@lang('Estimate Shipping Time')</label>
+            <input type="text" class="form-control" name="shipping_time" value="{{$edit->shipping_time}}">
+            @error('shipping_time')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
           </div>
+        @endif
+        @if(isset($edit->whole_sell_quantity))
+          <div class="form-group col-md-6">
+            <label for="">@lang('Whole Sell Quantity')</label>
+            <input type="number" class="form-control" name="whole_sell_quantity"  value="{{$edit->whole_sell_quantity}}">
+            @error('whole_sell_quantity')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+          </div>
+        @endif
+        @if(isset($edit->whole_sell_persentage))
+        <div class="form-group col-md-6">
+          <label for="">@lang('Whole Sell Persentage')</label>
+          <input type="number" class="form-control" name="whole_sell_persentage" value="{{$edit->whole_sell_persentage}}">
+          @error('whole_sell_persentage')
+              <div class="text-danger">{{ $message }}</div>
+          @enderror
+        </div>
+        @endif
           <div class="form-group col-md-12">
 	          <label for="inputEmail">Details</label>
 	          <textarea class="ckeditor form-control" name="details" id="inputEmail" rows="3">{{$edit->details}}</textarea>
