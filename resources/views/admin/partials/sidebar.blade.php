@@ -28,6 +28,22 @@
             <li><a href="{{route('admin.bestSeller')}}"><i class="fa fa-circle-o"></i> @lang('Best Product')</a></li>
           </ul>
         </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-laptop"></i>
+            <span>Orders</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{route('admin.allOrder')}}"><i class="fa fa-circle-o"></i> @lang('All Orders')</a></li>
+            <li><a href="{{route('admin.pendingOrder')}}"><i class="fa fa-circle-o"></i> @lang('Pending Orders')</a></li>
+            <li><a href="{{route('admin.processingOrder')}}"><i class="fa fa-circle-o"></i> @lang('Processing Orders')</a></li>
+            <li><a href="{{route('admin.bestSeller')}}"><i class="fa fa-circle-o"></i> @lang('Complete Orders')</a></li>
+            <li><a href="{{route('admin.bestSeller')}}"><i class="fa fa-circle-o"></i> @lang('Declined Orders')</a></li>
+          </ul>
+        </li>
         <li class="active treeview">
             <li><a href="{{route('admin.brand')}}"><i class="fa fa-circle-o"></i> @lang('Brands')</a></li>
         </li>
@@ -57,6 +73,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{route('admin.themeColor')}}"><i class="fa fa-circle-o"></i> @lang('Theme Color')</a></li>
+            <li><a href="{{route('admin.loader')}}"><i class="fa fa-circle-o"></i> @lang('Loader')</a></li>
             <li><a href="{{route('admin.slidercreate')}}"><i class="fa fa-circle-o"></i> @lang('Sliders')</a></li>
             <li class="treeview">
               <a href="#"><i class="fa fa-circle-o"></i> @lang('Banner')
@@ -93,8 +110,12 @@
             <li><a href="{{route('admin.fqa')}}"><i class="fa fa-circle-o"></i> @lang('FAQ Page')</a></li>
             <li><a href="{{route('admin.termsAndConditions')}}"><i class="fa fa-circle-o"></i> @lang('Terms & Condiotions')</a></li>
             <li><a href="{{route('admin.PrivacyAndPolicy')}}"><i class="fa fa-circle-o"></i> @lang('Privacy & Policy')</a></li>
+            <li><a href="{{route('admin.footerManu')}}"><i class="fa fa-circle-o"></i> @lang('Footer')</a></li>
           </ul>
         </li>
+        <li class="active treeview">
+          <li><a href=""><i class="fa fa-circle-o"></i> @lang('Home Page Customize')</a></li>
+      </li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-laptop"></i>

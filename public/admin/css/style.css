@@ -190,3 +190,16 @@
     display: block;
     padding: 5px 5px 5px 4px;
   }
+hr{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px;
+    border-top: 1px solid #727272;
+}
+.total_Cost{
+  float: right;
+  padding: 15px 85px 10px 16px;
+  background: white;
+  border-top: 1px solid;
+  margin-top: 16px;
+}

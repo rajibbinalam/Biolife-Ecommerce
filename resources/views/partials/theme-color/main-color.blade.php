@@ -192,3 +192,7 @@ body.top-refine-opened .top-functions-area .flt-item.group-on-mobile .wrap-selec
 .sidebar .wgt-content .check-list li a:hover::before{
 	border-color: {{App\Models\ThemeColor::first()->WebPage}};
 }
+.product-add-to-cart-btn:hover,.welcome-allproduct-add-to-cart-btn:hover,.biolife-banner__promotion3 .product-detail .add-to-cart-btn, .biolife-banner__promotion .product-detail .add-to-cart-btn,.welcome-add-to-cart-btn:hover {
+    background-color: {{App\Models\ThemeColor::first()->WebPage}};
+    color: white !important;
+}

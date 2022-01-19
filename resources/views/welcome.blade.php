@@ -51,7 +51,7 @@
                                     <del><span class="price-amount"><span class="currencySymbol">£</span>{{$bannerpsoduct->old_price}}</span></del>
                                 </div>
                                 <div class="buttons">
-                                    <form action="{{route('addToCart')}}" method="post">
+                                    <form class="add_to_cart" action="{{route('addToCart')}}" method="post">
                                         @csrf
                                         <input type="hidden" value="{{$bannerpsoduct->id}}" name="pid">
                                         <input type="hidden" value="{{$bannerpsoduct->name}}" name="name">
@@ -60,7 +60,7 @@
                                         <input type="hidden" value="1" name="quantity">
                                         <input type="hidden" value="" name="size">
                                         <div class="">
-                                            <button type="submit" class="btn add-to-cart-btn">@lang('add to cart')</button>
+                                            <button type="submit" class="btn add-to-cart-btn add_to_cart" product-id="{{$bannerpsoduct->id}}">@lang('add to cart')</button>
                                         </div>
                                     </form>
                                 </div>
@@ -407,11 +407,10 @@
                                 <span class="tbn"><i class="fa fa-share-alt" aria-hidden="true"></i></span>
                                 <div class="inner-content">
                                     <ul class="socials">
-                                        <li><a href="#" title="twitter" class="socail-btn"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                        <li><a href="#" title="facebook" class="socail-btn"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                        <li><a href="#" title="pinterest" class="socail-btn"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                        <li><a href="#" title="youtube" class="socail-btn"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
-                                        <li><a href="#" title="instagram" class="socail-btn"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                        <li><a href="#" id="twitter_btn" title="twitter" class="socail-btn"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                        <li><a href="#" id="facebook_btn" title="facebook" class="socail-btn"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                        <li><a href="#" id="pinterest_btn" title="pinterest" class="socail-btn"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                                        <li><a href="#" id="whatsapp_btn" title="whatsapp" class="socail-btn"><i class="fa fa-whatsapp" aria-hidden="true"></i></a></li>
                                     </ul>
                                 </div>
                             </div>

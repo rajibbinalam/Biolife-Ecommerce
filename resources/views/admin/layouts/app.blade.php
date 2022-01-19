@@ -8,7 +8,6 @@
     <meta name="csrf-token" content="">
     <link rel="icon" type="image/x-icon" href="{{asset($general->favicon)}}">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="{{asset('admin/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('admin/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin/bower_components/font-awesome/css/font-awesome.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin/bower_components/Ionicons/css/ionicons.min.css')}}">
@@ -16,12 +15,15 @@
     <link rel="stylesheet" href="{{asset('admin/dist/css/skins/_all-skins.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin/bower_components/morris.js/morris.css')}}">
     <link rel="stylesheet" href="{{asset('admin/bower_components/jvectormap/jquery-jvectormap.css')}}">
-    <link rel="stylesheet" href="{{asset('admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+    <link rel="stylesheet"
+        href="{{asset('admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin/bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
     <link rel="stylesheet" href="{{asset('admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin/css/toast.css')}}">
+    <link rel="stylesheet" href="{{asset('admin/css/style.css')}}">
     <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <style>
         @include('admin.layouts.theme-color.color')
     </style>
@@ -36,30 +38,30 @@
         @include('admin.partials.sidebar')
 
         <div class="content-wrapper">
-        <section class="content-header">
-            <div class="row">
-                <div class="col-lg-6">
-                <small>{{__(@$pageTitle)}} </small>
-                <small>{{__(@$custom)}} </small>
+            <section class="content-header">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <small>{{__(@$pageTitle)}} </small>
+                        <small>{{__(@$custom)}} </small>
+                    </div>
+                    <div class="col-lg-6">
+                        @stack('breadcrumb')
+                    </div>
                 </div>
-                <div class="col-lg-6">
-                @stack('breadcrumb')
-                </div>
-            </div>
-    
-            
-               
-           
-         </section>
-         <section class="content">
-            @yield('content')
 
-         </section>
+
+
+
+            </section>
+            <section class="content">
+                @yield('content')
+
+            </section>
         </div>
 
         @include('admin.partials.footer')
 
-        
+
     </div>
 
 
@@ -103,12 +105,11 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{asset('admin/dist/js/demo.js')}}"></script>
     <script src="{{asset('admin/js/iziToast.js')}}"></script>
-
     <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script>
-        $(document).ready( function () {
+        $(document).ready(function () {
             $('#data_table').DataTable();
-        } );
+        });
     </script>
 
 
@@ -123,34 +124,41 @@
 
 
     <script>
-      
-      $(document).ready(function () {
-         @if($errors->any())
-              @foreach ($errors->all() as $error)
-                  iziToast.error({
-                      title: 'error',
-                      message:"{{$error}}",
-                      position:'topRight'
-                  });
-              @endforeach
-          @endif
-          @if(session()->has('success'))
-                
-                iziToast.success({
-                title: 'success',
-                message: '{{session()->get('success')}}',
-        });
+
+        $(document).ready(function () {
+            @if ($errors -> any())
+                @foreach($errors -> all() as $error)
+                iziToast.error({
+                    title: 'error',
+                    message: "{{$error}}",
+                    position: 'topRight'
+                });
+            @endforeach
             @endif
-          
-      });
+            @if (session() -> has('success'))
+
+                iziToast.success({
+                    title: 'success',
+                    message: '{{session()->get('success')}}',
+                });
+            @endif
+
+        });
+
+       
+        
+    </script>
+
+    <script>
+     function printme(){
+            $("#invoicePrint").print();
+        }
+    </script>
 
 
-  </script>
+    @stack('script')
+    @stack('postscript')
 
-
- 
-@stack('script')
-@stack('postscript')
 
 
 

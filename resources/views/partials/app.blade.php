@@ -30,16 +30,9 @@
 <body class="biolife-body">
 
 <!-- Preloader -->
-    {{-- <div id="biof-loading">
-        <div class="biof-loading-center">
-            <div class="biof-loading-center-absolute">
-                <div class="dot dot-one"></div>
-                <div class="dot dot-two"></div>
-                <div class="dot dot-three"></div>
-            </div>
-        </div>
-    </div> --}}
-
+<?php
+     $loader;
+?>
     <!-- HEADER -->
     @include('partials.header')
 
@@ -71,6 +64,8 @@
 
     <script>
         $(document).ready(function () {
+            
+
            @if($errors->any())
                 @foreach ($errors->all() as $error)
                     iziToast.error({
@@ -90,6 +85,22 @@
             
         });
     </script>
+
+
+    <script>
+    (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://sandbox.sslcommerz.com/embed.min.js?" + Math.random().toString(36).substring(7);
+            tag.parentNode.insertBefore(script, tag);
+        };
+
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+
+
+
+</script>
 </body>
 
 </html>

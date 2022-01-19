@@ -2,33 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use Gloudemans\Shoppingcart\Facades\Cart;
-use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Brand;
 use App\Models\Banner;
-use App\Models\BottomBanner;
-use App\Models\TopBanner;
-use App\Models\BlogCategory;
-use App\Models\BlogComment;
-use App\Models\BlogPost;
-use App\Models\Category;
-use App\Models\ChildCategory;
+use App\Models\Orders;
+use App\Models\Slider;
 use App\Models\Contact;
-use App\Models\GeneralSetting;
 use App\Models\Message;
-use App\Models\MiddleBanner;
 use App\Models\Partner;
 use App\Models\Product;
-use App\Models\Slider;
-use App\Models\SocialLink;
-use App\Models\SubCategory;
-use App\Models\Subscriber;
+use App\Models\BlogPost;
+use App\Models\Category;
 use App\Models\HomePage;
-use App\Models\Brand;
-use App\Models\Orders;
 use App\Models\Wishlist;
+use App\Models\TopBanner;
+use App\Models\SocialLink;
+use App\Models\Subscriber;
+use App\Models\BlogComment;
+use App\Models\SubCategory;
+use App\Models\BlogCategory;
+use App\Models\BottomBanner;
+use App\Models\MiddleBanner;
+use Illuminate\Http\Request;
+use App\Models\ChildCategory;
 use App\Models\ProductReview;
+use App\Models\GeneralSetting;
 use App\Models\ShippingMethod;
-use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class HomeController extends Controller
 {
@@ -337,24 +338,32 @@ class HomeController extends Controller
         return back()->with('success','Item Remove from Cart');
     }
 
-    //===============  payment Methods
+   
+//================    Order Product
+    public function orderProduct(){
+        foreach(Cart::content() as $cart){
+            $order = new Orders();
+            $order->order_number = 'BIOLIFE'.time();
+            $order->product_id = $cart->id;
+            $order->user_id = Auth::user()->id;
+            $order->total_cost = $cart->price;
+            $order->quantity = $cart->qty;
+            $order->size = $cart->options['size'];
+            $order->color = $cart->options['colors'];
+            // $order->name = $cart->name;
+            $order->save();
+            // dd($order);
+        }
+        Cart::destroy();
+        return redirect()->route('paymentMethod')->with('success','Your Order Confirmed');
+        
+    }
+
+
+ //===============  payment Methods
     public function paymentMethod(){
         return view('/payment');
     }
-
-    public function orderProduct(Request $request){
-        $order = new Orders();
-        $order->order_number = 'BIOLIFE'.time();
-        $order->product_id = $request->product_id;
-        $order->user_id = $request->user_id;
-        $order->total_cost = $request->total_cost;
-        $order->quantity = $request->quantity;
-        $order->size = $request->size;
-        $order->color = $request->color;
-        $order->save();
-        return back()->with('success','Your Order Confirmed');
-    }
-
         //================= Wishlist 
         public function addWishlist(Request $request){
             $wishlist = new Wishlist();

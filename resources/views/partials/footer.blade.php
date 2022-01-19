@@ -31,24 +31,24 @@
                                 <div class="col-lg-6 col-sm-6 col-xs-6">
                                     <div class="wrap-custom-menu vertical-menu-2">
                                         <ul class="menu">
-                                            <li><a href="#">About Us</a></li>
-                                            <li><a href="#">About Our Shop</a></li>
-                                            <li><a href="#">Secure Shopping</a></li>
-                                            <li><a href="#">Delivery infomation</a></li>
-                                            <li><a href="#">Privacy Policy</a></li>
-                                            <li><a href="#">Our Sitemap</a></li>
+                                            <li><a href="{{$footer1->link1}}">{{$footer1->name1}}</a></li>
+                                            <li><a href="{{$footer1->link2}}">{{$footer1->name2}}</a></li>
+                                            <li><a href="{{$footer1->link3}}">{{$footer1->name3}}</a></li>
+                                            <li><a href="{{$footer1->link4}}">{{$footer1->name4}}</a></li>
+                                            <li><a href="{{$footer1->link5}}">{{$footer1->name5}}</a></li>
+                                            <li><a href="{{$footer1->link6}}">{{$footer1->name6}}</a></li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-sm-6 col-xs-6">
                                     <div class="wrap-custom-menu vertical-menu-2">
                                         <ul class="menu">
-                                            <li><a href="#">Who We Are</a></li>
-                                            <li><a href="#">Our Services</a></li>
-                                            <li><a href="#">Projects</a></li>
-                                            <li><a href="#">Contacts Us</a></li>
-                                            <li><a href="#">Innovation</a></li>
-                                            <li><a href="#">Testimonials</a></li>
+                                            <li><a href="{{$footer2->link1}}">{{$footer2->name1}}</a></li>
+                                            <li><a href="{{$footer2->link2}}">{{$footer2->name2}}</a></li>
+                                            <li><a href="{{$footer2->link3}}">{{$footer2->name3}}</a></li>
+                                            <li><a href="{{$footer2->link4}}">{{$footer2->name4}}</a></li>
+                                            <li><a href="{{$footer2->link5}}">{{$footer2->name5}}</a></li>
+                                            <li><a href="{{$footer2->link6}}">{{$footer2->name6}}</a></li>
                                         </ul>
                                     </div>
                                 </div>

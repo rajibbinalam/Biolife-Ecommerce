@@ -9,6 +9,7 @@ use App\Models\Slider;
 use App\Models\TopBanner;
 use App\Models\MiddleBanner;
 use App\Models\BottomBanner;
+use App\Models\Loader;
 use App\Models\Partner;
 use App\Models\PickupLocation;
 use App\Models\ReturnPolicy;
@@ -458,6 +459,22 @@ class GeneralSetController extends Controller
         $Admincolor->add_by = $request->add_by;
         $Admincolor->save();
         return back()->with('success','Web Theme Color Changed');
+    }
+
+    //=============== Loader
+    public function loader(){
+        $pageTitle = "Loader";
+        $loader = Loader::first();
+        return view('admin.general_settings.loader',compact('pageTitle','loader'));
+    }
+
+    public function loaderInsert(Request $request){
+        $loader = Loader::first();
+        $loader->html = $request->html;
+        $loader->add_by = $request->add_by;
+        $loader->save();
+        return back()->with('success','Loadder Added Success');
+
     }
     //============= Partners
 

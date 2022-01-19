@@ -39,6 +39,7 @@
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <img src="{{Auth::user()->avatar}}" alt="" height="30" width="30">
                                     <a class="dropdown-item user-profile" style="color: black" href="">@lang('My Profile')</a>
+                                    <a class="dropdown-item user-profile" style="color: black" href="">@lang('My Order')</a>
                                     <form action="{{route('logout')}}" method="post" style="margin-left: 55px;">
                                         @csrf
                                         {{-- <input type="submit" name="submit" class="dropdown-item user-profile" value="{{ __('Log Out') }}"> --}}

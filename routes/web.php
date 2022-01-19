@@ -42,8 +42,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/customer/update-billing/{id}','HomeController@customerBillingUpdate')->name('customerBillingUpdate');
     Route::post('/update-cart','HomeController@UpdateCart')->name('UpdateCart');
     Route::get('/checkout/payment-methods','HomeController@paymentMethod')->name('paymentMethod');    // View Cart
-    Route::get('/order','HomeController@orderProduct')->name('orderProduct');
+    Route::get(md5('order'),'HomeController@orderProduct')->name('orderProduct');
 
+    
+    // Route::post('/add-to-cart{id}','HomeController@addTOCartGlobal')->name('add_to_cart_global');
+    
         //====== Wishlist
     Route::post('/add-wishlist','HomeController@addWishlist')->name('addWishlist');
     Route::get('/my-wishlist/{user_id}','HomeController@MyWishlist')->name('MyWishlist');
@@ -69,6 +72,20 @@ Route::prefix('github')->name('github.')->group( function(){
     Route::any('/callback', [App\Http\Controllers\SocialLoginController::class, 'callbackFromGitHub'])->name('callback');
 });
 
+
+// SSLCOMMERZ Start
+Route::get('/example1', [App\Http\Controllers\SslCommerzPaymentController::class, 'exampleEasyCheckout']);
+Route::get('/example2', [App\Http\Controllers\SslCommerzPaymentController::class, 'exampleHostedCheckout']);
+
+Route::post('/pay', [App\Http\Controllers\SslCommerzPaymentController::class, 'index']);
+Route::post('/pay-via-ajax', [App\Http\Controllers\SslCommerzPaymentController::class, 'payViaAjax']);
+
+Route::post('/success', [App\Http\Controllers\SslCommerzPaymentController::class, 'success']);
+Route::post('/fail', [App\Http\Controllers\SslCommerzPaymentController::class, 'fail']);
+Route::post('/cancel', [App\Http\Controllers\SslCommerzPaymentController::class, 'cancel']);
+
+Route::post('/ipn', [App\Http\Controllers\SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END
 
 
 
@@ -114,6 +131,15 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
     Route::post('/home-pages/4', 'HomeController@HomePage4');
     Route::post('/home-pages/5', 'HomeController@HomePage5');
     //Route::get('/home-pages/delete', 'HomeController@delete')->name('delete');
+
+    // =============== Order Section
+    Route::get('/all-order','OrderController@allOrder')->name('allOrder');
+    Route::post('/order/status/update/{id}','OrderController@activeOrder')->name('activeOrder');
+    Route::get('/order/view/{id}','OrderController@viewOrder')->name('viewOrder');
+    Route::get('/order/invoice/{id}','OrderController@viewOrderInvoice')->name('viewOrderInvoice');
+
+    Route::get('/pending-order','OrderController@pendingOrder')->name('pendingOrder');
+    Route::get('/processing-order','OrderController@processingOrder')->name('processingOrder');
 
     //==========slider
     Route::get('/slider', 'GeneralSetController@slidercreate')->name('slidercreate');
@@ -164,6 +190,10 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
     Route::post('theme-color/admin-sidebar','GeneralSetController@adminSidebarUpdate')->name('adminSidebarUpdate');
     Route::post('theme-color/web','GeneralSetController@webColorUpdate')->name('webColorUpdate');
 
+    // =============== Loader
+    Route::get('/loader','GeneralSetController@loader')->name('loader');
+    Route::post('/loader/update/','GeneralSetController@loaderInsert')->name('loaderInsert');
+
     //================ FAQ Page
     Route::get('/fqa', 'ContactSocialController@fqa')->name('fqa');
     Route::post('/fqa', 'ContactSocialController@fqaInsert')->name('fqaInsert');
@@ -175,6 +205,11 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
     // ============== Terms and Conditions
     Route::get('/privacy-policy', 'ContactSocialController@PrivacyAndPolicy')->name('PrivacyAndPolicy');
     Route::post('/privacy-policy/{id}', 'ContactSocialController@PrivacyAndPolicyUpdate')->name('PrivacyAndPolicyUpdate');
+
+    //================ Footer Manu 
+    Route::get('/footer-manu','ManuPageController@footerManu')->name("footerManu");
+    Route::post('/footer-manu1','ManuPageController@footerManuAdd1st')->name("footerManuAdd1st");
+    Route::post('/footer-manu2','ManuPageController@footerManuAdd2nd')->name("footerManuAdd2nd");
 
     
 

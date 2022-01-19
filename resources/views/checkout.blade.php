@@ -181,22 +181,11 @@
                                 </li>
                             </ul>
                         </div>
-                        @foreach ($carts as $cart)
-                        {{-- {{$cart->count()}} --}}
-                        <form action="{{route('orderProduct')}}" id="checkOut" method="post">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{$cart->id}}" id="">
-                            <input type="hidden" name="user_id" value="{{Auth::user()->id}}" id="">
-                            <input type="hidden" name="total_cost" value="{{Cart::subtotal()}}" id="">
-                            <input type="hidden" name="quantity" value="{{$cart->qty}}" id="">
-                            <input type="hidden" name="color" value="{{$cart->options['colors']}}" id="">
-                            <input type="hidden" name="size" value="{{$cart->options['size']}}" id="">
-                            
-                        </form>
-                        @endforeach
-                        <button type="submit" name="btn-sbmt" form="checkOut" class="btn checkout-btn">Check Out</button>
                         
-                        <a href="{{route('paymentMethod')}}">Check Out</a>
+                        {{-- <button type="submit" name="btn-sbmt" form="checkOut" class="btn checkout-btn">Check Out</button> --}}
+                        
+                        <a class="btn checkout-btn" href="{{route('orderProduct')}}">Check Out</a>
+                        {{-- <a href="{{route('paymentMethod')}}">Check Out</a> --}}
                             
                         
 
