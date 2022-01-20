@@ -5881,6 +5881,26 @@ body.open-overlay #overlay{
     padding: 8px 15px 8px 15px;
     font-weight: 700;
 }
+.web-maintenence{
+    text-align: center;
+    vertical-align: middle;
+    padding: 100px 0 100px 0px;
+}
+        /* SSL Commerz Css */
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
 .btn-github:hover{
     color: white;
     background-color: #515151;

@@ -22,7 +22,7 @@
             <div class="inner">
               <h3>53<sup style="font-size: 20px">%</sup></h3>
 
-              <p>Bounce Rate</p>
+              <p>This Month</p>
             </div>
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
@@ -42,7 +42,7 @@
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="" class="small-box-footer">More info<i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -50,14 +50,14 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>65</h3>
+              <h3>{{App\Models\Orders::count()}}</h3>
 
-              <p>Unique Visitors</p>
+              <p>All Orders</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{route('admin.allOrder')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

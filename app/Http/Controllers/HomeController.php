@@ -25,6 +25,7 @@ use App\Models\BottomBanner;
 use App\Models\MiddleBanner;
 use Illuminate\Http\Request;
 use App\Models\ChildCategory;
+use App\Models\Coupon;
 use App\Models\ProductReview;
 use App\Models\GeneralSetting;
 use App\Models\ShippingMethod;
@@ -160,95 +161,7 @@ class HomeController extends Controller
         return view('style1.single_product',compact('pageTitle','single_product','product_image','releted_products','product_reviews','product_size','product_color'));
     }
 
-    // =============   Home Page Insertion
-     public function homePagesinsert(Request $request){
-        $request->validate([
-            'Feature'=> 'required|max:1024',
-        ]);
-        $allHome = HomePage::all();
-        if(($allHome->count())<1){
-
-            if ($request->hasFile('Feature')) {
-                $files = $request->file('Feature');
-                
-                $imageLocation = array();
-                $i = 0;
-                foreach ($files as $file){
-                    $extension = $file->getClientOriginalExtension();
-                    $fileName = 'feature' . time() . ++$i . '.' . $extension;
-                    $location = '/Feature/logo/';
-                    $file->move(public_path() . $location, $fileName);
-                    $imageLocation[] = $location . $fileName;
-                }
-                HomePage::insert([
-                    'Feature' => implode('|',$imageLocation),
-                ]);
-
-
-                return back()->with('success', 'Success!');
-            }
-
-        } else {
-                return back()->with('error', 'Item Is already Inserted!');
-            }
-
-       
-     }
-
-    public function homePages(){
-        $pageTitle = "Home Page";
-        $features = HomePage::first();
-        $page_no = $features->web_page;
-        //$feature = explode('|',$features->Feature);
-        return view('admin.Home_Pages.index', compact('features','pageTitle','page_no'));
-    }
-
-    public function HomePage1(Request $request){
-        $home1 = HomePage::first();
-        $home1->web_page = $request->get('web_page');
-        $home1->add_by = $request->get('add_by');
-        $home1->save();
-        return back()->with('success','Homa Page 1 Selected');
-    }
-    public function HomePage2(Request $request){
-        $home2 = HomePage::first();
-        $home2->web_page = $request->get('web_page');
-        $home2->add_by = $request->get('add_by');
-        $home2->save();
-        return back()->with('success','Homa Page 2 Selected');
-    }
-    public function HomePage3(Request $request){
-        //dd($request->all());
-        $home3 = HomePage::first();
-        $home3->web_page = $request->get('web_page');
-        $home3->add_by = $request->get('add_by');
-        $home3->save();
-        return back()->with('success','Homa Page 3 Selected');
-    }
-    public function HomePage4(Request $request){
-        $home4 = HomePage::first();
-        $home4->web_page = $request->get('web_page');
-        $home4->add_by = $request->get('add_by');
-        $home4->save();
-        return back()->with('success','Homa Page 4 Selected');
-    }
-    public function HomePage5(Request $request){
-        $home5 = HomePage::first();
-        $home5->web_page = $request->get('web_page');
-        $home5->add_by = $request->get('add_by');
-        $home5->save();
-        return back()->with('success','Homa Page 5 Selected');
-    }
-
-    // public function delete(){
-    //     $delete = HomePage::all();
-    //     $delete->delete();
-    //     unlink(public_path($delete->Feature));
-    //     return back();
-    // }
-
-
-
+    
     //      ============= Add To Cart
     public function addToCart(Request $request){
         $id = $request->get('pid');
@@ -311,6 +224,7 @@ class HomeController extends Controller
         }
     }
 
+
     public function checkOut(){
         $pageTitle = "My Cart";
         $carts = Cart::content();
@@ -326,8 +240,20 @@ class HomeController extends Controller
         $updateCustomer->email = $request->email;
         $updateCustomer->phone = $request->phone;
         $updateCustomer->district = $request->district;
-        $updateCustomer->district = $request->district;
+        $updateCustomer->zip = $request->zip;
         $updateCustomer->address = $request->address;
+        $oldImage = $updateCustomer->image;
+        if($request->hasFile('image')){
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $fileName= 'user_'. time() . '.' . $extension;
+            $location= '/images/user/';
+            $file->move(public_path() . $location, $fileName);
+            $imageLocation= $location. $fileName;
+        }else{
+            $imageLocation= $oldImage;
+        }
+        $updateCustomer->image = $imageLocation;
         $updateCustomer->save();
         return back();
     }
@@ -352,11 +278,22 @@ class HomeController extends Controller
             $order->color = $cart->options['colors'];
             // $order->name = $cart->name;
             $order->save();
-            // dd($order);
         }
-        Cart::destroy();
+        // Cart::destroy();
         return redirect()->route('paymentMethod')->with('success','Your Order Confirmed');
         
+    }
+
+    public function myOrder(){
+        $pageTitle = "My Order List";
+        $user = Auth::user()->id;
+        $myOrders = Orders::where('user_id',$user)->orderBy('id','DESC')->get();
+        return view('my-order',compact('pageTitle','myOrders'));
+    }
+
+    public function userProfile(){
+        $pageTitle = "User Profile";
+        return view('my-profile',compact('pageTitle'));
     }
 
 

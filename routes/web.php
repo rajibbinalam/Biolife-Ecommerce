@@ -44,6 +44,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout/payment-methods','HomeController@paymentMethod')->name('paymentMethod');    // View Cart
     Route::get(md5('order'),'HomeController@orderProduct')->name('orderProduct');
 
+    Route::get('/user-profile','HomeController@userProfile')->name('userProfile');
+
+    Route::get('/my-order','HomeController@myOrder')->name("myOrder");
+    Route::post('/coupon','HomeController@addCoupon')->name('addCoupon');
+
     
     // Route::post('/add-to-cart{id}','HomeController@addTOCartGlobal')->name('add_to_cart_global');
     
@@ -122,15 +127,22 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
     Route::post('/profile/update/{id}','AdminController@adminProfileupdate')->name('adminProfileupdate');
 
     //================= Home Pages
-    Route::get('/home-pages', 'HomeController@homePages')->name('homePages');
-    Route::post('/home-pages', 'HomeController@homePagesinsert')->name('homePagesinsert');
+    Route::get('/home-pages', 'webContentController@homePages')->name('homePages');
+    Route::post('/home-pages', 'webContentController@homePagesinsert')->name('homePagesinsert');
+
+    //==================  Web Maintenece
+    Route::get('/web-maintenece', 'webContentController@webMaintence')->name('webMaintence');
+    Route::post('/web-maintenence/update', 'webContentController@webMaintenceInsert')->name('webMaintenceInsert');
+    Route::post('/web-maintenence/status/update/', 'webContentController@webMaintenceStatusUpdate')->name('webMaintenceStatusUpdate');
+
+
     // Update
-    Route::post('/home-pages/1', 'HomeController@HomePage1');
-    Route::post('/home-pages/2', 'HomeController@HomePage2')->name('homepage2');
-    Route::post('/home-pages/3', 'HomeController@HomePage3')->name('homepage3');
-    Route::post('/home-pages/4', 'HomeController@HomePage4');
-    Route::post('/home-pages/5', 'HomeController@HomePage5');
-    //Route::get('/home-pages/delete', 'HomeController@delete')->name('delete');
+    Route::post('/home-pages/1', 'webContentController@HomePage1');
+    Route::post('/home-pages/2', 'webContentController@HomePage2')->name('homepage2');
+    Route::post('/home-pages/3', 'webContentController@HomePage3')->name('homepage3');
+    Route::post('/home-pages/4', 'webContentController@HomePage4');
+    Route::post('/home-pages/5', 'webContentController@HomePage5');
+    //Route::get('/home-pages/delete', 'webContentController@delete')->name('delete');
 
     // =============== Order Section
     Route::get('/all-order','OrderController@allOrder')->name('allOrder');
@@ -140,6 +152,9 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
 
     Route::get('/pending-order','OrderController@pendingOrder')->name('pendingOrder');
     Route::get('/processing-order','OrderController@processingOrder')->name('processingOrder');
+
+    Route::get('/complete-order','OrderController@completeOrder')->name('completeOrder');
+    Route::get('/declined-order','OrderController@declinedOrder')->name('declinedOrder');
 
     //==========slider
     Route::get('/slider', 'GeneralSetController@slidercreate')->name('slidercreate');
@@ -193,6 +208,7 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
     // =============== Loader
     Route::get('/loader','GeneralSetController@loader')->name('loader');
     Route::post('/loader/update/','GeneralSetController@loaderInsert')->name('loaderInsert');
+    Route::post('/loader/status/update/','GeneralSetController@loaderstatusUpdate')->name('loaderstatusUpdate');
 
     //================ FAQ Page
     Route::get('/fqa', 'ContactSocialController@fqa')->name('fqa');
@@ -287,8 +303,11 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
         Route::post('/store', 'SettingController@updateGeneralSetting')->name('store');
     });
 
-    //================== Product section   
+    //==================== Customers 
+    Route::get('/customers','Admin\SettingController@customers')->name('customers');
+    Route::get('/customer/delete/{id}','Admin\SettingController@customersDelete')->name('customersDelete');
 
+    //================== Product section
     Route::resource('products',ProductController::class);
     Route::post('/bulk-product','ProductController@BulkProductImport')->name('BulkProductImport');
     Route::get('/product/export/', 'ProductController@BulkProductExport')->name('BulkProductExport');
@@ -314,6 +333,11 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function () 
     Route::get('/brand', 'BrandController@index')->name('brand');
     Route::post('/brand', 'BrandController@insert')->name('brnadInsert');
     Route::get('/brand/delete/{id}', 'BrandController@delete')->name('brandDelete');
+
+    //================= Counpons
+    Route::get('/coupons', 'BrandController@coupons')->name('coupons');
+    Route::post('/coupons', 'BrandController@couponsInsert')->name('couponsInsert');
+    Route::get('/coupon/delete/{id}', 'BrandController@couponDelete')->name('couponDelete');
 
     //================ Best Seller Product
     Route::get('/best-product', 'ProductController@bestSeller')->name('bestSeller');

@@ -22,17 +22,36 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/main-color.php')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
     <style>
-        @include('partials.theme-color.main-color')
+        @include('partials.theme-color.main-color');
     </style>
 
 </head>
 
 <body class="biolife-body">
-
-<!-- Preloader -->
 <?php
-     $loader;
+    if($WebMaintenence->status == 1){
+        echo "<h1 class='web-maintenence'>".$WebMaintenence->code."<h1/>";
+    }else{
+       
 ?>
+<!-- Preloader -->
+
+<?php  
+    if($loader->status == 1){
+        // $loader->html;?>
+        <div id="biof-loading">
+            <div class="biof-loading-center">
+                <div class="biof-loading-center-absolute">
+                    <div class="dot dot-one"></div>
+                    <div class="dot dot-two"></div>
+                    <div class="dot dot-three"></div>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+?>
+
     <!-- HEADER -->
     @include('partials.header')
 
@@ -50,7 +69,9 @@
 
     <!-- Scroll Top Button -->
     <a class="btn-scroll-top"><i class="biolife-icon icon-left-arrow"></i></a>
-
+<?php 
+    }
+?>
     <script src="{{asset('assets/js/jquery-3.4.1.min.js')}}"></script>
     <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('assets/js/jquery.countdown.min.js')}}"></script>

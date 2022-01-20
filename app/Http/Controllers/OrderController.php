@@ -44,6 +44,19 @@ class OrderController extends Controller
         return view('admin.orders.processing_order',compact('pageTitle','orders'));
 
     }
+    public function completeOrder(){
+        $pageTitle = "Complete Orders";
+        $orders = Orders::where('status',2)->get();
+        return view('admin.orders.complete_order',compact('pageTitle','orders'));
+
+    }
+    public function declinedOrder(){
+        $pageTitle = "Complete Orders";
+        $orders = Orders::where('status',3)->get();
+        return view('admin.orders.declined_order',compact('pageTitle','orders'));
+
+    }
+
 
 
 

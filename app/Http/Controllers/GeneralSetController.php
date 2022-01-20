@@ -476,6 +476,13 @@ class GeneralSetController extends Controller
         return back()->with('success','Loadder Added Success');
 
     }
+
+    public function loaderstatusUpdate(Request $request){
+        $status = Loader::first();
+        $status->status = $request->status;
+        $status->save();
+        return back()->with('success','Status Updated Success');
+    }
     //============= Partners
 
     public function partnercreate()

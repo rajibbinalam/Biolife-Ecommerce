@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\GeneralSetting;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\ViewErrorBag;
 
 class SettingController extends Controller
 {
@@ -54,4 +56,21 @@ class SettingController extends Controller
         $general->save();
         return back()->with('success','Settings Update Success');
     }
+
+
+
+
+    //================ Customers
+    public function customers(){
+        $pageTitle = "Customers";
+        $customers = User::all();
+        return View('admin.customers.customers',compact('customers','pageTitle'));
+    }
+
+    public function customersDelete($id){
+        $delete = User::find($id);
+        $delete->delete();
+        return back()->with('success','Customer Deleted');
+    }
+
 }

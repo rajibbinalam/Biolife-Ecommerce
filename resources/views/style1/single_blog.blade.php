@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="post-content">
-                        <p>{{strip_tags(htmlspecialchars_decode($single->details))}}</p>
+                        <p>@php echo $single->details; @endphp</p>
                         
                     </div>
 

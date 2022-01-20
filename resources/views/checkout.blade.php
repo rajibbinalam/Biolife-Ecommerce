@@ -62,35 +62,7 @@
                             </li>
                             <li class="step 3rd">
                                 <div class="checkout-act"><h3 class="title-box" style="margin-bottom: 20px;"><span class="number">3</span>Billing</h3></div>
-                                <form action="{{url('/customer/update-billing/'.Auth::user()->id)}}" method="post">
-                                    @csrf
-                                    <div class="form-group col-md-6">
-                                        <label for=""> Name</label>
-                                        <input type="text" class="form-control" name="name" id="" value="{{Auth::user()->name}}">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for=""> Phone</label>
-                                        <input type="text" class="form-control" name="phone" id="" value="{{Auth::user()->phone}}">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for=""> Email Address</label>
-                                        <input type="email" class="form-control" name="email" id="" value="{{Auth::user()->email}}">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for=""> District</label>
-                                        <input type="text" class="form-control" name="district" id="" value="{{Auth::user()->district}}">
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label for="address">Billing Address</label>
-                                        <textarea name="address" id="address" cols="80" rows="4" placeholder="Billing Address">{{Auth::user()->address}}</textarea>
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <button type="submit" class="btn btn-primary">Save</button>
-                                    </div>
-                                </form>
-                            </li>
-                            <li class="step 4th">
-                                <div class="checkout-act"><h3 class="title-box" style="margin-top: 30px; "><span class="number">4</span>Let's Check Out</h3></div>
+                                
                             </li>
                         </ul>
                     </div>
@@ -169,14 +141,20 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <div class="subtotal-line">
-                                        <a href="" class="link-forward">Promo/Gift</a>
-                                    </div>
+                                    <form action="{{route('addCoupon')}}" method="post">
+                                        @csrf
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <input type="text" name="coupon" placeholder="Apply Coupon">
+                                                <button class="btn btn-outline-warningy" type="submit">Coupon</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </li>
                                 <li>
                                     <div class="subtotal-line">
                                         <b class="stt-name">total:</b>
-                                        <span class="stt-price">£{{Cart::subtotal() }}</span>
+                                        <span class="stt-price">£{{Cart::subtotal() + Cart::tax() + $shipping}}</span>
                                     </div>
                                 </li>
                             </ul>
@@ -185,6 +163,7 @@
                         {{-- <button type="submit" name="btn-sbmt" form="checkOut" class="btn checkout-btn">Check Out</button> --}}
                         
                         <a class="btn checkout-btn" href="{{route('orderProduct')}}">Check Out</a>
+
                         {{-- <a href="{{route('paymentMethod')}}">Check Out</a> --}}
                             
                         

@@ -9,11 +9,18 @@
           </a>
         </li>
         <li class="treeview">
-          <a href="{{route('admin.homePages')}}" class="active">
-            <li><i class="fa fa-dashboard"></i>@lang('Web Page')</li>
+          <a href="#">
+            <i class="fa fa-laptop"></i>
+            <span>Web Content</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
           </a>
+          <ul class="treeview-menu">
+            <li><a href="{{route('admin.homePages')}}"><i class="fa fa-circle-o"></i>@lang('Web Pages')</a></li>
+            <li><a href="{{route('admin.webMaintence')}}"><i class="fa fa-circle-o"></i>@lang('Web Maintenence')</a></li>
+          </ul>
         </li>
-    
         <li class="treeview">
           <a href="#">
             <i class="fa fa-laptop"></i>
@@ -40,12 +47,15 @@
             <li><a href="{{route('admin.allOrder')}}"><i class="fa fa-circle-o"></i> @lang('All Orders')</a></li>
             <li><a href="{{route('admin.pendingOrder')}}"><i class="fa fa-circle-o"></i> @lang('Pending Orders')</a></li>
             <li><a href="{{route('admin.processingOrder')}}"><i class="fa fa-circle-o"></i> @lang('Processing Orders')</a></li>
-            <li><a href="{{route('admin.bestSeller')}}"><i class="fa fa-circle-o"></i> @lang('Complete Orders')</a></li>
-            <li><a href="{{route('admin.bestSeller')}}"><i class="fa fa-circle-o"></i> @lang('Declined Orders')</a></li>
+            <li><a href="{{route('admin.completeOrder')}}"><i class="fa fa-circle-o"></i> @lang('Complete Orders')</a></li>
+            <li><a href="{{route('admin.declinedOrder')}}"><i class="fa fa-circle-o"></i> @lang('Declined Orders')</a></li>
           </ul>
         </li>
         <li class="active treeview">
             <li><a href="{{route('admin.brand')}}"><i class="fa fa-circle-o"></i> @lang('Brands')</a></li>
+        </li>
+        <li class="active treeview">
+            <li><a href="{{route('admin.coupons')}}"><i class="fa fa-circle-o"></i> @lang('Coupons')</a></li>
         </li>
 
         <li class="treeview">
@@ -131,6 +141,9 @@
         </li>
         <li class="active treeview">
             <li><a href="{{route('admin.setting.general')}}"><i class="fa fa-circle-o"></i> @lang('Setting general')</a></li>
+        </li>
+        <li class="active treeview">
+            <li><a href="{{route('admin.customers')}}"><i class="fa fa-circle-o"></i> @lang('Customers')</a></li>
         </li>
 
         <li class="treeview">
